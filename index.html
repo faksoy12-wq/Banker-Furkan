@@ -749,10 +749,10 @@ async function fetchRates() {
     const r = await fetch('/api/rates');
     const d = await r.json();
     S.prev = {...S.rates};
-    S.rates.usd   = parseFloat(d['USD']?.Selling || d['USD']?.Buying || 43);
-    S.rates.eur   = parseFloat(d['EUR']?.Selling || d['EUR']?.Buying || 50);
-    S.rates.altin = parseFloat(d['gram-altin']?.Selling || d['gram-altin']?.Buying || 7100);
-    S.rates.ons   = S.rates.altin / S.rates.usd * 31.1035;
+    S.rates.usd   = d.usd   || 42.8;
+    S.rates.eur   = d.eur   || 50.2;
+    S.rates.altin = d.altin || 7100;
+    S.rates.ons   = d.ons   || 3000;
     const n = new Date();
     document.getElementById('upd-time').textContent = n.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'}) + ' güncellendi';
   } catch(e) {
