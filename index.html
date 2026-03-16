@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Furkan Aksoy — Finansal Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --cream:#FAFAF7;--white:#fff;--ink:#1C1C1E;--ink2:#48484A;--ink3:#8E8E93;
+  --gold:#B8860B;--gold-bg:#FFF8E7;--gold-bd:#F0D080;
+  --green:#1A7A4A;--green-bg:#EDFAF3;--green-bd:#A8DFC0;
+  --red:#C0392B;--red-bg:#FEF0EE;--red-bd:#F5C5C0;
+  --blue:#1A5FAA;--blue-bg:#EEF4FD;--blue-bd:#C0D8F5;
+  --purple:#7B3FBE;--purple-bg:#F3EEFF;--purple-bd:#D4B8F0;
+  --border:#E5E5EA;--sh:0 1px 3px rgba(0,0,0,0.07),0 4px 12px rgba(0,0,0,0.04);
+  --serif:'Playfair Display',Georgia,serif;--sans:'Plus Jakarta Sans',sans-serif;--r:12px;
+}
+body{background:var(--cream);font-family:var(--sans);color:var(--ink);font-size:14px;}
+.header{background:var(--white);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.h-name{font-family:var(--serif);font-size:19px;}
+.h-sub{font-size:11px;color:var(--ink3);margin-top:2px;}
+.pill{font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;}
+.pill-gold{background:var(--gold-bg);border:1px solid var(--gold-bd);color:var(--gold);}
+.pill-green{background:var(--green-bg);border:1px solid var(--green-bd);color:var(--green);}
+.ticker{background:var(--white);border-bottom:1px solid var(--border);padding:9px 24px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.tk-item{display:flex;align-items:center;gap:7px;}
+.tk-lbl{font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;}
+.tk-val{font-size:14px;font-weight:700;}
+.tk-chg{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;}
+.chg-u{background:var(--green-bg);color:var(--green);}
+.chg-d{background:var(--red-bg);color:var(--red);}
+.chg-n{background:#F2F2F7;color:var(--ink3);}
+.tk-div{width:1px;height:26px;background:var(--border);}
+.nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:2px;overflow-x:auto;}
+.nb{font-size:12px;font-weight:500;color:var(--ink3);background:none;border:none;border-bottom:2px solid transparent;padding:11px 13px;cursor:pointer;white-space:nowrap;transition:all .15s;}
+.nb:hover{color:var(--ink);}
+.nb.active{color:var(--gold);border-bottom-color:var(--gold);}
+.content{padding:20px 24px;max-width:1100px;}
+.tab{display:none;}.tab.active{display:block;}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px;}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px;}
+.g21{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px;}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);margin-bottom:14px;}
+.ct{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;}
+.stat{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);}
+.sl{font-size:10px;color:var(--ink3);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px;}
+.sv{font-size:20px;font-weight:700;}
+.ss{font-size:10px;color:var(--ink3);margin-top:3px;}
+.arow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+.arow:last-child{border-bottom:none;}
+.adot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.an{flex:1;min-width:0;}
+.an-m{font-size:13px;font-weight:600;}
+.an-s{font-size:10px;color:var(--ink3);margin-top:1px;}
+.abw{width:50px;height:4px;background:#F2F2F7;border-radius:2px;flex-shrink:0;}
+.ab{height:4px;border-radius:2px;}
+.ap{font-size:11px;font-weight:600;color:var(--ink3);min-width:28px;text-align:right;}
+.aa{font-size:13px;font-weight:700;min-width:80px;text-align:right;}
+.ac{font-size:10px;color:var(--ink3);min-width:86px;text-align:right;}
+.sc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
+.sc{border-radius:10px;padding:13px 11px;border:1px solid var(--border);}
+.srow{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border);}
+.srow:last-child{border-bottom:none;}
+.slbl{font-size:12px;color:var(--ink2);flex:1;}
+input[type=range]{width:80px;accent-color:var(--gold);}
+.sval{font-size:13px;font-weight:700;color:var(--gold);min-width:50px;text-align:right;}
+.res-box{background:var(--gold-bg);border:1px solid var(--gold-bd);border-radius:10px;padding:13px 15px;margin-top:10px;}
+.res-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:3px;}
+.res-val{font-family:var(--serif);font-size:23px;color:var(--gold);}
+.res-sub{font-size:11px;color:var(--ink3);margin-top:2px;}
+.chart-wrap{position:relative;width:100%;height:185px;}
+.tl{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.tl:last-child{border-bottom:none;}
+.tl-b{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;flex-shrink:0;margin-top:2px;min-width:54px;text-align:center;}
+.tl-t{font-size:13px;font-weight:600;margin-bottom:2px;}
+.tl-d{font-size:11px;color:var(--ink3);line-height:1.5;}
+.tl-a{font-size:12px;font-weight:700;color:var(--green);margin-top:3px;}
+.act{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.act:last-child{border-bottom:none;}
+.act-n{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.done-btn{font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:var(--white);color:var(--ink3);cursor:pointer;margin-top:5px;transition:all .2s;}
+.done-btn.done{background:var(--green-bg);color:var(--green);border-color:var(--green-bd);}
+.tx-r{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.tx-r:last-child{border-bottom:none;}
+.tx-v{font-weight:700;color:var(--green);}
+.warn{background:var(--gold-bg);border:1px solid var(--gold-bd);border-radius:8px;padding:9px 12px;font-size:11px;color:var(--gold);line-height:1.6;margin-top:10px;}
+.info{background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:8px;padding:9px 12px;font-size:11px;color:var(--blue);line-height:1.6;margin-top:10px;}
+.ziraat-btn{display:inline-flex;align-items:center;gap:5px;background:#C8102E;color:white;font-size:11px;font-weight:600;padding:6px 13px;border-radius:20px;border:none;cursor:pointer;text-decoration:none;margin-top:8px;}
+.form-group{margin-bottom:14px;}
+.form-label{font-size:11px;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;display:block;}
+.form-input{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:600;font-family:var(--sans);color:var(--ink);background:var(--cream);outline:none;transition:border .15s;}
+.form-input:focus{border-color:var(--gold-bd);background:var(--white);}
+.form-hint{font-size:10px;color:var(--ink3);margin-top:4px;}
+.save-btn{width:100%;padding:12px;background:var(--gold);color:white;font-size:13px;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-family:var(--sans);transition:opacity .2s;margin-top:4px;}
+.save-btn:hover{opacity:.9;}
+.month-select{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--sans);color:var(--ink);background:var(--cream);outline:none;}
+.history-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:var(--cream);border:1px solid var(--border);margin-bottom:6px;}
+.h-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-bd);flex-shrink:0;}
+.h-net{font-size:14px;font-weight:700;color:var(--green);}
+.h-del{font-size:10px;color:var(--red);cursor:pointer;margin-left:auto;padding:2px 7px;border:1px solid var(--red-bd);border-radius:4px;background:var(--red-bg);flex-shrink:0;}
+.success-box{background:var(--green-bg);border:1px solid var(--green-bd);border-radius:10px;padding:14px;margin-top:12px;display:none;}
+@media(max-width:600px){
+  .g4{grid-template-columns:repeat(2,1fr);}
+  .g21{grid-template-columns:1fr;}
+  .sc-grid{grid-template-columns:repeat(2,1fr);}
+  .content{padding:12px;}
+}
+</style>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Finans">
+  <meta name="theme-color" content="#B8860B">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="https://placehold.co/192x192/B8860B/FFFFFF?text=F">
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="h-name">Furkan Aksoy</div>
+    <div class="h-sub">Aile Hekimi · Van Erciş · Finansal Özgürlük Planı</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <span class="pill pill-gold">27 yaş · 56'ya 29 yıl</span>
+    <span class="pill pill-green" id="tasarruf-pill">%61 tasarruf</span>
+    <span style="font-size:10px;color:var(--ink3);" id="upd-time">Kurlar yükleniyor...</span>
+  </div>
+</div>
+
+<div class="ticker">
+  <span style="font-size:10px;font-weight:700;color:var(--ink3);letter-spacing:.05em;">CANLI</span>
+  <div class="tk-div"></div>
+  <div class="tk-item"><span class="tk-lbl">Gram Altın</span><span class="tk-val" id="t-altin">—</span><span class="tk-chg chg-n" id="t-ac">—</span></div>
+  <div class="tk-div"></div>
+  <div class="tk-item"><span class="tk-lbl">USD/TL</span><span class="tk-val" id="t-usd">—</span><span class="tk-chg chg-n" id="t-uc">—</span></div>
+  <div class="tk-div"></div>
+  <div class="tk-item"><span class="tk-lbl">EUR/TL</span><span class="tk-val" id="t-eur">—</span><span class="tk-chg chg-n" id="t-ec">—</span></div>
+  <div class="tk-div"></div>
+  <div class="tk-item"><span class="tk-lbl">ONS/$</span><span class="tk-val" id="t-ons">—</span><span class="tk-chg chg-n" id="t-oc">—</span></div>
+  <div class="tk-div"></div>
+  <div class="tk-item"><span class="tk-lbl">54K =</span><span class="tk-val" id="t-gram" style="color:#C9A84C;">— gram</span></div>
+</div>
+
+<div class="nav">
+  <button class="nb active" onclick="goTab('portfolio',this)">Portföy</button>
+  <button class="nb" onclick="goTab('bordro',this)">📋 Bordro Güncelle</button>
+  <button class="nb" onclick="goTab('calculator',this)">Hesap Makinesi</button>
+  <button class="nb" onclick="goTab('freedom',this)">Yol Haritası</button>
+  <button class="nb" onclick="goTab('aksiyon',this)">Aksiyon</button>
+  <button class="nb" onclick="goTab('vergi',this)">Vergi</button>
+</div>
+
+<div class="content">
+
+<!-- PORTFÖY -->
+<div class="tab active" id="tab-portfolio">
+  <div class="g4">
+    <div class="stat"><div class="sl">Aylık Net Maaş</div><div class="sv" id="s-maas" style="font-size:17px;">196.000 ₺</div><div class="ss" id="s-maas-sub">Son bordro ortalaması</div></div>
+    <div class="stat"><div class="sl">Aylık Yatırım</div><div class="sv" id="s-yatirim" style="font-size:17px;color:var(--green);">120.000 ₺</div><div class="ss" id="s-oran">Aylık sabit yatırım</div></div>
+    <div class="stat"><div class="sl">Allianz USD</div><div class="sv" style="font-size:17px;">1.200 $</div><div class="ss" id="s-allianz-tl">TL karşılığı yükleniyor...</div></div>
+    <div class="stat"><div class="sl">Yıllık Vergi Avantajı</div><div class="sv" id="s-vergi" style="font-size:17px;color:var(--green);">~31.500 ₺</div><div class="ss">Devlet + vergi iadesi</div></div>
+  </div>
+  <div class="g21">
+    <div class="card" style="margin-bottom:0;">
+      <div class="ct">Aylık <span id="yatirim-baslik">120.000 ₺</span> Dağılımı — Ziraat Bankası</div>
+      <div class="arow"><div class="adot" style="background:#C9A84C;"></div><div class="an"><div class="an-m">Gram Altın</div><div class="an-s">Ziraat Mobil → Yatırım → Altın Hesabı</div></div><div class="abw"><div class="ab" style="width:45%;background:#C9A84C;"></div></div><div class="ap">%45</div><div class="aa" style="color:#C9A84C;" id="p-altin">54.000 ₺</div><div class="ac" id="p-gram">— gram</div></div>
+      <div class="arow"><div class="adot" style="background:#1A7A4A;"></div><div class="an"><div class="an-m">Para Piyasası Fonu (ZPP)</div><div class="an-s">Ziraat Mobil → Yatırım → Fon → ZPP</div></div><div class="abw"><div class="ab" style="width:30%;background:#1A7A4A;"></div></div><div class="ap">%30</div><div class="aa" style="color:#1A7A4A;" id="p-ppf">36.000 ₺</div><div class="ac" style="font-size:10px;color:var(--ink3);">Günlük ~%0.10 faiz</div></div>
+      <div class="arow"><div class="adot" style="background:#1A5FAA;"></div><div class="an"><div class="an-m">BİST 30 Endeks Fonu</div><div class="an-s">Ziraat Mobil → Yatırım → Fon → Endeks</div></div><div class="abw"><div class="ab" style="width:15%;background:#1A5FAA;"></div></div><div class="ap">%15</div><div class="aa" style="color:#1A5FAA;" id="p-bist">18.000 ₺</div><div class="ac" style="font-size:10px;color:var(--ink3);">Takip etme, bekle</div></div>
+      <div class="arow"><div class="adot" style="background:#7B3FBE;"></div><div class="an"><div class="an-m">Döviz Fonu (USD)</div><div class="an-s">Ziraat Mobil → Yatırım → Fon → Döviz</div></div><div class="abw"><div class="ab" style="width:10%;background:#7B3FBE;"></div></div><div class="ap">%10</div><div class="aa" style="color:#7B3FBE;" id="p-usd">12.000 ₺</div><div class="ac" id="p-usd-c">— USD</div></div>
+      <div class="arow" style="opacity:.4;"><div class="adot" style="background:#aaa;"></div><div class="an"><div class="an-m">Zorunlu BES</div><div class="an-s">Bordrodan otomatik — dokunma</div></div><div class="abw"></div><div class="ap">—</div><div class="aa" style="color:#aaa;">Otomatik</div><div class="ac"></div></div>
+      <div class="arow" style="opacity:.4;"><div class="adot" style="background:#aaa;"></div><div class="an"><div class="an-m">Allianz USD Poliçe</div><div class="an-s">300 $/ay · Devam et</div></div><div class="abw"></div><div class="ap">—</div><div class="aa" id="p-allianz" style="color:#aaa;">— ₺/ay</div><div class="ac"></div></div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <a class="ziraat-btn" href="https://www.ziraatbank.com.tr/tr/bireysel/yatirim/altin-hesabi" target="_blank">🏦 Ziraat Altın</a>
+        <a class="ziraat-btn" style="background:#1A7A4A;" href="https://www.ziraatbank.com.tr/tr/bireysel/yatirim/yatirim-fonlari" target="_blank">📊 Ziraat Fonlar</a>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="card" style="margin-bottom:0;">
+        <div class="ct">Anlık Hesaplamalar</div>
+        <div style="font-size:12px;line-height:2.4;">
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--ink3);">%45 ile altın</span><span id="c-gram" style="font-weight:700;color:#C9A84C;">—</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--ink3);">%10 ile dolar</span><span id="c-usd" style="font-weight:700;color:#7B3FBE;">—</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--ink3);">1.200$ birikimin TL'si</span><span id="c-allianz" style="font-weight:700;color:var(--green);">—</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--ink3);">300$ prim TL karşılığı</span><span id="c-prim" style="font-weight:700;color:var(--ink3);">—</span></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:0;">
+        <div class="ct">Başarı Eşiği 2026</div>
+        <div style="font-family:var(--serif);font-size:24px;color:var(--gold);margin:3px 0 8px;">~%25</div>
+        <div style="font-size:11px;line-height:2.1;">
+          <div><span style="background:var(--red-bg);color:var(--red);padding:1px 6px;border-radius:4px;font-weight:700;font-size:10px;">%0–25</span> Reel kayıp</div>
+          <div><span style="background:var(--gold-bg);color:var(--gold);padding:1px 6px;border-radius:4px;font-weight:700;font-size:10px;">%25–30</span> Başabaş</div>
+          <div><span style="background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:4px;font-weight:700;font-size:10px;">%30+</span> Reel büyüme ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">56 Yaşında Portföy — 4 Senaryo</div>
+    <div class="sc-grid">
+      <div class="sc" style="background:var(--red-bg);border-color:var(--red-bd);"><div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:3px;">Kötümser</div><div style="font-size:11px;color:var(--ink3);margin-bottom:7px;">%12 yıllık getiri</div><div style="font-size:14px;font-weight:700;color:var(--red);">~245 Milyon ₺</div></div>
+      <div class="sc" style="background:var(--green-bg);border-color:var(--green-bd);border-width:2px;"><div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:3px;">Gerçekçi ✓</div><div style="font-size:11px;color:var(--ink3);margin-bottom:7px;">%18 yıllık getiri</div><div style="font-size:14px;font-weight:700;color:var(--green);">~1.4 Milyar ₺</div><div style="font-size:10px;color:var(--green);margin-top:3px;">En olası senaryo</div></div>
+      <div class="sc" style="background:var(--blue-bg);border-color:var(--blue-bd);"><div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:3px;">İyimser</div><div style="font-size:11px;color:var(--ink3);margin-bottom:7px;">%25 yıllık getiri</div><div style="font-size:14px;font-weight:700;color:var(--blue);">~6.7 Milyar ₺</div></div>
+      <div class="sc" style="background:#F9F9F9;opacity:.5;"><div style="font-size:10px;font-weight:700;color:var(--ink3);margin-bottom:3px;">Kağıt Üstü</div><div style="font-size:11px;color:var(--ink3);margin-bottom:7px;">%35 yıllık getiri</div><div style="font-size:14px;font-weight:700;color:var(--ink3);text-decoration:line-through;">~200 Milyar ₺</div></div>
+    </div>
+    <div class="info">Tüm rakamlar nominaldir. Gerçekçi senaryo (%18) bugünün parasıyla yaklaşık 80–120 milyon TL alım gücüne denk gelir.</div>
+  </div>
+</div>
+
+<!-- BORDRO -->
+<div class="tab" id="tab-bordro">
+  <div class="g2">
+    <div class="card" style="margin-bottom:0;">
+      <div class="ct">Her Ay Bordrodan 3 Bilgiyi Gir</div>
+      <p style="font-size:12px;color:var(--ink3);margin-bottom:16px;line-height:1.7;">Bordronu açıp sadece 3 rakamı gir — net maaş, brüt ücret ve gelir vergisi. Dashboard otomatik güncellenir.</p>
+      <div class="form-group">
+        <label class="form-label">Hangi Ay?</label>
+        <select class="month-select" id="f-ay">
+          <option value="Ocak 2025">Ocak 2025</option>
+          <option value="Şubat 2025">Şubat 2025</option>
+          <option value="Mart 2025">Mart 2025</option>
+          <option value="Nisan 2025">Nisan 2025</option>
+          <option value="Mayıs 2025">Mayıs 2025</option>
+          <option value="Haziran 2025">Haziran 2025</option>
+          <option value="Temmuz 2025">Temmuz 2025</option>
+          <option value="Ağustos 2025">Ağustos 2025</option>
+          <option value="Eylül 2025">Eylül 2025</option>
+          <option value="Ekim 2025">Ekim 2025</option>
+          <option value="Kasım 2025">Kasım 2025</option>
+          <option value="Aralık 2025">Aralık 2025</option>
+          <option value="Ocak 2026">Ocak 2026</option>
+          <option value="Şubat 2026">Şubat 2026</option>
+          <option value="Mart 2026" selected>Mart 2026</option>
+          <option value="Nisan 2026">Nisan 2026</option>
+          <option value="Mayıs 2026">Mayıs 2026</option>
+          <option value="Haziran 2026">Haziran 2026</option>
+          <option value="Temmuz 2026">Temmuz 2026</option>
+          <option value="Ağustos 2026">Ağustos 2026</option>
+          <option value="Eylül 2026">Eylül 2026</option>
+          <option value="Ekim 2026">Ekim 2026</option>
+          <option value="Kasım 2026">Kasım 2026</option>
+          <option value="Aralık 2026">Aralık 2026</option>
+          <option value="Ocak 2027">Ocak 2027</option>
+          <option value="Şubat 2027">Şubat 2027</option>
+          <option value="Mart 2027">Mart 2027</option>
+          <option value="Nisan 2027">Nisan 2027</option>
+          <option value="Mayıs 2027">Mayıs 2027</option>
+          <option value="Haziran 2027">Haziran 2027</option>
+          <option value="Temmuz 2027">Temmuz 2027</option>
+          <option value="Ağustos 2027">Ağustos 2027</option>
+          <option value="Eylül 2027">Eylül 2027</option>
+          <option value="Ekim 2027">Ekim 2027</option>
+          <option value="Kasım 2027">Kasım 2027</option>
+          <option value="Aralık 2027">Aralık 2027</option>
+          <option value="Ocak 2028">Ocak 2028</option>
+          <option value="Şubat 2028">Şubat 2028</option>
+          <option value="Mart 2028">Mart 2028</option>
+          <option value="Nisan 2028">Nisan 2028</option>
+          <option value="Mayıs 2028">Mayıs 2028</option>
+          <option value="Haziran 2028">Haziran 2028</option>
+          <option value="Temmuz 2028">Temmuz 2028</option>
+          <option value="Ağustos 2028">Ağustos 2028</option>
+          <option value="Eylül 2028">Eylül 2028</option>
+          <option value="Ekim 2028">Ekim 2028</option>
+          <option value="Kasım 2028">Kasım 2028</option>
+          <option value="Aralık 2028">Aralık 2028</option>
+          <option value="Ocak 2029">Ocak 2029</option>
+          <option value="Şubat 2029">Şubat 2029</option>
+          <option value="Mart 2029">Mart 2029</option>
+          <option value="Nisan 2029">Nisan 2029</option>
+          <option value="Mayıs 2029">Mayıs 2029</option>
+          <option value="Haziran 2029">Haziran 2029</option>
+          <option value="Temmuz 2029">Temmuz 2029</option>
+          <option value="Ağustos 2029">Ağustos 2029</option>
+          <option value="Eylül 2029">Eylül 2029</option>
+          <option value="Ekim 2029">Ekim 2029</option>
+          <option value="Kasım 2029">Kasım 2029</option>
+          <option value="Aralık 2029">Aralık 2029</option>
+          <option value="Ocak 2030">Ocak 2030</option>
+          <option value="Şubat 2030">Şubat 2030</option>
+          <option value="Mart 2030">Mart 2030</option>
+          <option value="Nisan 2030">Nisan 2030</option>
+          <option value="Mayıs 2030">Mayıs 2030</option>
+          <option value="Haziran 2030">Haziran 2030</option>
+          <option value="Temmuz 2030">Temmuz 2030</option>
+          <option value="Ağustos 2030">Ağustos 2030</option>
+          <option value="Eylül 2030">Eylül 2030</option>
+          <option value="Ekim 2030">Ekim 2030</option>
+          <option value="Kasım 2030">Kasım 2030</option>
+          <option value="Aralık 2030">Aralık 2030</option>
+          <option value="Ocak 2031">Ocak 2031</option>
+          <option value="Şubat 2031">Şubat 2031</option>
+          <option value="Mart 2031">Mart 2031</option>
+          <option value="Nisan 2031">Nisan 2031</option>
+          <option value="Mayıs 2031">Mayıs 2031</option>
+          <option value="Haziran 2031">Haziran 2031</option>
+          <option value="Temmuz 2031">Temmuz 2031</option>
+          <option value="Ağustos 2031">Ağustos 2031</option>
+          <option value="Eylül 2031">Eylül 2031</option>
+          <option value="Ekim 2031">Ekim 2031</option>
+          <option value="Kasım 2031">Kasım 2031</option>
+          <option value="Aralık 2031">Aralık 2031</option>
+          <option value="Ocak 2032">Ocak 2032</option>
+          <option value="Şubat 2032">Şubat 2032</option>
+          <option value="Mart 2032">Mart 2032</option>
+          <option value="Nisan 2032">Nisan 2032</option>
+          <option value="Mayıs 2032">Mayıs 2032</option>
+          <option value="Haziran 2032">Haziran 2032</option>
+          <option value="Temmuz 2032">Temmuz 2032</option>
+          <option value="Ağustos 2032">Ağustos 2032</option>
+          <option value="Eylül 2032">Eylül 2032</option>
+          <option value="Ekim 2032">Ekim 2032</option>
+          <option value="Kasım 2032">Kasım 2032</option>
+          <option value="Aralık 2032">Aralık 2032</option>
+          <option value="Ocak 2033">Ocak 2033</option>
+          <option value="Şubat 2033">Şubat 2033</option>
+          <option value="Mart 2033">Mart 2033</option>
+          <option value="Nisan 2033">Nisan 2033</option>
+          <option value="Mayıs 2033">Mayıs 2033</option>
+          <option value="Haziran 2033">Haziran 2033</option>
+          <option value="Temmuz 2033">Temmuz 2033</option>
+          <option value="Ağustos 2033">Ağustos 2033</option>
+          <option value="Eylül 2033">Eylül 2033</option>
+          <option value="Ekim 2033">Ekim 2033</option>
+          <option value="Kasım 2033">Kasım 2033</option>
+          <option value="Aralık 2033">Aralık 2033</option>
+          <option value="Ocak 2034">Ocak 2034</option>
+          <option value="Şubat 2034">Şubat 2034</option>
+          <option value="Mart 2034">Mart 2034</option>
+          <option value="Nisan 2034">Nisan 2034</option>
+          <option value="Mayıs 2034">Mayıs 2034</option>
+          <option value="Haziran 2034">Haziran 2034</option>
+          <option value="Temmuz 2034">Temmuz 2034</option>
+          <option value="Ağustos 2034">Ağustos 2034</option>
+          <option value="Eylül 2034">Eylül 2034</option>
+          <option value="Ekim 2034">Ekim 2034</option>
+          <option value="Kasım 2034">Kasım 2034</option>
+          <option value="Aralık 2034">Aralık 2034</option>
+          <option value="Ocak 2035">Ocak 2035</option>
+          <option value="Şubat 2035">Şubat 2035</option>
+          <option value="Mart 2035">Mart 2035</option>
+          <option value="Nisan 2035">Nisan 2035</option>
+          <option value="Mayıs 2035">Mayıs 2035</option>
+          <option value="Haziran 2035">Haziran 2035</option>
+          <option value="Temmuz 2035">Temmuz 2035</option>
+          <option value="Ağustos 2035">Ağustos 2035</option>
+          <option value="Eylül 2035">Eylül 2035</option>
+          <option value="Ekim 2035">Ekim 2035</option>
+          <option value="Kasım 2035">Kasım 2035</option>
+          <option value="Aralık 2035">Aralık 2035</option>
+          <option value="Ocak 2036">Ocak 2036</option>
+          <option value="Şubat 2036">Şubat 2036</option>
+          <option value="Mart 2036">Mart 2036</option>
+          <option value="Nisan 2036">Nisan 2036</option>
+          <option value="Mayıs 2036">Mayıs 2036</option>
+          <option value="Haziran 2036">Haziran 2036</option>
+          <option value="Temmuz 2036">Temmuz 2036</option>
+          <option value="Ağustos 2036">Ağustos 2036</option>
+          <option value="Eylül 2036">Eylül 2036</option>
+          <option value="Ekim 2036">Ekim 2036</option>
+          <option value="Kasım 2036">Kasım 2036</option>
+          <option value="Aralık 2036">Aralık 2036</option>
+          <option value="Ocak 2037">Ocak 2037</option>
+          <option value="Şubat 2037">Şubat 2037</option>
+          <option value="Mart 2037">Mart 2037</option>
+          <option value="Nisan 2037">Nisan 2037</option>
+          <option value="Mayıs 2037">Mayıs 2037</option>
+          <option value="Haziran 2037">Haziran 2037</option>
+          <option value="Temmuz 2037">Temmuz 2037</option>
+          <option value="Ağustos 2037">Ağustos 2037</option>
+          <option value="Eylül 2037">Eylül 2037</option>
+          <option value="Ekim 2037">Ekim 2037</option>
+          <option value="Kasım 2037">Kasım 2037</option>
+          <option value="Aralık 2037">Aralık 2037</option>
+          <option value="Ocak 2038">Ocak 2038</option>
+          <option value="Şubat 2038">Şubat 2038</option>
+          <option value="Mart 2038">Mart 2038</option>
+          <option value="Nisan 2038">Nisan 2038</option>
+          <option value="Mayıs 2038">Mayıs 2038</option>
+          <option value="Haziran 2038">Haziran 2038</option>
+          <option value="Temmuz 2038">Temmuz 2038</option>
+          <option value="Ağustos 2038">Ağustos 2038</option>
+          <option value="Eylül 2038">Eylül 2038</option>
+          <option value="Ekim 2038">Ekim 2038</option>
+          <option value="Kasım 2038">Kasım 2038</option>
+          <option value="Aralık 2038">Aralık 2038</option>
+          <option value="Ocak 2039">Ocak 2039</option>
+          <option value="Şubat 2039">Şubat 2039</option>
+          <option value="Mart 2039">Mart 2039</option>
+          <option value="Nisan 2039">Nisan 2039</option>
+          <option value="Mayıs 2039">Mayıs 2039</option>
+          <option value="Haziran 2039">Haziran 2039</option>
+          <option value="Temmuz 2039">Temmuz 2039</option>
+          <option value="Ağustos 2039">Ağustos 2039</option>
+          <option value="Eylül 2039">Eylül 2039</option>
+          <option value="Ekim 2039">Ekim 2039</option>
+          <option value="Kasım 2039">Kasım 2039</option>
+          <option value="Aralık 2039">Aralık 2039</option>
+          <option value="Ocak 2040">Ocak 2040</option>
+          <option value="Şubat 2040">Şubat 2040</option>
+          <option value="Mart 2040">Mart 2040</option>
+          <option value="Nisan 2040">Nisan 2040</option>
+          <option value="Mayıs 2040">Mayıs 2040</option>
+          <option value="Haziran 2040">Haziran 2040</option>
+          <option value="Temmuz 2040">Temmuz 2040</option>
+          <option value="Ağustos 2040">Ağustos 2040</option>
+          <option value="Eylül 2040">Eylül 2040</option>
+          <option value="Ekim 2040">Ekim 2040</option>
+          <option value="Kasım 2040">Kasım 2040</option>
+          <option value="Aralık 2040">Aralık 2040</option>
+          <option value="Ocak 2041">Ocak 2041</option>
+          <option value="Şubat 2041">Şubat 2041</option>
+          <option value="Mart 2041">Mart 2041</option>
+          <option value="Nisan 2041">Nisan 2041</option>
+          <option value="Mayıs 2041">Mayıs 2041</option>
+          <option value="Haziran 2041">Haziran 2041</option>
+          <option value="Temmuz 2041">Temmuz 2041</option>
+          <option value="Ağustos 2041">Ağustos 2041</option>
+          <option value="Eylül 2041">Eylül 2041</option>
+          <option value="Ekim 2041">Ekim 2041</option>
+          <option value="Kasım 2041">Kasım 2041</option>
+          <option value="Aralık 2041">Aralık 2041</option>
+          <option value="Ocak 2042">Ocak 2042</option>
+          <option value="Şubat 2042">Şubat 2042</option>
+          <option value="Mart 2042">Mart 2042</option>
+          <option value="Nisan 2042">Nisan 2042</option>
+          <option value="Mayıs 2042">Mayıs 2042</option>
+          <option value="Haziran 2042">Haziran 2042</option>
+          <option value="Temmuz 2042">Temmuz 2042</option>
+          <option value="Ağustos 2042">Ağustos 2042</option>
+          <option value="Eylül 2042">Eylül 2042</option>
+          <option value="Ekim 2042">Ekim 2042</option>
+          <option value="Kasım 2042">Kasım 2042</option>
+          <option value="Aralık 2042">Aralık 2042</option>
+          <option value="Ocak 2043">Ocak 2043</option>
+          <option value="Şubat 2043">Şubat 2043</option>
+          <option value="Mart 2043">Mart 2043</option>
+          <option value="Nisan 2043">Nisan 2043</option>
+          <option value="Mayıs 2043">Mayıs 2043</option>
+          <option value="Haziran 2043">Haziran 2043</option>
+          <option value="Temmuz 2043">Temmuz 2043</option>
+          <option value="Ağustos 2043">Ağustos 2043</option>
+          <option value="Eylül 2043">Eylül 2043</option>
+          <option value="Ekim 2043">Ekim 2043</option>
+          <option value="Kasım 2043">Kasım 2043</option>
+          <option value="Aralık 2043">Aralık 2043</option>
+          <option value="Ocak 2044">Ocak 2044</option>
+          <option value="Şubat 2044">Şubat 2044</option>
+          <option value="Mart 2044">Mart 2044</option>
+          <option value="Nisan 2044">Nisan 2044</option>
+          <option value="Mayıs 2044">Mayıs 2044</option>
+          <option value="Haziran 2044">Haziran 2044</option>
+          <option value="Temmuz 2044">Temmuz 2044</option>
+          <option value="Ağustos 2044">Ağustos 2044</option>
+          <option value="Eylül 2044">Eylül 2044</option>
+          <option value="Ekim 2044">Ekim 2044</option>
+          <option value="Kasım 2044">Kasım 2044</option>
+          <option value="Aralık 2044">Aralık 2044</option>
+          <option value="Ocak 2045">Ocak 2045</option>
+          <option value="Şubat 2045">Şubat 2045</option>
+          <option value="Mart 2045">Mart 2045</option>
+          <option value="Nisan 2045">Nisan 2045</option>
+          <option value="Mayıs 2045">Mayıs 2045</option>
+          <option value="Haziran 2045">Haziran 2045</option>
+          <option value="Temmuz 2045">Temmuz 2045</option>
+          <option value="Ağustos 2045">Ağustos 2045</option>
+          <option value="Eylül 2045">Eylül 2045</option>
+          <option value="Ekim 2045">Ekim 2045</option>
+          <option value="Kasım 2045">Kasım 2045</option>
+          <option value="Aralık 2045">Aralık 2045</option>
+          <option value="Ocak 2046">Ocak 2046</option>
+          <option value="Şubat 2046">Şubat 2046</option>
+          <option value="Mart 2046">Mart 2046</option>
+          <option value="Nisan 2046">Nisan 2046</option>
+          <option value="Mayıs 2046">Mayıs 2046</option>
+          <option value="Haziran 2046">Haziran 2046</option>
+          <option value="Temmuz 2046">Temmuz 2046</option>
+          <option value="Ağustos 2046">Ağustos 2046</option>
+          <option value="Eylül 2046">Eylül 2046</option>
+          <option value="Ekim 2046">Ekim 2046</option>
+          <option value="Kasım 2046">Kasım 2046</option>
+          <option value="Aralık 2046">Aralık 2046</option>
+          <option value="Ocak 2047">Ocak 2047</option>
+          <option value="Şubat 2047">Şubat 2047</option>
+          <option value="Mart 2047">Mart 2047</option>
+          <option value="Nisan 2047">Nisan 2047</option>
+          <option value="Mayıs 2047">Mayıs 2047</option>
+          <option value="Haziran 2047">Haziran 2047</option>
+          <option value="Temmuz 2047">Temmuz 2047</option>
+          <option value="Ağustos 2047">Ağustos 2047</option>
+          <option value="Eylül 2047">Eylül 2047</option>
+          <option value="Ekim 2047">Ekim 2047</option>
+          <option value="Kasım 2047">Kasım 2047</option>
+          <option value="Aralık 2047">Aralık 2047</option>
+          <option value="Ocak 2048">Ocak 2048</option>
+          <option value="Şubat 2048">Şubat 2048</option>
+          <option value="Mart 2048">Mart 2048</option>
+          <option value="Nisan 2048">Nisan 2048</option>
+          <option value="Mayıs 2048">Mayıs 2048</option>
+          <option value="Haziran 2048">Haziran 2048</option>
+          <option value="Temmuz 2048">Temmuz 2048</option>
+          <option value="Ağustos 2048">Ağustos 2048</option>
+          <option value="Eylül 2048">Eylül 2048</option>
+          <option value="Ekim 2048">Ekim 2048</option>
+          <option value="Kasım 2048">Kasım 2048</option>
+          <option value="Aralık 2048">Aralık 2048</option>
+          <option value="Ocak 2049">Ocak 2049</option>
+          <option value="Şubat 2049">Şubat 2049</option>
+          <option value="Mart 2049">Mart 2049</option>
+          <option value="Nisan 2049">Nisan 2049</option>
+          <option value="Mayıs 2049">Mayıs 2049</option>
+          <option value="Haziran 2049">Haziran 2049</option>
+          <option value="Temmuz 2049">Temmuz 2049</option>
+          <option value="Ağustos 2049">Ağustos 2049</option>
+          <option value="Eylül 2049">Eylül 2049</option>
+          <option value="Ekim 2049">Ekim 2049</option>
+          <option value="Kasım 2049">Kasım 2049</option>
+          <option value="Aralık 2049">Aralık 2049</option>
+          <option value="Ocak 2050">Ocak 2050</option>
+          <option value="Şubat 2050">Şubat 2050</option>
+          <option value="Mart 2050">Mart 2050</option>
+          <option value="Nisan 2050">Nisan 2050</option>
+          <option value="Mayıs 2050">Mayıs 2050</option>
+          <option value="Haziran 2050">Haziran 2050</option>
+          <option value="Temmuz 2050">Temmuz 2050</option>
+          <option value="Ağustos 2050">Ağustos 2050</option>
+          <option value="Eylül 2050">Eylül 2050</option>
+          <option value="Ekim 2050">Ekim 2050</option>
+          <option value="Kasım 2050">Kasım 2050</option>
+          <option value="Aralık 2050">Aralık 2050</option>
+          <option value="Ocak 2051">Ocak 2051</option>
+          <option value="Şubat 2051">Şubat 2051</option>
+          <option value="Mart 2051">Mart 2051</option>
+          <option value="Nisan 2051">Nisan 2051</option>
+          <option value="Mayıs 2051">Mayıs 2051</option>
+          <option value="Haziran 2051">Haziran 2051</option>
+          <option value="Temmuz 2051">Temmuz 2051</option>
+          <option value="Ağustos 2051">Ağustos 2051</option>
+          <option value="Eylül 2051">Eylül 2051</option>
+          <option value="Ekim 2051">Ekim 2051</option>
+          <option value="Kasım 2051">Kasım 2051</option>
+          <option value="Aralık 2051">Aralık 2051</option>
+          <option value="Ocak 2052">Ocak 2052</option>
+          <option value="Şubat 2052">Şubat 2052</option>
+          <option value="Mart 2052">Mart 2052</option>
+          <option value="Nisan 2052">Nisan 2052</option>
+          <option value="Mayıs 2052">Mayıs 2052</option>
+          <option value="Haziran 2052">Haziran 2052</option>
+          <option value="Temmuz 2052">Temmuz 2052</option>
+          <option value="Ağustos 2052">Ağustos 2052</option>
+          <option value="Eylül 2052">Eylül 2052</option>
+          <option value="Ekim 2052">Ekim 2052</option>
+          <option value="Kasım 2052">Kasım 2052</option>
+          <option value="Aralık 2052">Aralık 2052</option>
+          <option value="Ocak 2053">Ocak 2053</option>
+          <option value="Şubat 2053">Şubat 2053</option>
+          <option value="Mart 2053">Mart 2053</option>
+          <option value="Nisan 2053">Nisan 2053</option>
+          <option value="Mayıs 2053">Mayıs 2053</option>
+          <option value="Haziran 2053">Haziran 2053</option>
+          <option value="Temmuz 2053">Temmuz 2053</option>
+          <option value="Ağustos 2053">Ağustos 2053</option>
+          <option value="Eylül 2053">Eylül 2053</option>
+          <option value="Ekim 2053">Ekim 2053</option>
+          <option value="Kasım 2053">Kasım 2053</option>
+          <option value="Aralık 2053">Aralık 2053</option>
+          <option value="Ocak 2054">Ocak 2054</option>
+          <option value="Şubat 2054">Şubat 2054</option>
+          <option value="Mart 2054">Mart 2054</option>
+          <option value="Nisan 2054">Nisan 2054</option>
+          <option value="Mayıs 2054">Mayıs 2054</option>
+          <option value="Haziran 2054">Haziran 2054</option>
+          <option value="Temmuz 2054">Temmuz 2054</option>
+          <option value="Ağustos 2054">Ağustos 2054</option>
+          <option value="Eylül 2054">Eylül 2054</option>
+          <option value="Ekim 2054">Ekim 2054</option>
+          <option value="Kasım 2054">Kasım 2054</option>
+          <option value="Aralık 2054">Aralık 2054</option>
+          <option value="Ocak 2055">Ocak 2055</option>
+          <option value="Şubat 2055">Şubat 2055</option>
+          <option value="Mart 2055">Mart 2055</option>
+          <option value="Nisan 2055">Nisan 2055</option>
+          <option value="Mayıs 2055">Mayıs 2055</option>
+          <option value="Haziran 2055">Haziran 2055</option>
+          <option value="Temmuz 2055">Temmuz 2055</option>
+          <option value="Ağustos 2055">Ağustos 2055</option>
+          <option value="Eylül 2055">Eylül 2055</option>
+          <option value="Ekim 2055">Ekim 2055</option>
+          <option value="Kasım 2055">Kasım 2055</option>
+          <option value="Aralık 2055">Aralık 2055</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ÖDEME TOPLAMI (Net Maaş) ₺</label>
+        <input class="form-input" type="number" id="f-net" placeholder="örn: 193505" oninput="calcPreview()">
+        <div class="form-hint">Bordrodaki "ÖDEME TOPLAMI" satırındaki rakam</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">BRÜT ÜCRET ₺</label>
+        <input class="form-input" type="number" id="f-brut" placeholder="örn: 191247" oninput="calcPreview()">
+        <div class="form-hint">Bordrodaki "Brüt Ücret" satırındaki rakam</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">GELİR VERGİSİ KESİNTİSİ ₺</label>
+        <input class="form-input" type="number" id="f-vergi" placeholder="örn: 21906" oninput="calcPreview()">
+        <div class="form-hint">Bordrodaki "Gelir Vergisi" satırındaki rakam</div>
+      </div>
+      <div id="preview-box" style="display:none;background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px;">
+        <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;">Önizleme</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">
+          <div style="background:var(--white);border-radius:8px;padding:10px;border:1px solid var(--border);"><div style="color:var(--ink3);margin-bottom:3px;">Net maaşın</div><div id="prev-net" style="font-size:16px;font-weight:700;">—</div></div>
+          <div style="background:var(--white);border-radius:8px;padding:10px;border:1px solid var(--border);"><div style="color:var(--ink3);margin-bottom:3px;">Vergi dilimi</div><div id="prev-dilim" style="font-size:16px;font-weight:700;color:var(--gold);">—</div></div>
+          <div style="background:var(--white);border-radius:8px;padding:10px;border:1px solid var(--border);"><div style="color:var(--ink3);margin-bottom:3px;">Allianz aylık iade</div><div id="prev-iade" style="font-size:16px;font-weight:700;color:var(--green);">—</div></div>
+          <div style="background:var(--white);border-radius:8px;padding:10px;border:1px solid var(--border);"><div style="color:var(--ink3);margin-bottom:3px;">Allianz yıllık iade</div><div id="prev-yiade" style="font-size:16px;font-weight:700;color:var(--green);">—</div></div>
+        </div>
+      </div>
+      <button class="save-btn" onclick="saveBordro()">Kaydet ve Dashboard'u Güncelle</button>
+      <div id="success-box" class="success-box">
+        <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:4px;">✓ Dashboard güncellendi!</div>
+        <div id="success-msg" style="font-size:12px;color:var(--ink3);"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:0;">
+      <div class="ct">Bordro Geçmişi</div>
+      <div id="bordro-history"><div style="font-size:12px;color:var(--ink3);text-align:center;padding:24px 0;line-height:1.8;">Henüz bordro girilmedi.</div></div>
+      <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+        <div class="ct">Ortalama Net Maaş</div>
+        <div style="font-family:var(--serif);font-size:26px;color:var(--gold);" id="avg-maas">—</div>
+        <div style="font-size:11px;color:var(--ink3);margin-top:3px;" id="avg-sub">Bordro girildikçe hesaplanacak</div>
+      </div>
+      <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+        <div class="ct">Bordrodan Ne Girilmeli?</div>
+        <div style="background:var(--cream);border-radius:8px;padding:12px;border:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--ink2);line-height:2.1;">
+            <div>📄 <strong>ÖDEME TOPLAMI</strong> → Net maaş alanına</div>
+            <div>📄 <strong>Brüt Ücret</strong> → Brüt ücret alanına</div>
+            <div>📄 <strong>Gelir Vergisi</strong> → Vergi kesintisi alanına</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HESAP MAKİNESİ -->
+<div class="tab" id="tab-calculator">
+  <div class="g2">
+    <div class="card" style="margin-bottom:0;">
+      <div class="ct">Parametreler</div>
+      <div class="srow"><span class="slbl">Aylık yatırım</span><input type="range" id="c-m" min="50000" max="400000" step="10000" value="120000" oninput="cu()"><span class="sval" id="c-m-o">120K ₺</span></div>
+      <div class="srow"><span class="slbl">Yıllık getiri</span><input type="range" id="c-r" min="10" max="40" step="1" value="18" oninput="cu()"><span class="sval" id="c-r-o">%18</span></div>
+      <div class="srow"><span class="slbl">Süre</span><input type="range" id="c-y" min="5" max="35" step="1" value="29" oninput="cu()"><span class="sval" id="c-y-o">29 yıl</span></div>
+      <div class="res-box"><div class="res-lbl">Dönem Sonu Portföy</div><div class="res-val" id="c-res">—</div><div class="res-sub" id="c-sub">—</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+        <div style="background:var(--cream);border-radius:8px;padding:10px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--ink3);margin-bottom:2px;">Toplam yatırdığın</div><div id="c-inv" style="font-size:14px;font-weight:700;">—</div></div>
+        <div style="background:var(--green-bg);border-radius:8px;padding:10px;border:1px solid var(--green-bd);"><div style="font-size:10px;color:var(--green);margin-bottom:2px;">Faizden kazancın</div><div id="c-gain" style="font-size:14px;font-weight:700;color:var(--green);">—</div></div>
+      </div>
+      <div style="background:var(--gold-bg);border-radius:8px;padding:10px;margin-top:8px;border:1px solid var(--gold-bd);"><div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:2px;">Aylık güvenli çekim (anapara korunarak)</div><div id="c-income" style="font-size:18px;font-weight:700;color:var(--gold);">—</div></div>
+    </div>
+    <div class="card" style="margin-bottom:0;">
+      <div class="ct">Büyüme Grafiği</div>
+      <div class="chart-wrap"><canvas id="cc"></canvas></div>
+      <div style="margin-top:14px;"><div class="ct">Kilometre Taşları</div><div id="ms"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- YOL HARİTASI -->
+<div class="tab" id="tab-freedom">
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;">
+    <div class="card" style="text-align:center;margin-bottom:0;"><div class="ct">Şu anki yaşın</div><div style="font-family:var(--serif);font-size:44px;color:var(--gold);margin:6px 0 3px;">27</div><div style="font-size:11px;color:var(--ink3);">Önünde 29 yıl var</div></div>
+    <div class="card" style="text-align:center;margin-bottom:0;"><div class="ct">Hedef yaş</div><div style="font-family:var(--serif);font-size:44px;color:var(--ink);margin:6px 0 3px;">56</div><div style="font-size:11px;color:var(--ink3);">Finansal özgürlük</div></div>
+    <div class="card" style="text-align:center;background:var(--green-bg);border-color:var(--green-bd);margin-bottom:0;"><div class="ct" style="color:var(--green);">Aylık Yatırım</div><div style="font-family:var(--serif);font-size:36px;color:var(--green);margin:6px 0 3px;" id="f-yatirim">120K ₺</div><div style="font-size:11px;color:var(--green);">Her ay düzenli</div></div>
+  </div>
+  <div class="card"><div class="ct">29 Yıllık Yol Haritası — %18 Gerçekçi Senaryo</div><div id="tl-list"></div></div>
+</div>
+
+<!-- AKSİYON -->
+<div class="tab" id="tab-aksiyon">
+  <div class="g2">
+    <div class="card" style="margin-bottom:0;"><div class="ct">Bu Hafta Yapılacaklar</div><div id="act-list"></div></div>
+    <div class="card" style="margin-bottom:0;">
+      <div class="ct">Her Ay Tekrar Et — Ziraat Mobil</div>
+      <div class="arow"><div class="adot" style="background:#C9A84C;"></div><div class="an"><div class="an-m">Altın al</div><div class="an-s">Yatırım → Altın Hesabı</div></div><div class="aa" id="act-altin" style="color:#C9A84C;">54.000 ₺</div></div>
+      <div class="arow"><div class="adot" style="background:#1A7A4A;"></div><div class="an"><div class="an-m">Para Piyasası Fonu (ZPP)</div><div class="an-s">Yatırım → Fon → ZPP</div></div><div class="aa" id="act-ppf" style="color:#1A7A4A;">36.000 ₺</div></div>
+      <div class="arow"><div class="adot" style="background:#1A5FAA;"></div><div class="an"><div class="an-m">BİST 30 Endeks Fonu</div><div class="an-s">Yatırım → Fon → Endeks</div></div><div class="aa" id="act-bist" style="color:#1A5FAA;">18.000 ₺</div></div>
+      <div class="arow"><div class="adot" style="background:#7B3FBE;"></div><div class="an"><div class="an-m">Döviz Fonu (USD)</div><div class="an-s">Yatırım → Fon → Döviz</div></div><div class="aa" id="act-usd" style="color:#7B3FBE;">12.000 ₺</div></div>
+      <div class="arow"><div class="adot" style="background:#C9A84C;"></div><div class="an"><div class="an-m">Allianz makbuzunu İK'ya ilet</div><div class="an-s">Her ay · vergi iadesi</div></div><div class="aa" id="act-iade" style="color:var(--green);font-size:11px;">+2.247 ₺</div></div>
+      <div class="warn">Her ay fiyata bakmadan aynı miktarı al. Ortalama maliyet stratejisi.</div>
+      <div style="margin-top:10px;"><a class="ziraat-btn" href="https://bireysel.ziraatbank.com.tr" target="_blank">🏦 Ziraat Mobil</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- VERGİ -->
+<div class="tab" id="tab-vergi">
+  <div class="g2">
+    <div class="card" style="margin-bottom:0;">
+      <div class="ct">Yıllık Vergi ve Devlet Katkısı</div>
+      <div class="tx-r"><span style="color:var(--ink2);">Allianz USD poliçe vergi iadesi</span><span class="tx-v" id="v-yillik">~26.964 ₺</span></div>
+      <div class="tx-r"><span style="color:var(--ink2);">Para piyasası fonu stopaj avantajı</span><span class="tx-v">+~4.500 ₺</span></div>
+      <div class="tx-r"><span style="color:var(--ink2);">Zorunlu BES devlet katkısı</span><span class="tx-v">Otomatik ✓</span></div>
+      <div class="tx-r" style="border-top:2px solid var(--border);margin-top:4px;padding-top:12px;"><span style="font-weight:700;">Toplam yıllık avantaj</span><span style="font-size:18px;font-weight:700;color:var(--green);" id="v-toplam">~31.464 ₺</span></div>
+      <div class="warn">Allianz makbuzunu muhasebeye iletmediysen ~9.000 ₺ vergi iadesi kaybediyorsun. Bu hafta başla.</div>
+    </div>
+    <div class="card" style="margin-bottom:0;">
+      <div class="ct">Allianz Vergi Hesabı Detayı</div>
+      <div class="tx-r"><span style="color:var(--ink2);">Aylık prim</span><span id="v-prim" style="font-weight:600;">300 $ (yükleniyor...)</span></div>
+      <div class="tx-r"><span style="color:var(--ink2);">İndirim tutarı (primin %50'si)</span><span id="v-indirim" style="font-weight:600;">6.420 ₺/ay</span></div>
+      <div class="tx-r"><span style="color:var(--ink2);">Vergi dilimin</span><span style="font-weight:700;color:var(--red);" id="v-dilim">%35</span></div>
+      <div class="tx-r"><span style="color:var(--ink2);">Aylık tasarruf</span><span class="tx-v" id="v-aylik">~2.247 ₺</span></div>
+      <div class="tx-r"><span style="color:var(--ink2);">Yıllık tasarruf</span><span class="tx-v" id="v-yillik2">~26.964 ₺</span></div>
+      <div class="info">Poliçe Türkiye'de kayıtlı Allianz şirketi — vergi avantajı geçerli ve yasal.</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+
+const S = {
+  maas: 196000, yatirim: 120000, brut: 191247,
+  rates: {altin:null,usd:null,eur:null,ons:null},
+  prev:  {altin:null,usd:null,eur:null,ons:null},
+  bordrolar: JSON.parse((function(){ try{ return localStorage.getItem('fa-b')||'[]' }catch(e){ return '[]' } })())
+};
+
+const fmtN = n => Math.round(n).toLocaleString('tr-TR');
+const fmt = n => n>=1e9?(n/1e9).toFixed(2)+' Milyar ₺':n>=1e6?(n/1e6).toFixed(1)+' Milyon ₺':n>=1e3?(n/1e3).toFixed(0)+'K ₺':fmtN(n)+' ₺';
+const fs = n => n>=1e9?(n/1e9).toFixed(1)+'Mr':n>=1e6?(n/1e6).toFixed(0)+'M':n>=1e3?(n/1e3).toFixed(0)+'K':Math.round(n);
+
+function goTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'calculator') setTimeout(cu, 50);
+}
+
+async function fetchRates() {
+  try {
+    const r = await fetch('https://finans.truncgil.com/v4/today.json');
+    const d = await r.json();
+    S.prev = {...S.rates};
+    S.rates.usd   = parseFloat(d['USD']?.Selling || d['USD']?.Buying || 43);
+    S.rates.eur   = parseFloat(d['EUR']?.Selling || d['EUR']?.Buying || 50);
+    S.rates.altin = parseFloat(d['gram-altin']?.Selling || d['gram-altin']?.Buying || 7100);
+    S.rates.ons   = S.rates.altin / S.rates.usd * 31.1035;
+    const n = new Date();
+    document.getElementById('upd-time').textContent = n.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'}) + ' güncellendi';
+  } catch(e) {
+    S.rates = {altin:7100, usd:42.8, eur:50.2, ons:5160};
+    document.getElementById('upd-time').textContent = 'Tahmini değerler';
+  }
+  updateAll();
+}
+
+function chg(c, p) {
+  if (!p || !c) return '<span class="tk-chg chg-n">—</span>';
+  const pct = ((c-p)/p*100).toFixed(2);
+  const cls = c>p ? 'chg-u' : c<p ? 'chg-d' : 'chg-n';
+  return '<span class="tk-chg ' + cls + '">' + (c>p?'+':'') + pct + '%</span>';
+}
+
+function vergiBelirle(b) {
+  if (b > 72500) return 0.40;
+  if (b > 25000) return 0.35;
+  if (b > 9167)  return 0.27;
+  if (b > 3917)  return 0.20;
+  return 0.15;
+}
+
+function updateAll() {
+  const {altin, usd, eur, ons} = S.rates;
+  if (!altin) return;
+  const y = S.yatirim;
+
+  document.getElementById('t-altin').textContent = fmtN(altin) + ' ₺';
+  document.getElementById('t-usd').textContent   = usd.toFixed(2) + ' ₺';
+  document.getElementById('t-eur').textContent   = eur.toFixed(2) + ' ₺';
+  document.getElementById('t-ons').textContent   = Math.round(ons).toLocaleString('tr-TR') + ' $';
+  document.getElementById('t-gram').textContent  = (54000/altin).toFixed(2) + ' gram';
+
+  var acEl = document.getElementById('t-ac');
+  if (acEl) acEl.outerHTML = chg(altin, S.prev.altin);
+  var ucEl = document.getElementById('t-uc');
+  if (ucEl) ucEl.outerHTML = chg(usd, S.prev.usd);
+  var ecEl = document.getElementById('t-ec');
+  if (ecEl) ecEl.outerHTML = chg(eur, S.prev.eur);
+  var ocEl = document.getElementById('t-oc');
+  if (ocEl) ocEl.outerHTML = chg(ons, S.prev.ons);
+
+  document.getElementById('p-altin').textContent = fmtN(y*0.45) + ' ₺';
+  document.getElementById('p-ppf').textContent   = fmtN(y*0.30) + ' ₺';
+  document.getElementById('p-bist').textContent  = fmtN(y*0.15) + ' ₺';
+  document.getElementById('p-usd').textContent   = fmtN(y*0.10) + ' ₺';
+  document.getElementById('p-gram').textContent  = (y*0.45/altin).toFixed(2) + ' gram alınır';
+  document.getElementById('p-usd-c').textContent = '~' + Math.round(y*0.10/usd) + ' USD';
+  document.getElementById('p-allianz').textContent = '~' + fmtN(300*usd) + ' ₺/ay';
+  document.getElementById('yatirim-baslik').textContent = fmtN(y) + ' ₺';
+
+  document.getElementById('c-gram').textContent   = (y*0.45/altin).toFixed(2) + ' gram';
+  document.getElementById('c-usd').textContent    = Math.round(y*0.10/usd).toLocaleString('tr-TR') + ' $';
+  document.getElementById('c-allianz').textContent = fmtN(1200*usd) + ' ₺';
+  document.getElementById('c-prim').textContent   = fmtN(300*usd) + ' ₺';
+  document.getElementById('s-allianz-tl').textContent = 'TL karşılığı: ' + fmtN(1200*usd) + ' ₺';
+
+  const primTL  = 300 * usd;
+  const indirim = primTL * 0.5;
+  const oran    = vergiBelirle(S.brut);
+  const aylik   = indirim * oran;
+  const yillik  = aylik * 12;
+
+  document.getElementById('v-prim').textContent    = '300 $ (~' + fmtN(primTL) + ' ₺)';
+  document.getElementById('v-indirim').textContent = fmtN(indirim) + ' ₺/ay';
+  document.getElementById('v-dilim').textContent   = '%' + (oran*100);
+  document.getElementById('v-aylik').textContent   = '~' + fmtN(aylik) + ' ₺';
+  document.getElementById('v-yillik').textContent  = '~' + fmtN(yillik) + ' ₺';
+  document.getElementById('v-yillik2').textContent = '~' + fmtN(yillik) + ' ₺';
+  document.getElementById('v-toplam').textContent  = '~' + fmtN(yillik + 4500) + ' ₺';
+  document.getElementById('s-vergi').textContent   = '~' + fmtN(yillik + 4500) + ' ₺';
+  document.getElementById('act-iade').textContent  = '+' + fmtN(aylik) + ' ₺';
+
+  document.getElementById('act-altin').textContent = fmtN(y*0.45) + ' ₺';
+  document.getElementById('act-ppf').textContent   = fmtN(y*0.30) + ' ₺';
+  document.getElementById('act-bist').textContent  = fmtN(y*0.15) + ' ₺';
+  document.getElementById('act-usd').textContent   = fmtN(y*0.10) + ' ₺';
+  document.getElementById('f-yatirim').textContent = fmtN(y) + ' ₺';
+}
+
+function calcPreview() {
+  const net  = parseInt(document.getElementById('f-net').value)  || 0;
+  const brut = parseInt(document.getElementById('f-brut').value) || 0;
+  if (!net && !brut) { document.getElementById('preview-box').style.display = 'none'; return; }
+  document.getElementById('preview-box').style.display = 'block';
+  const oran = vergiBelirle(brut);
+  const primTL = 300 * (S.rates.usd || 42.8);
+  const aylikIade = (primTL * 0.5) * oran;
+  document.getElementById('prev-net').textContent   = fmtN(net) + ' ₺';
+  document.getElementById('prev-dilim').textContent = '%' + (oran*100);
+  document.getElementById('prev-iade').textContent  = '~' + fmtN(aylikIade) + ' ₺';
+  document.getElementById('prev-yiade').textContent = '~' + fmtN(aylikIade*12) + ' ₺';
+}
+
+function saveBordro() {
+  const ay   = document.getElementById('f-ay').value;
+  const net  = parseInt(document.getElementById('f-net').value);
+  const brut = parseInt(document.getElementById('f-brut').value);
+  const vergi= parseInt(document.getElementById('f-vergi').value);
+  if (!net || !brut) { alert('Lütfen en az Net Maaş ve Brüt Ücret alanlarını doldurun.'); return; }
+
+  S.maas = net; S.brut = brut; S.yatirim = 120000;
+  document.getElementById('s-maas').textContent     = fmtN(net) + ' ₺';
+  document.getElementById('s-maas-sub').textContent = ay + ' bordrousu';
+  document.getElementById('s-yatirim').textContent  = fmtN(S.yatirim) + ' ₺';
+  const oran = Math.round(S.yatirim / net * 100);
+  document.getElementById('s-oran').textContent        = 'Gelirin %' + oran + "'i yatırıma";
+  document.getElementById('tasarruf-pill').textContent = '%' + oran + ' tasarruf';
+  updateAll();
+
+  const entry = {ay, net, brut, vergi, tarih: new Date().toLocaleDateString('tr-TR')};
+  S.bordrolar = S.bordrolar.filter(b => b.ay !== ay);
+  S.bordrolar.unshift(entry);
+  if (S.bordrolar.length > 12) S.bordrolar.pop();
+  try { localStorage.setItem('fa-b', JSON.stringify(S.bordrolar)); } catch(e) {}
+  renderHistory();
+
+  document.getElementById('success-box').style.display = 'block';
+  document.getElementById('success-msg').textContent = ay + ' bordrousu kaydedildi. Net: ' + fmtN(net) + ' ₺';
+  document.getElementById('f-net').value   = '';
+  document.getElementById('f-brut').value  = '';
+  document.getElementById('f-vergi').value = '';
+  document.getElementById('preview-box').style.display = 'none';
+}
+
+function renderHistory() {
+  const c = document.getElementById('bordro-history');
+  if (!S.bordrolar.length) {
+    c.innerHTML = '<div style="font-size:12px;color:var(--ink3);text-align:center;padding:24px 0;line-height:1.8;">Henüz bordro girilmedi.</div>';
+    document.getElementById('avg-maas').textContent = '—';
+    document.getElementById('avg-sub').textContent  = 'Bordro girildikçe hesaplanacak';
+    return;
+  }
+  c.innerHTML = S.bordrolar.map(function(b,i) {
+    return '<div class="history-item"><span class="h-badge">' + b.ay + '</span><span class="h-net">' + fmtN(b.net) + ' ₺</span><span style="font-size:10px;color:var(--ink3);">' + b.tarih + '</span><span class="h-del" onclick="delBordro(' + i + ')">Sil</span></div>';
+  }).join('');
+  const avg = S.bordrolar.reduce(function(a,b){ return a+b.net; }, 0) / S.bordrolar.length;
+  document.getElementById('avg-maas').textContent = fmtN(avg) + ' ₺';
+  document.getElementById('avg-sub').textContent  = 'Son ' + S.bordrolar.length + ' bordronun ortalaması';
+}
+
+function delBordro(i) {
+  S.bordrolar.splice(i, 1);
+  try { localStorage.setItem('fa-b', JSON.stringify(S.bordrolar)); } catch(e) {}
+  renderHistory();
+}
+
+var cc;
+function cu() {
+  const m = parseInt(document.getElementById('c-m').value);
+  const r = parseInt(document.getElementById('c-r').value);
+  const y = parseInt(document.getElementById('c-y').value);
+  document.getElementById('c-m-o').textContent = (m/1000) + 'K ₺';
+  document.getElementById('c-r-o').textContent = '%' + r;
+  document.getElementById('c-y-o').textContent = y + ' yıl';
+  const mr = r/100/12;
+  var p = 120000, inv = 120000;
+  var pA = [p], iA = [120000];
+  for (var mo = 1; mo <= y*12; mo++) { p = p*(1+mr)+m; inv+=m; pA.push(Math.round(p)); iA.push(Math.round(inv)); }
+  document.getElementById('c-res').textContent    = fmt(p);
+  document.getElementById('c-sub').textContent    = y + ' yıl · %' + r + ' yıllık getiri';
+  document.getElementById('c-inv').textContent    = fmt(inv);
+  document.getElementById('c-gain').textContent   = '+' + fmt(p-inv);
+  document.getElementById('c-income').textContent = fmt(Math.round(p*r/100/12)) + ' / ay';
+  var ms = '';
+  [5,10,15,20,29].forEach(function(a) {
+    var age = 27+a, idx = a*12, f = (a===29);
+    ms += '<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);' + (f?'font-weight:700;':'') + '"><span style="color:' + (f?'var(--green)':'var(--ink3)') + ';">' + age + ' yaş (' + a + '. yıl)</span><span style="color:' + (f?'var(--green)':'var(--ink)') + ';">' + fmt(pA[Math.min(idx,pA.length-1)]) + '</span></div>';
+  });
+  document.getElementById('ms').innerHTML = ms;
+  var labels = Array.from({length:y*12+1}, function(_,i){ return i%12===0 ? (27+i/12)+' yaş' : ''; });
+  if (cc) cc.destroy();
+  cc = new Chart(document.getElementById('cc'), {
+    type: 'line',
+    data: {labels: labels, datasets: [
+      {label:'Portföy', data:pA, borderColor:'#B8860B', backgroundColor:'rgba(184,134,11,0.05)', fill:true, tension:0.4, pointRadius:0, borderWidth:2},
+      {label:'Yatırılan', data:iA, borderColor:'#C8C8D0', borderDash:[4,4], fill:false, tension:0, pointRadius:0, borderWidth:1.5}
+    ]},
+    options: {responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{boxWidth:8,font:{size:11},color:'#8E8E93',padding:10}}},
+      scales:{
+        y:{ticks:{callback:function(v){return fs(v);},font:{size:10},color:'#8E8E93'},grid:{color:'rgba(0,0,0,0.04)'}},
+        x:{ticks:{font:{size:10},color:'#8E8E93',maxRotation:0},grid:{display:false}}
+      }
+    }
+  });
+}
+
+var mr18 = 0.18/12;
+var p18  = 120000;
+var av   = {27: 120000};
+for (var mo18 = 1; mo18 <= 29*12; mo18++) {
+  p18 = p18*(1+mr18) + 120000;
+  var age18 = 27 + mo18/12;
+  [30,35,40,45,50,56].forEach(function(a){ if (Math.abs(age18-a) < 0.05) av[a] = p18; });
+}
+
+var tlData = [
+  {age:'Şimdi', now:true,  t:'Başlangıç — Bu Hafta',       d:"Ziraat'tan altın hesabı aç · ZPP ve BİST 30 Endeks Fonu al · Allianz makbuzunu muhasebeye ilet", v:'120.000 ₺/ay yatırım başlıyor'},
+  {age:'30 yaş',           t:'İlk Büyük Milestone',         d:'Portföy ciddi büyüklüğe ulaştı. Ziraat uygulamasından durumu gözden geçir.', v: fmt(av[30]||0)},
+  {age:'35 yaş',           t:'Strateji Geçişi',             d:"BİST ağırlığını artır · Küçük gönüllü BES katkısı başlat · Dağılımı güncelle.", v: fmt(av[35]||0)},
+  {age:'40 yaş',           t:'Bileşik Faiz Hız Kazanıyor',  d:'Portföy büyüklüğü bileşik getiriyi katlar. Gelir artışını yatırıma yansıt.', v: fmt(av[40]||0)},
+  {age:'45 yaş',           t:'BES Optimizasyonu',           d:"56'ya 11 yıl kaldı. Gönüllü BES katkısını artır.", v: fmt(av[45]||0)},
+  {age:'50 yaş',           t:'Koruma Modu',                 d:"Riskli varlıkları azalt · BES'i maksimize et · Emeklilik sonrası gelir planını hazırla.", v: fmt(av[50]||0)},
+  {age:'56 yaş', final:true,t:'Finansal Özgürlük',          d:'Çalışmak zorunluluk değil tercih. Portföy her ay gelir üretir.', v: fmt(av[56]||0) + ' (tahmini · %18)'}
+];
+document.getElementById('tl-list').innerHTML = tlData.map(function(t) {
+  var bg = t.now ? 'var(--green-bg)' : t.final ? 'var(--gold-bg)' : '#F2F2F7';
+  var cl = t.now ? 'var(--green)'    : t.final ? 'var(--gold)'    : 'var(--ink3)';
+  return '<div class="tl"><div class="tl-b" style="background:'+bg+';color:'+cl+';">'+t.age+'</div><div><div class="tl-t">'+t.t+'</div><div class="tl-d">'+t.d+'</div><div class="tl-a">'+t.v+'</div></div></div>';
+}).join('');
+
+var actions = [
+  {n:1, bg:'var(--gold-bg)',    tc:'#B8860B',        t:'Ziraat Mobil → Yatırım → Altın Hesabı Aç',    d:'2 dakika. Miktarı gir, satın al. Her maaş günü tekrarla.'},
+  {n:2, bg:'var(--green-bg)',   tc:'var(--green)',   t:'Ziraat Mobil → Yatırım → Fon → ZPP',          d:'Para Piyasası Fonu. Günlük faiz işlemeye başlar.'},
+  {n:3, bg:'var(--blue-bg)',    tc:'var(--blue)',    t:'Ziraat Mobil → Yatırım → Fon → BİST 30 Endeks', d:'Al, unut. Takip etmene gerek yok.'},
+  {n:4, bg:'var(--purple-bg)',  tc:'var(--purple)',  t:'Ziraat Mobil → Yatırım → Fon → Döviz (USD)',  d:'Kur koruması + faiz.'},
+  {n:5, bg:'var(--gold-bg)',    tc:'#B8860B',        t:"Allianz prim makbuzunu muhasebe / İK'ya ilet", d:'Her ay tekrar et. Yılda ~27K ₺ vergi iadesi.'}
+];
+var done = JSON.parse((function(){ try{ return localStorage.getItem('fa-d')||'{}' }catch(e){ return '{}' } })());
+function renderAct() {
+  document.getElementById('act-list').innerHTML = actions.map(function(a,i) {
+    return '<div class="act"><div class="act-n" style="background:'+a.bg+';color:'+a.tc+';">'+a.n+'</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;margin-bottom:2px;'+(done[i]?'text-decoration:line-through;opacity:.4;':'')+'">'+a.t+'</div><div style="font-size:11px;color:var(--ink3);line-height:1.5;">'+a.d+'</div><button class="done-btn '+(done[i]?'done':'')+'" onclick="tog('+i+')">'+(done[i]?'✓ Tamamlandı':'Tamamlandı işaretle')+'</button></div></div>';
+  }).join('');
+}
+function tog(i) {
+  done[i] = !done[i];
+  try { localStorage.setItem('fa-d', JSON.stringify(done)); } catch(e) {}
+  renderAct();
+}
+
+renderAct();
+renderHistory();
+cu();
+fetchRates();
+setInterval(fetchRates, 60000);
+
+if (S.bordrolar.length > 0) {
+  var last = S.bordrolar[0];
+  S.maas = last.net; S.brut = last.brut || 191247;
+  document.getElementById('s-maas').textContent     = fmtN(last.net) + ' ₺';
+  document.getElementById('s-maas-sub').textContent = last.ay + ' bordrousu';
+}
+
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+      console.log('SW registered');
+    }).catch(function(err) {
+      console.log('SW error:', err);
+    });
+  });
+}
+</script>
+</body>
+</html>
