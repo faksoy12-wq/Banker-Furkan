@@ -179,7 +179,23 @@ input[type=range]{width:80px;accent-color:var(--gold);}
 <div class="tab active" id="tab-portfolio">
   <div class="g4">
     <div class="stat"><div class="sl">Aylık Net Maaş</div><div class="sv" id="s-maas" style="font-size:17px;">196.000 ₺</div><div class="ss" id="s-maas-sub">Son bordro ortalaması</div></div>
-    <div class="stat"><div class="sl">Aylık Yatırım</div><div class="sv" id="s-yatirim" style="font-size:17px;color:var(--green);">120.000 ₺</div><div class="ss" id="s-oran">Aylık sabit yatırım</div></div>
+    <div class="stat" style="cursor:pointer;border:1px solid var(--green-bd);background:var(--green-bg);" onclick="toggleYatirimEdit()">
+      <div class="sl" style="color:var(--green);">Bu Ay Yatırım <span style="font-size:9px;background:var(--green);color:white;padding:1px 5px;border-radius:3px;margin-left:4px;">DÜZENLE</span></div>
+      <div id="yatirim-display">
+        <div class="sv" id="s-yatirim" style="font-size:17px;color:var(--green);">120.000 ₺</div>
+        <div class="ss" id="s-oran">Aylık yatırım</div>
+      </div>
+      <div id="yatirim-edit" style="display:none;" onclick="event.stopPropagation()">
+        <input type="number" id="yatirim-input" 
+          style="width:100%;padding:6px 10px;border:1.5px solid var(--green-bd);border-radius:8px;font-size:16px;font-weight:700;color:var(--green);background:var(--white);outline:none;margin-top:4px;font-family:var(--sans);"
+          placeholder="örn: 120000"
+          oninput="previewYatirim(this.value)">
+        <div style="display:flex;gap:6px;margin-top:6px;">
+          <button onclick="saveYatirim()" style="flex:1;padding:6px;background:var(--green);color:white;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--sans);">Kaydet</button>
+          <button onclick="cancelYatirim()" style="flex:1;padding:6px;background:var(--white);color:var(--ink3);border:1px solid var(--border);border-radius:6px;font-size:12px;cursor:pointer;font-family:var(--sans);">İptal</button>
+        </div>
+      </div>
+    </div>
     <div class="stat"><div class="sl">Allianz USD</div><div class="sv" style="font-size:17px;">1.200 $</div><div class="ss" id="s-allianz-tl">TL karşılığı yükleniyor...</div></div>
     <div class="stat"><div class="sl">Yıllık Vergi Avantajı</div><div class="sv" id="s-vergi" style="font-size:17px;color:var(--green);">~31.500 ₺</div><div class="ss">Devlet + vergi iadesi</div></div>
   </div>
@@ -1175,6 +1191,59 @@ function tog(i) {
   renderAct();
 }
 
+// Aylık yatırım düzenleme fonksiyonları
+function toggleYatirimEdit() {
+  var display = document.getElementById('yatirim-display');
+  var edit    = document.getElementById('yatirim-edit');
+  var input   = document.getElementById('yatirim-input');
+  if (edit.style.display === 'none') {
+    edit.style.display = 'block';
+    display.style.display = 'none';
+    input.value = S.yatirim;
+    input.focus();
+    input.select();
+  } else {
+    cancelYatirim();
+  }
+}
+
+function previewYatirim(val) {
+  var v = parseInt(val);
+  if (v > 0) {
+    document.getElementById('s-yatirim').textContent = Math.round(v).toLocaleString('tr-TR') + ' ₺';
+  }
+}
+
+function saveYatirim() {
+  var val = parseInt(document.getElementById('yatirim-input').value);
+  if (!val || val < 1000) {
+    alert('Geçerli bir yatırım tutarı girin (minimum 1.000 ₺)');
+    return;
+  }
+  S.yatirim = val;
+  // LocalStorage'a kaydet
+  try { localStorage.setItem('fa-yatirim', val); } catch(e) {}
+  // Dashboard güncelle
+  document.getElementById('s-yatirim').textContent = Math.round(val).toLocaleString('tr-TR') + ' ₺';
+  document.getElementById('yatirim-baslik').textContent = Math.round(val).toLocaleString('tr-TR') + ' ₺';
+  document.getElementById('act-altin').textContent = Math.round(val*0.45).toLocaleString('tr-TR') + ' ₺';
+  document.getElementById('act-ppf').textContent   = Math.round(val*0.30).toLocaleString('tr-TR') + ' ₺';
+  document.getElementById('act-bist').textContent  = Math.round(val*0.15).toLocaleString('tr-TR') + ' ₺';
+  document.getElementById('act-usd').textContent   = Math.round(val*0.10).toLocaleString('tr-TR') + ' ₺';
+  document.getElementById('f-yatirim').textContent = Math.round(val/1000) + 'K ₺';
+  updateAll();
+  cancelYatirim();
+  // Hesap makinesi slider'ını da güncelle
+  document.getElementById('c-m').value = val;
+  cu();
+}
+
+function cancelYatirim() {
+  document.getElementById('yatirim-edit').style.display = 'none';
+  document.getElementById('yatirim-display').style.display = 'block';
+  document.getElementById('s-yatirim').textContent = Math.round(S.yatirim).toLocaleString('tr-TR') + ' ₺';
+}
+
 renderAct();
 renderHistory();
 cu();
@@ -1211,6 +1280,17 @@ if (S.bordrolar.length > 0) {
   document.getElementById('s-maas').textContent     = fmtN(last.net) + ' ₺';
   document.getElementById('s-maas-sub').textContent = last.ay + ' bordrousu';
 }
+
+// Kayıtlı yatırım miktarını yükle
+try {
+  var savedYatirim = localStorage.getItem('fa-yatirim');
+  if (savedYatirim && parseInt(savedYatirim) > 0) {
+    S.yatirim = parseInt(savedYatirim);
+    document.getElementById('s-yatirim').textContent = fmtN(S.yatirim) + ' ₺';
+    document.getElementById('yatirim-baslik').textContent = fmtN(S.yatirim) + ' ₺';
+    document.getElementById('c-m').value = S.yatirim;
+  }
+} catch(e) {}
 
 </script>
 
