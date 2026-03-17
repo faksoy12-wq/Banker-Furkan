@@ -201,16 +201,37 @@ input[type=range]{width:80px;accent-color:var(--gold);}
   </div>
   <div class="g21">
     <div class="card" style="margin-bottom:0;">
-      <div class="ct">Aylık <span id="yatirim-baslik">120.000 ₺</span> Dağılımı — Ziraat Bankası</div>
-      <div class="arow"><div class="adot" style="background:#C9A84C;"></div><div class="an"><div class="an-m">Gram Altın</div><div class="an-s">Ziraat → Altın Hesabı</div></div><div class="abw"><div class="ab" style="width:45%;background:#C9A84C;"></div></div><div class="ap">%45</div><div class="aa" style="color:#C9A84C;" id="p-altin">54.000 ₺</div><div class="ac" id="p-gram">— gram</div></div>
-      <div class="arow"><div class="adot" style="background:#1A7A4A;"></div><div class="an"><div class="an-m">Para Piyasası Fonu (ZPP)</div><div class="an-s">Ziraat → Fon → ZPP</div></div><div class="abw"><div class="ab" style="width:30%;background:#1A7A4A;"></div></div><div class="ap">%30</div><div class="aa" style="color:#1A7A4A;" id="p-ppf">36.000 ₺</div><div class="ac" style="font-size:10px;color:var(--ink3);">Günlük ~%0.10 faiz</div></div>
-      <div class="arow"><div class="adot" style="background:#1A5FAA;"></div><div class="an"><div class="an-m">BİST 30 Endeks Fonu</div><div class="an-s">Ziraat → Fon → Endeks</div></div><div class="abw"><div class="ab" style="width:15%;background:#1A5FAA;"></div></div><div class="ap">%15</div><div class="aa" style="color:#1A5FAA;" id="p-bist">18.000 ₺</div><div class="ac" style="font-size:10px;color:var(--ink3);">Takip etme, bekle</div></div>
-      <div class="arow"><div class="adot" style="background:#7B3FBE;"></div><div class="an"><div class="an-m">Döviz Fonu (USD)</div><div class="an-s">Ziraat → Fon → Döviz</div></div><div class="abw"><div class="ab" style="width:10%;background:#7B3FBE;"></div></div><div class="ap">%10</div><div class="aa" style="color:#7B3FBE;" id="p-usd">12.000 ₺</div><div class="ac" id="p-usd-c">— USD</div></div>
-      <div class="arow" style="opacity:.4;"><div class="adot" style="background:#aaa;"></div><div class="an"><div class="an-m">Zorunlu BES</div><div class="an-s">Bordrodan otomatik — dokunma</div></div><div class="abw"></div><div class="ap">—</div><div class="aa" style="color:#aaa;">Otomatik</div><div class="ac"></div></div>
-      <div class="arow" style="opacity:.4;"><div class="adot" style="background:#aaa;"></div><div class="an"><div class="an-m">Allianz USD Poliçe</div><div class="an-s">300 $/ay · Devam et</div></div><div class="abw"></div><div class="ap">—</div><div class="aa" id="p-allianz" style="color:#aaa;">— ₺/ay</div><div class="ac"></div></div>
-      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-        <a class="ziraat-btn" href="https://www.ziraatbank.com.tr/tr/bireysel/yatirim/altin-hesabi" target="_blank">🏦 Ziraat Altın</a>
-        <a class="ziraat-btn" style="background:#1A7A4A;" href="https://www.ziraatbank.com.tr/tr/bireysel/yatirim/yatirim-fonlari" target="_blank">📊 Ziraat Fonlar</a>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div class="ct" style="margin-bottom:0;">Aylık <span id="yatirim-baslik">120.000 ₺</span> Dağılımı</div>
+        <button onclick="toggleAracDuzenle()" id="arac-btn" style="font-size:11px;padding:4px 10px;border:1px solid var(--gold-bd);background:var(--gold-bg);color:var(--gold);border-radius:6px;cursor:pointer;font-family:var(--sans);font-weight:600;">✏️ Düzenle</button>
+      </div>
+
+      <!-- Normal görünüm -->
+      <div id="dagılım-normal">
+        <div id="dagılım-satirlar"></div>
+        <div class="arow" style="opacity:.4;"><div class="adot" style="background:#aaa;"></div><div class="an"><div class="an-m">Zorunlu BES</div><div class="an-s">Bordrodan otomatik</div></div><div class="abw"></div><div class="ap">—</div><div class="aa" style="color:#aaa;">Otomatik</div><div class="ac"></div></div>
+        <div class="arow" style="opacity:.4;"><div class="adot" style="background:#aaa;"></div><div class="an"><div class="an-m">Allianz USD Poliçe</div><div class="an-s">300 $/ay · Devam et</div></div><div class="abw"></div><div class="ap">—</div><div class="aa" id="p-allianz" style="color:#aaa;">— ₺/ay</div><div class="ac"></div></div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+          <a class="ziraat-btn" href="https://www.ziraatbank.com.tr/tr/bireysel/yatirim/altin-hesabi" target="_blank">🏦 Ziraat Altın</a>
+          <a class="ziraat-btn" style="background:#1A7A4A;" href="https://www.ziraatbank.com.tr/tr/bireysel/yatirim/yatirim-fonlari" target="_blank">📊 Ziraat Fonlar</a>
+        </div>
+      </div>
+
+      <!-- Düzenleme modu -->
+      <div id="dagılım-duzenle" style="display:none;">
+        <div style="font-size:11px;color:var(--ink3);margin-bottom:10px;background:var(--gold-bg);border-radius:6px;padding:8px 10px;">Oranları değiştir veya yeni araç ekle. Toplam %100 olmalı.</div>
+        <div id="arac-liste"></div>
+        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+          <button onclick="aracEkle('Gümüş','#9E9E9E','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ Gümüş</button>
+          <button onclick="aracEkle('Eurobond','#E8A020','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ Eurobond</button>
+          <button onclick="aracEkle('BIST 50','#1A5FAA','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ BIST 50</button>
+          <button onclick="aracEkle('Özel','#888','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ Özel</button>
+        </div>
+        <div id="toplam-oran-uyari" style="font-size:11px;font-weight:600;margin-top:8px;padding:6px 10px;border-radius:6px;display:none;"></div>
+        <div style="display:flex;gap:6px;margin-top:10px;">
+          <button onclick="dagılımKaydet()" style="flex:1;padding:8px;background:var(--green);color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--sans);">Kaydet</button>
+          <button onclick="dagılımIptal()" style="flex:1;padding:8px;background:var(--white);color:var(--ink3);border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;font-family:var(--sans);">İptal</button>
+        </div>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:12px;">
@@ -878,10 +899,17 @@ async function fetchRates() {
 }
 
 function chg(c, p) {
-  if (!p || !c) return '<span class="tk-chg chg-n">—</span>';
-  const pct = ((c-p)/p*100).toFixed(2);
-  const cls = c>p ? 'chg-u' : c<p ? 'chg-d' : 'chg-n';
-  return '<span class="tk-chg ' + cls + '">' + (c>p?'+':'') + pct + '%</span>';
+  if (!p || !c) return {cls:'chg-n', txt:'—'};
+  var pct = ((c-p)/p*100).toFixed(2);
+  var cls = c>p ? 'chg-u' : c<p ? 'chg-d' : 'chg-n';
+  return {cls: cls, txt: (c>p?'+':'') + pct + '%'};
+}
+function updateChg(id, c, p) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var r = chg(c, p);
+  el.textContent = r.txt;
+  el.className = 'tk-chg ' + r.cls;
 }
 
 function vergiBelirle(b) {
@@ -903,28 +931,25 @@ function updateAll() {
   document.getElementById('t-usd').textContent   = usd.toFixed(2) + ' ₺';
   document.getElementById('t-eur').textContent   = eur.toFixed(2) + ' ₺';
   document.getElementById('t-ons').textContent   = Math.round(ons).toLocaleString('tr-TR') + ' $';
-  document.getElementById('t-gram').textContent  = (54000/altin).toFixed(2) + ' gram';
+  document.getElementById('t-gram').textContent  = (S.yatirim*0.45/altin).toFixed(2) + ' gram';
 
-  var acEl = document.getElementById('t-ac');
-  if (acEl) acEl.outerHTML = chg(altin, S.prev.altin);
-  var ucEl = document.getElementById('t-uc');
-  if (ucEl) ucEl.outerHTML = chg(usd, S.prev.usd);
-  var ecEl = document.getElementById('t-ec');
-  if (ecEl) ecEl.outerHTML = chg(eur, S.prev.eur);
-  var ocEl = document.getElementById('t-oc');
-  if (ocEl) ocEl.outerHTML = chg(ons, S.prev.ons);
+  updateChg('t-ac', altin, S.prev.altin);
+  updateChg('t-uc', usd,   S.prev.usd);
+  updateChg('t-ec', eur,   S.prev.eur);
+  updateChg('t-oc', ons,   S.prev.ons);
 
-  document.getElementById('p-altin').textContent = fmtN(y*0.45) + ' ₺';
-  document.getElementById('p-ppf').textContent   = fmtN(y*0.30) + ' ₺';
-  document.getElementById('p-bist').textContent  = fmtN(y*0.15) + ' ₺';
-  document.getElementById('p-usd').textContent   = fmtN(y*0.10) + ' ₺';
-  document.getElementById('p-gram').textContent  = (y*0.45/altin).toFixed(2) + ' gram alınır';
-  document.getElementById('p-usd-c').textContent = '~' + Math.round(y*0.10/usd) + ' USD';
+  // Araç listesini güncelle
+  renderDagılım();
   document.getElementById('p-allianz').textContent = '~' + fmtN(300*usd) + ' ₺/ay';
   document.getElementById('yatirim-baslik').textContent = fmtN(y) + ' ₺';
 
-  document.getElementById('c-gram').textContent   = (y*0.45/altin).toFixed(2) + ' gram';
-  document.getElementById('c-usd').textContent    = Math.round(y*0.10/usd).toLocaleString('tr-TR') + ' $';
+  // Anlık hesaplamalar - araç oranlarına göre
+  var altinArac = S.araclar.find(function(a){ return a.id === 'altin'; });
+  var usdArac   = S.araclar.find(function(a){ return a.id === 'usd'; });
+  var altinOran = altinArac ? altinArac.oran/100 : 0.45;
+  var usdOran   = usdArac   ? usdArac.oran/100   : 0.10;
+  document.getElementById('c-gram').textContent   = (y*altinOran/altin).toFixed(2) + ' gram';
+  document.getElementById('c-usd').textContent    = Math.round(y*usdOran/usd).toLocaleString('tr-TR') + ' $';
   document.getElementById('c-allianz').textContent = fmtN(1200*usd) + ' ₺';
   document.getElementById('c-prim').textContent   = fmtN(300*usd) + ' ₺';
   document.getElementById('s-allianz-tl').textContent = 'TL karşılığı: ' + fmtN(1200*usd) + ' ₺';
@@ -945,10 +970,11 @@ function updateAll() {
   document.getElementById('s-vergi').textContent   = '~' + fmtN(yillik + 4500) + ' ₺';
   document.getElementById('act-iade').textContent  = '+' + fmtN(aylik) + ' ₺';
 
-  document.getElementById('act-altin').textContent = fmtN(y*0.45) + ' ₺';
-  document.getElementById('act-ppf').textContent   = fmtN(y*0.30) + ' ₺';
-  document.getElementById('act-bist').textContent  = fmtN(y*0.15) + ' ₺';
-  document.getElementById('act-usd').textContent   = fmtN(y*0.10) + ' ₺';
+  // Aksiyon tutarları - araç oranlarına göre
+  S.araclar.forEach(function(a) {
+    var el = document.getElementById('act-' + a.id);
+    if (el) el.textContent = fmtN(Math.round(y * a.oran/100)) + ' ₺';
+  });
   var yK = y >= 1000000 ? (y/1000000).toFixed(1)+'M ₺' : (y/1000).toFixed(0)+'K ₺';
   document.getElementById('f-yatirim').textContent = yK;
 }
@@ -1158,7 +1184,7 @@ for (var mo18 = 1; mo18 <= 29*12; mo18++) {
 }
 
 var tlData = [
-  {age:'Şimdi', now:true,  t:'Başlangıç — Bu Hafta',       d:"Ziraat'tan altın hesabı aç · ZPP ve BİST 30 Endeks Fonu al · Allianz makbuzunu muhasebeye ilet", v:'120.000 ₺/ay yatırım başlıyor'},
+  {age:'Şimdi', now:true,  t:'Başlangıç — Bu Hafta',       d:"Ziraat'tan altın hesabı aç · ZPP ve BİST 30 Endeks Fonu al · Allianz makbuzunu muhasebeye ilet", v:(function(){ return Math.round(S.yatirim).toLocaleString('tr-TR') + ' ₺/ay yatırım başlıyor'; })()},
   {age:'30 yaş',           t:'İlk Büyük Milestone',         d:'Portföy ciddi büyüklüğe ulaştı. Ziraat uygulamasından durumu gözden geçir.', v: fmt(av[30]||0)},
   {age:'35 yaş',           t:'Strateji Geçişi',             d:"BİST ağırlığını artır · Küçük gönüllü BES katkısı başlat · Dağılımı güncelle.", v: fmt(av[35]||0)},
   {age:'40 yaş',           t:'Bileşik Faiz Hız Kazanıyor',  d:'Portföy büyüklüğü bileşik getiriyi katlar. Gelir artışını yatırıma yansıt.', v: fmt(av[40]||0)},
@@ -1191,6 +1217,150 @@ function tog(i) {
   renderAct();
 }
 
+// ─── YATIRIM ARAÇLARI YÖNETİMİ ───────────────────────────────────────────
+
+// Varsayılan araçlar
+var DEFAULT_ARACLAR = [
+  {id:'altin', ad:'Gram Altın',           renk:'#C9A84C', oran:45, platform:'Ziraat → Altın Hesabı',  aciklama:'gram'},
+  {id:'ppf',   ad:'Para Piyasası Fonu',   renk:'#1A7A4A', oran:30, platform:'Ziraat → Fon → ZPP',     aciklama:'faiz'},
+  {id:'bist',  ad:'BİST 30 Endeks Fonu',  renk:'#1A5FAA', oran:15, platform:'Ziraat → Fon → Endeks',  aciklama:''},
+  {id:'usd',   ad:'Döviz Fonu (USD)',      renk:'#7B3FBE', oran:10, platform:'Ziraat → Fon → Döviz',   aciklama:'usd'},
+];
+
+// Araçları localStorage'dan yükle veya varsayılanları kullan
+function loadAraclar() {
+  try {
+    var saved = localStorage.getItem('fa-araclar');
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(DEFAULT_ARACLAR));
+}
+
+S.araclar = loadAraclar();
+
+// Dağılım satırlarını render et
+function renderDagılım() {
+  var container = document.getElementById('dagılım-satirlar');
+  if (!container) return;
+  var toplam = S.araclar.reduce(function(s,a){ return s+a.oran; }, 0);
+  container.innerHTML = S.araclar.map(function(a) {
+    var tutar = Math.round(S.yatirim * a.oran / 100);
+    var aciklama = '';
+    if (a.aciklama === 'gram' && S.rates.altin) {
+      aciklama = (tutar / S.rates.altin).toFixed(2) + ' gram alınır';
+    } else if (a.aciklama === 'usd' && S.rates.usd) {
+      aciklama = '~' + Math.round(tutar / S.rates.usd) + ' USD';
+    } else if (a.aciklama === 'faiz') {
+      aciklama = 'Günlük ~%0.10 faiz';
+    }
+    return '<div class="arow">' +
+      '<div class="adot" style="background:' + a.renk + ';"></div>' +
+      '<div class="an"><div class="an-m">' + a.ad + '</div>' +
+      '<div class="an-s">' + a.platform + '</div></div>' +
+      '<div class="abw"><div class="ab" style="width:' + a.oran + '%;background:' + a.renk + ';"></div></div>' +
+      '<div class="ap">%' + a.oran + '</div>' +
+      '<div class="aa" style="color:' + a.renk + ';">' + fmtN(tutar) + ' ₺</div>' +
+      '<div class="ac" style="font-size:10px;color:var(--ink3);">' + aciklama + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+// Düzenleme listesini render et
+function renderAracListe() {
+  var container = document.getElementById('arac-liste');
+  if (!container) return;
+  container.innerHTML = S.araclar.map(function(a, i) {
+    return '<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);">' +
+      '<div style="width:12px;height:12px;border-radius:50%;background:' + a.renk + ';flex-shrink:0;"></div>' +
+      '<div style="flex:1;font-size:13px;font-weight:500;">' + a.ad + '</div>' +
+      '<div style="display:flex;align-items:center;gap:4px;">' +
+      '<span style="font-size:12px;color:var(--ink3);">%</span>' +
+      '<input type="number" value="' + a.oran + '" min="0" max="100" step="1" ' +
+      'style="width:52px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-weight:600;text-align:center;font-family:var(--sans);" ' +
+      'oninput="oranGuncelle(' + i + ', this.value)">' +
+      '</div>' +
+      '<button onclick="aracSil(' + i + ')" style="font-size:16px;background:none;border:none;cursor:pointer;color:var(--ink3);padding:0 4px;" title="Sil">×</button>' +
+      '</div>';
+  }).join('');
+  toplamGoster();
+}
+
+function oranGuncelle(i, val) {
+  S.araclar[i].oran = parseInt(val) || 0;
+  toplamGoster();
+}
+
+function toplamGoster() {
+  var toplam = S.araclar.reduce(function(s,a){ return s+a.oran; }, 0);
+  var el = document.getElementById('toplam-oran-uyari');
+  if (!el) return;
+  el.style.display = 'block';
+  if (toplam === 100) {
+    el.style.background = 'var(--green-bg)';
+    el.style.color = 'var(--green)';
+    el.textContent = '✓ Toplam: %' + toplam + ' — Mükemmel!';
+  } else if (toplam < 100) {
+    el.style.background = 'var(--gold-bg)';
+    el.style.color = 'var(--gold)';
+    el.textContent = '⚠ Toplam: %' + toplam + ' — ' + (100-toplam) + '% eksik';
+  } else {
+    el.style.background = 'var(--red-bg)';
+    el.style.color = 'var(--red)';
+    el.textContent = '✗ Toplam: %' + toplam + ' — ' + (toplam-100) + '% fazla';
+  }
+}
+
+function aracEkle(ad, renk, oran) {
+  S.araclar.push({
+    id: 'ozel_' + Date.now(),
+    ad: ad, renk: renk,
+    oran: parseInt(oran),
+    platform: 'Ziraat → Yatırım',
+    aciklama: ''
+  });
+  renderAracListe();
+}
+
+function aracSil(i) {
+  if (S.araclar.length <= 1) { alert('En az 1 araç olmalı'); return; }
+  S.araclar.splice(i, 1);
+  renderAracListe();
+}
+
+function toggleAracDuzenle() {
+  var normal  = document.getElementById('dagılım-normal');
+  var duzenle = document.getElementById('dagılım-duzenle');
+  var btn     = document.getElementById('arac-btn');
+  if (duzenle.style.display === 'none') {
+    duzenle.style.display = 'block';
+    normal.style.display  = 'none';
+    btn.textContent = '✕ Kapat';
+    renderAracListe();
+  } else {
+    dagılımIptal();
+  }
+}
+
+function dagılımKaydet() {
+  var toplam = S.araclar.reduce(function(s,a){ return s+a.oran; }, 0);
+  if (toplam !== 100) {
+    alert('Oranların toplamı %100 olmalı! Şu an: %' + toplam);
+    return;
+  }
+  try { localStorage.setItem('fa-araclar', JSON.stringify(S.araclar)); } catch(e) {}
+  renderDagılım();
+  updateAll();
+  dagılımIptal();
+}
+
+function dagılımIptal() {
+  S.araclar = loadAraclar();
+  document.getElementById('dagılım-duzenle').style.display = 'none';
+  document.getElementById('dagılım-normal').style.display  = 'block';
+  document.getElementById('arac-btn').textContent = '✏️ Düzenle';
+}
+
+// ─── AYLIK YATIRIM DÜZENLEME ──────────────────────────────────────────────
 // Aylık yatırım düzenleme fonksiyonları
 function toggleYatirimEdit() {
   var display = document.getElementById('yatirim-display');
@@ -1221,19 +1391,13 @@ function saveYatirim() {
     return;
   }
   S.yatirim = val;
-  // LocalStorage'a kaydet
   try { localStorage.setItem('fa-yatirim', val); } catch(e) {}
-  // Dashboard güncelle
-  document.getElementById('s-yatirim').textContent = Math.round(val).toLocaleString('tr-TR') + ' ₺';
-  document.getElementById('yatirim-baslik').textContent = Math.round(val).toLocaleString('tr-TR') + ' ₺';
-  document.getElementById('act-altin').textContent = Math.round(val*0.45).toLocaleString('tr-TR') + ' ₺';
-  document.getElementById('act-ppf').textContent   = Math.round(val*0.30).toLocaleString('tr-TR') + ' ₺';
-  document.getElementById('act-bist').textContent  = Math.round(val*0.15).toLocaleString('tr-TR') + ' ₺';
-  document.getElementById('act-usd').textContent   = Math.round(val*0.10).toLocaleString('tr-TR') + ' ₺';
-  document.getElementById('f-yatirim').textContent = Math.round(val/1000) + 'K ₺';
+  document.getElementById('s-yatirim').textContent      = Math.round(val).toLocaleString('tr-TR') + ' ₺';
+  document.getElementById('yatirim-baslik').textContent  = Math.round(val).toLocaleString('tr-TR') + ' ₺';
+  document.getElementById('f-yatirim').textContent       = Math.round(val/1000) + 'K ₺';
+  renderDagılım();
   updateAll();
   cancelYatirim();
-  // Hesap makinesi slider'ını da güncelle
   document.getElementById('c-m').value = val;
   cu();
 }
@@ -1246,6 +1410,7 @@ function cancelYatirim() {
 
 renderAct();
 renderHistory();
+renderDagılım();
 cu();
 fetchRates();
 
