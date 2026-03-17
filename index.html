@@ -44,6 +44,7 @@ body{background:var(--cream);font-family:var(--sans);color:var(--ink);font-size:
 .g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px;}
 .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px;}
 .g21{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px;}
+.g21-eq{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
 .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);margin-bottom:14px;}
 .ct{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;}
 .stat{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);}
@@ -103,11 +104,17 @@ input[type=range]{width:80px;accent-color:var(--gold);}
 .h-net{font-size:14px;font-weight:700;color:var(--green);}
 .h-del{font-size:10px;color:var(--red);cursor:pointer;margin-left:auto;padding:2px 7px;border:1px solid var(--red-bd);border-radius:4px;background:var(--red-bg);flex-shrink:0;}
 .success-box{background:var(--green-bg);border:1px solid var(--green-bd);border-radius:10px;padding:14px;margin-top:12px;display:none;}
-@media(max-width:600px){
+@media(max-width:768px){
   .g4{grid-template-columns:repeat(2,1fr);}
   .g21{grid-template-columns:1fr;}
+  .g21-eq{grid-template-columns:1fr;}
+  .g2{grid-template-columns:1fr;}
   .sc-grid{grid-template-columns:repeat(2,1fr);}
   .content{padding:12px;}
+  .ticker{gap:10px;padding:9px 12px;}
+  .tk-div{display:none;}
+  .nav{padding:0 12px;}
+  .header{padding:12px;}
 }
 </style>
 
@@ -183,20 +190,62 @@ input[type=range]{width:80px;accent-color:var(--gold);}
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div class="card" style="margin-bottom:0;">
         <div class="ct">Anlık Hesaplamalar</div>
-        <div style="font-size:12px;line-height:2.4;">
-          <div style="display:flex;justify-content:space-between;"><span style="color:var(--ink3);">%45 ile altın</span><span id="c-gram" style="font-weight:700;color:#C9A84C;">—</span></div>
-          <div style="display:flex;justify-content:space-between;"><span style="color:var(--ink3);">%10 ile dolar</span><span id="c-usd" style="font-weight:700;color:#7B3FBE;">—</span></div>
-          <div style="display:flex;justify-content:space-between;"><span style="color:var(--ink3);">1.200$ birikimin TL'si</span><span id="c-allianz" style="font-weight:700;color:var(--green);">—</span></div>
-          <div style="display:flex;justify-content:space-between;"><span style="color:var(--ink3);">300$ prim TL karşılığı</span><span id="c-prim" style="font-weight:700;color:var(--ink3);">—</span></div>
+        <div style="font-size:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);">
+            <span style="color:var(--ink3);">Bu ay %45 ile altın</span>
+            <span id="c-gram" style="font-weight:700;color:#C9A84C;font-size:14px;">—</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);">
+            <span style="color:var(--ink3);">Bu ay %10 ile dolar</span>
+            <span id="c-usd" style="font-weight:700;color:#7B3FBE;font-size:14px;">—</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);">
+            <span style="color:var(--ink3);">1.200$ birikimin TL'si</span>
+            <span id="c-allianz" style="font-weight:700;color:var(--green);font-size:14px;">—</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;">
+            <span style="color:var(--ink3);">300$ prim TL karşılığı</span>
+            <span id="c-prim" style="font-weight:700;color:var(--ink3);font-size:14px;">—</span>
+          </div>
         </div>
       </div>
       <div class="card" style="margin-bottom:0;">
         <div class="ct">Başarı Eşiği 2026</div>
-        <div style="font-family:var(--serif);font-size:24px;color:var(--gold);margin:3px 0 8px;">~%25</div>
-        <div style="font-size:11px;line-height:2.1;">
-          <div><span style="background:var(--red-bg);color:var(--red);padding:1px 6px;border-radius:4px;font-weight:700;font-size:10px;">%0–25</span> Reel kayıp</div>
-          <div><span style="background:var(--gold-bg);color:var(--gold);padding:1px 6px;border-radius:4px;font-weight:700;font-size:10px;">%25–30</span> Başabaş</div>
-          <div><span style="background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:4px;font-weight:700;font-size:10px;">%30+</span> Reel büyüme ✓</div>
+        <div style="font-family:var(--serif);font-size:22px;color:var(--gold);margin:3px 0 10px;">Enflasyon ~%25</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;background:var(--red-bg);border-radius:8px;padding:8px 12px;">
+            <span style="font-size:11px;color:var(--red);font-weight:600;">%0 – %25</span>
+            <span style="font-size:11px;color:var(--red);">Reel kayıp</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:var(--gold-bg);border-radius:8px;padding:8px 12px;">
+            <span style="font-size:11px;color:var(--gold);font-weight:600;">%25 – %30</span>
+            <span style="font-size:11px;color:var(--gold);">Başabaş</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:var(--green-bg);border-radius:8px;padding:8px 12px;">
+            <span style="font-size:11px;color:var(--green);font-weight:600;">%30+</span>
+            <span style="font-size:11px;color:var(--green);">Reel büyüme ✓</span>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:0;">
+        <div class="ct">Yaşa Göre Strateji</div>
+        <div style="font-size:11px;line-height:2.2;">
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);">
+            <span style="background:var(--green-bg);color:var(--green);padding:1px 7px;border-radius:4px;font-weight:700;font-size:10px;">ŞİMDİ 27–35</span>
+            <span style="color:var(--ink3);">Altın ağır, BES yok</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);">
+            <span style="color:var(--gold);font-weight:600;font-size:10px;">35–44 yaş</span>
+            <span style="color:var(--ink3);">BİST artır, BES başlat</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);">
+            <span style="color:var(--blue);font-weight:600;font-size:10px;">44–50 yaş</span>
+            <span style="color:var(--ink3);">BES artır, denge kur</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;">
+            <span style="color:var(--purple);font-weight:600;font-size:10px;">50–56 yaş</span>
+            <span style="color:var(--ink3);">BES maks, koruma</span>
+          </div>
         </div>
       </div>
     </div>
@@ -653,15 +702,55 @@ input[type=range]{width:80px;accent-color:var(--gold);}
   <div class="g2">
     <div class="card" style="margin-bottom:0;">
       <div class="ct">Parametreler</div>
-      <div class="srow"><span class="slbl">Aylık yatırım</span><input type="range" id="c-m" min="50000" max="400000" step="10000" value="120000" oninput="cu()"><span class="sval" id="c-m-o">120K ₺</span></div>
+      <div class="srow"><span class="slbl">Başlangıç aylık yatırım</span><input type="range" id="c-m" min="50000" max="400000" step="10000" value="120000" oninput="cu()"><span class="sval" id="c-m-o">120K ₺</span></div>
       <div class="srow"><span class="slbl">Yıllık getiri</span><input type="range" id="c-r" min="10" max="40" step="1" value="18" oninput="cu()"><span class="sval" id="c-r-o">%18</span></div>
       <div class="srow"><span class="slbl">Süre</span><input type="range" id="c-y" min="5" max="35" step="1" value="29" oninput="cu()"><span class="sval" id="c-y-o">29 yıl</span></div>
-      <div class="res-box"><div class="res-lbl">Dönem Sonu Portföy</div><div class="res-val" id="c-res">—</div><div class="res-sub" id="c-sub">—</div></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-        <div style="background:var(--cream);border-radius:8px;padding:10px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--ink3);margin-bottom:2px;">Toplam yatırdığın</div><div id="c-inv" style="font-size:14px;font-weight:700;">—</div></div>
-        <div style="background:var(--green-bg);border-radius:8px;padding:10px;border:1px solid var(--green-bd);"><div style="font-size:10px;color:var(--green);margin-bottom:2px;">Faizden kazancın</div><div id="c-gain" style="font-size:14px;font-weight:700;color:var(--green);">—</div></div>
+      <div class="srow" style="background:var(--gold-bg);border-radius:8px;padding:8px 10px;border:1px solid var(--gold-bd);margin-top:4px;">
+        <span class="slbl" style="color:var(--gold);font-weight:600;">6 ayda artış oranı</span>
+        <input type="range" id="c-inc" min="0" max="20" step="1" value="0" oninput="cu()" style="accent-color:var(--gold);">
+        <span class="sval" id="c-inc-o" style="color:var(--gold);">%0</span>
       </div>
-      <div style="background:var(--gold-bg);border-radius:8px;padding:10px;margin-top:8px;border:1px solid var(--gold-bd);"><div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:2px;">Aylık güvenli çekim (anapara korunarak)</div><div id="c-income" style="font-size:18px;font-weight:700;color:var(--gold);">—</div></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+        <div style="background:var(--cream);border-radius:8px;padding:10px;border:1px solid var(--border);">
+          <div style="font-size:10px;color:var(--ink3);margin-bottom:2px;">Dönem sonu portföy</div>
+          <div id="c-res" style="font-size:15px;font-weight:700;color:var(--gold);">—</div>
+        </div>
+        <div style="background:var(--green-bg);border-radius:8px;padding:10px;border:1px solid var(--green-bd);">
+          <div style="font-size:10px;color:var(--green);margin-bottom:2px;">Faizden kazancın</div>
+          <div id="c-gain" style="font-size:15px;font-weight:700;color:var(--green);">—</div>
+        </div>
+        <div style="background:var(--cream);border-radius:8px;padding:10px;border:1px solid var(--border);">
+          <div style="font-size:10px;color:var(--ink3);margin-bottom:2px;">Toplam yatırdığın</div>
+          <div id="c-inv" style="font-size:15px;font-weight:700;">—</div>
+        </div>
+        <div style="background:var(--gold-bg);border-radius:8px;padding:10px;border:1px solid var(--gold-bd);">
+          <div style="font-size:10px;color:var(--gold);margin-bottom:2px;">Aylık güvenli çekim</div>
+          <div id="c-income" style="font-size:15px;font-weight:700;color:var(--gold);">—</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px;">
+        <div class="ct">Sabit vs Artan Karşılaştırması</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="background:var(--cream);border-radius:8px;padding:10px;border:1px solid var(--border);text-align:center;">
+            <div style="font-size:10px;color:var(--ink3);margin-bottom:4px;">Sabit yatırımla</div>
+            <div id="c-sabit" style="font-size:14px;font-weight:700;color:var(--ink);">—</div>
+            <div style="font-size:10px;color:var(--ink3);margin-top:2px;">%0 artış</div>
+          </div>
+          <div style="background:var(--green-bg);border-radius:8px;padding:10px;border:1px solid var(--green-bd);text-align:center;">
+            <div style="font-size:10px;color:var(--green);margin-bottom:4px;">Artan yatırımla</div>
+            <div id="c-artan" style="font-size:14px;font-weight:700;color:var(--green);">—</div>
+            <div style="font-size:10px;color:var(--green);margin-top:2px;" id="c-artan-fark">— fark</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px;">
+        <div class="ct">Son yıl aylık yatırım</div>
+        <div id="c-last-monthly" style="font-size:16px;font-weight:700;color:var(--ink);">—</div>
+        <div style="font-size:11px;color:var(--ink3);margin-top:2px);" id="c-last-sub">Artış olmadan hep 120K ₺</div>
+      </div>
     </div>
     <div class="card" style="margin-bottom:0;">
       <div class="ct">Büyüme Grafiği</div>
@@ -889,7 +978,7 @@ function renderHistory() {
     return;
   }
   c.innerHTML = S.bordrolar.map(function(b,i) {
-    return '<div class="history-item"><span class="h-badge">' + b.ay + '</span><span class="h-net">' + fmtN(b.net) + ' ₺</span><span style="font-size:10px;color:var(--ink3);">' + b.tarih + '</span><span class="h-del" onclick="delBordro(' + i + ')">Sil</span></div>';
+    return '<div class="history-item"><span class="h-badge">' + b.ay + '</span><span class="h-net">' + fmtN(b.net) + ' ₺</span><span style="font-size:10px;color:var(--ink3);">' + b.tarih + '</span><span style="margin-left:auto;display:flex;gap:6px;"><span style="font-size:10px;color:var(--blue);cursor:pointer;padding:2px 7px;border:1px solid var(--blue-bd);border-radius:4px;background:var(--blue-bg);" onclick="editBordro(' + i + ')">Düzenle</span><span class="h-del" onclick="delBordro(' + i + ')">Sil</span></span></div>';
   }).join('');
   const avg = S.bordrolar.reduce(function(a,b){ return a+b.net; }, 0) / S.bordrolar.length;
   document.getElementById('avg-maas').textContent = fmtN(avg) + ' ₺';
@@ -897,42 +986,129 @@ function renderHistory() {
 }
 
 function delBordro(i) {
+  if (!confirm(S.bordrolar[i].ay + ' bordrosunu silmek istediğinizden emin misiniz?')) return;
   S.bordrolar.splice(i, 1);
   try { localStorage.setItem('fa-b', JSON.stringify(S.bordrolar)); } catch(e) {}
   renderHistory();
 }
 
+function editBordro(i) {
+  var b = S.bordrolar[i];
+  // Formu doldur
+  document.getElementById('f-ay').value    = b.ay;
+  document.getElementById('f-net').value   = b.net;
+  document.getElementById('f-brut').value  = b.brut || '';
+  document.getElementById('f-vergi').value = b.vergi || '';
+  // Bordro sekmesine geç
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.nb').forEach(function(btn){ btn.classList.remove('active'); });
+  document.getElementById('tab-bordro').classList.add('active');
+  document.querySelectorAll('.nb')[1].classList.add('active');
+  // Önizlemeyi güncelle
+  calcPreview();
+  // Bilgi mesajı
+  document.getElementById('success-box').style.display = 'block';
+  document.getElementById('success-msg').textContent = b.ay + ' bordrousu düzenleme modunda. Değiştirip kaydet butonuna bas.';
+  // Eski kaydı sil - kaydettiğinde yeni olarak eklenecek
+  S.bordrolar.splice(i, 1);
+  try { localStorage.setItem('fa-b', JSON.stringify(S.bordrolar)); } catch(e) {}
+  renderHistory();
+  window.scrollTo(0, 0);
+}
+
 var cc;
 function cu() {
-  const m = parseInt(document.getElementById('c-m').value);
-  const r = parseInt(document.getElementById('c-r').value);
-  const y = parseInt(document.getElementById('c-y').value);
-  document.getElementById('c-m-o').textContent = (m/1000) + 'K ₺';
-  document.getElementById('c-r-o').textContent = '%' + r;
-  document.getElementById('c-y-o').textContent = y + ' yıl';
+  const m    = parseInt(document.getElementById('c-m').value);
+  const r    = parseInt(document.getElementById('c-r').value);
+  const y    = parseInt(document.getElementById('c-y').value);
+  const inc  = parseInt(document.getElementById('c-inc').value);
+
+  document.getElementById('c-m-o').textContent   = (m/1000) + 'K ₺';
+  document.getElementById('c-r-o').textContent   = '%' + r;
+  document.getElementById('c-y-o').textContent   = y + ' yıl';
+  document.getElementById('c-inc-o').textContent = '%' + inc;
+
   const mr = r/100/12;
-  var p = 120000, inv = 120000;
-  var pA = [p], iA = [120000];
-  for (var mo = 1; mo <= y*12; mo++) { p = p*(1+mr)+m; inv+=m; pA.push(Math.round(p)); iA.push(Math.round(inv)); }
-  document.getElementById('c-res').textContent    = fmt(p);
-  document.getElementById('c-sub').textContent    = y + ' yıl · %' + r + ' yıllık getiri';
-  document.getElementById('c-inv').textContent    = fmt(inv);
-  document.getElementById('c-gain').textContent   = '+' + fmt(p-inv);
-  document.getElementById('c-income').textContent = fmt(Math.round(p*r/100/12)) + ' / ay';
+
+  // Sabit yatırım hesabı
+  var pSabit = 120000, invSabit = 120000;
+  var pSabitA = [pSabit];
+  for (var mo = 1; mo <= y*12; mo++) {
+    pSabit = pSabit*(1+mr)+m;
+    invSabit += m;
+    pSabitA.push(Math.round(pSabit));
+  }
+
+  // Artan yatırım hesabı
+  var pArtan = 120000, invArtan = 120000;
+  var pArtanA = [pArtan];
+  var mArtan = m;
+  var lastMonthly = m;
+  for (var mo2 = 1; mo2 <= y*12; mo2++) {
+    if (inc > 0 && mo2 > 1 && mo2 % 6 === 1) {
+      mArtan = Math.round(mArtan * (1 + inc/100));
+    }
+    pArtan = pArtan*(1+mr)+mArtan;
+    invArtan += mArtan;
+    pArtanA.push(Math.round(pArtan));
+    if (mo2 === y*12) lastMonthly = mArtan;
+  }
+
+  // Göster - artış varsa artan, yoksa sabit göster
+  var pFinal = inc > 0 ? pArtan : pSabit;
+  var invFinal = inc > 0 ? invArtan : invSabit;
+  var pA = inc > 0 ? pArtanA : pSabitA;
+  var iA = [];
+  var tmpInv = 120000, tmpM = m;
+  iA.push(tmpInv);
+  for (var mo3 = 1; mo3 <= y*12; mo3++) {
+    if (inc > 0 && mo3 > 1 && mo3 % 6 === 1) tmpM = Math.round(tmpM * (1 + inc/100));
+    tmpInv += (inc > 0 ? tmpM : m);
+    iA.push(Math.round(tmpInv));
+  }
+
+  document.getElementById('c-res').textContent    = fmt(pFinal);
+  document.getElementById('c-inv').textContent    = fmt(invFinal);
+  document.getElementById('c-gain').textContent   = '+' + fmt(pFinal - invFinal);
+  document.getElementById('c-income').textContent = fmt(Math.round(pFinal*r/100/12)) + ' / ay';
+
+  // Karşılaştırma
+  document.getElementById('c-sabit').textContent = fmt(pSabit);
+  document.getElementById('c-artan').textContent = fmt(pArtan);
+  var fark = pArtan - pSabit;
+  document.getElementById('c-artan-fark').textContent = inc > 0 ? '+' + fmt(fark) + ' fazla' : 'Artış yok';
+
+  // Son yıl aylık
+  document.getElementById('c-last-monthly').textContent = fmt(lastMonthly);
+  document.getElementById('c-last-sub').textContent = inc > 0 
+    ? y + '. yılda aylık yatırım (6 ayda %" + inc + " artışla)'
+    : 'Artış olmadan hep ' + (m/1000) + 'K ₺';
+
+  // Kilometre taşları
   var ms = '';
   [5,10,15,20,29].forEach(function(a) {
-    var age = 27+a, idx = a*12, f = (a===29);
-    ms += '<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);' + (f?'font-weight:700;':'') + '"><span style="color:' + (f?'var(--green)':'var(--ink3)') + ';">' + age + ' yaş (' + a + '. yıl)</span><span style="color:' + (f?'var(--green)':'var(--ink)') + ';">' + fmt(pA[Math.min(idx,pA.length-1)]) + '</span></div>';
+    var age = 27+a, idx = a*12, f = (a===y||a===29);
+    if (idx <= pA.length-1) {
+      ms += '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);' + (f?'font-weight:700;':'') + '"><span style="color:' + (f?'var(--green)':'var(--ink3)') + ';">' + age + ' yaş (' + a + '. yıl)</span><span style="color:' + (f?'var(--green)':'var(--ink)') + ';">' + fmt(pA[Math.min(idx,pA.length-1)]) + '</span></div>';
+    }
   });
   document.getElementById('ms').innerHTML = ms;
+
+  // Grafik
   var labels = Array.from({length:y*12+1}, function(_,i){ return i%12===0 ? (27+i/12)+' yaş' : ''; });
+  var datasets = [
+    {label:'Portföy', data:pA, borderColor:'#B8860B', backgroundColor:'rgba(184,134,11,0.05)', fill:true, tension:0.4, pointRadius:0, borderWidth:2},
+    {label:'Yatırılan', data:iA, borderColor:'#C8C8D0', borderDash:[4,4], fill:false, tension:0, pointRadius:0, borderWidth:1.5}
+  ];
+  // Artış varsa sabit senaryoyu da göster
+  if (inc > 0) {
+    datasets.push({label:'Sabit yatırım', data:pSabitA, borderColor:'#A06CD5', borderDash:[2,4], fill:false, tension:0.4, pointRadius:0, borderWidth:1.5});
+  }
+
   if (cc) cc.destroy();
   cc = new Chart(document.getElementById('cc'), {
     type: 'line',
-    data: {labels: labels, datasets: [
-      {label:'Portföy', data:pA, borderColor:'#B8860B', backgroundColor:'rgba(184,134,11,0.05)', fill:true, tension:0.4, pointRadius:0, borderWidth:2},
-      {label:'Yatırılan', data:iA, borderColor:'#C8C8D0', borderDash:[4,4], fill:false, tension:0, pointRadius:0, borderWidth:1.5}
-    ]},
+    data: {labels: labels, datasets: datasets},
     options: {responsive:true, maintainAspectRatio:false,
       plugins:{legend:{labels:{boxWidth:8,font:{size:11},color:'#8E8E93',padding:10}}},
       scales:{
