@@ -5,219 +5,261 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Mangır — Kişisel Finans Asistanı</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 :root {
-  --gold: #B8860B; --cream: #FAFAF7; --ink: #1C1C1E; --white: #fff;
-  --soft-gray: #F2F2F7; --border: #E5E5EA;
+  --gold: #B8860B; --cream: #FAFAF7; --ink: #1C1C1E; --ink2: #48484A; --white: #fff;
+  --soft-gray: #F2F2F7; --border: #E5E5EA; --green: #34C759;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.5; overflow-x: hidden; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.5; }
 
-/* --- Slider Modernizasyonu --- */
-input[type=range] { -webkit-appearance: none; width: 100%; height: 12px; background: var(--border); border-radius: 10px; outline: none; margin: 20px 0; }
-input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; background: var(--gold); border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
-
-/* --- Sayfa Yapısı --- */
-.page-section { display: none; min-height: 100vh; width: 100%; position: absolute; top: 0; left: 0; }
-.visible { display: flex !important; flex-direction: column; animation: fadeIn 0.4s ease; }
+/* Ekran Yönetimi */
+.page { display: none; min-height: 100vh; padding: 24px; max-width: 600px; margin: 0 auto; animation: fadeIn 0.4s ease; }
+.active-page { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.container { padding: 24px; max-width: 500px; margin: 0 auto; width: 100%; }
-.card { background: var(--white); border-radius: 24px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+/* Kartlar ve Butonlar */
+.card { background: var(--white); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.section-title { font-family: 'Playfair Display'; font-size: 1.4rem; margin-bottom: 16px; display: flex; align-items: center; }
+.btn { background: var(--ink); color: var(--white); padding: 16px; border-radius: 12px; border: none; font-weight: 600; width: 100%; cursor: pointer; transition: 0.2s; font-size: 1rem; }
+.btn-outline { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+.btn:active { transform: scale(0.98); }
 
-/* --- Profil Giriş --- */
-.profile-item { display: flex; align-items: center; padding: 16px; background: var(--soft-gray); border-radius: 16px; margin-top: 12px; cursor: pointer; border: 2px solid transparent; }
-.profile-item:hover { border-color: var(--gold); }
+/* Form Elemanları ve Slider */
+label { font-weight: 600; font-size: 0.9rem; color: var(--ink2); display: block; margin-bottom: 8px; margin-top: 16px; }
+input[type="text"], input[type="number"], select { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--soft-gray); font-family: inherit; font-size: 1rem; }
+input[type=range] { -webkit-appearance: none; width: 100%; height: 10px; background: var(--border); border-radius: 10px; outline: none; margin: 10px 0 20px 0; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; background: var(--gold); border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
 
-/* --- Emoji & Başlık Standart --- */
-.h-icon { font-size: 1.4rem; margin-right: 10px; }
-.section-title { display: flex; align-items: center; font-family: 'Playfair Display'; font-size: 1.5rem; margin-bottom: 20px; }
+/* Profil Listesi */
+.profile-card { padding: 16px; background: var(--soft-gray); border-radius: 16px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer; border: 2px solid transparent; }
+.profile-card:hover { border-color: var(--gold); }
 
-/* Onboarding */
-#onboarding { background: var(--cream); justify-content: center; z-index: 100; }
-.btn-main { background: var(--ink); color: var(--white); padding: 18px; border-radius: 16px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; width: 100%; transition: 0.2s; }
-.btn-main:active { transform: scale(0.98); }
-
-.hidden { display: none !important; }
+/* Alt Menü (Opsiyonel) */
+.nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 15px 0; z-index: 100; padding-bottom: calc(15px + env(safe-area-inset-bottom)); }
 </style>
 </head>
 <body>
 
-<section id="auth-screen" class="page-section visible">
-    <div class="container">
-        <h1 style="font-family:'Playfair Display'; font-size: 3rem; margin-top: 40px;">Mangır 🏦</h1>
-        <p style="color: var(--ink2); margin-bottom: 40px;">Finansal yol haritanıza hoş geldiniz.</p>
-        
-        <div id="saved-profiles">
-            </div>
-        
-        <button class="btn-main" onclick="startNewOnboarding()" style="margin-top: 20px; background: transparent; color: var(--ink); border: 2px solid var(--ink);">+ Yeni Profil Oluştur</button>
+<div id="screen-auth" class="page active-page">
+    <h1 style="font-family:'Playfair Display'; font-size: 3rem; margin-top: 20px;">Mangır 🏦</h1>
+    <p style="color: var(--ink2); margin-bottom: 40px;">Kişisel finans asistanınıza hoş geldiniz.</p>
+    
+    <div id="profile-list"></div>
+    
+    <button class="btn btn-outline" onclick="showScreen('screen-onboarding')" style="margin-top: 20px;">+ Yeni Profil Oluştur</button>
+</div>
+
+<div id="screen-onboarding" class="page">
+    <h2 class="section-title">👤 Sizi Tanıyalım</h2>
+    
+    <label>Adınız veya Lakabınız</label>
+    <input type="text" id="ob-name" placeholder="Örn: Yatırımcı">
+    
+    <label>Yaşınız: <span id="ob-age-val" style="color:var(--gold)">30</span></label>
+    <input type="range" id="ob-age" min="18" max="75" value="30" oninput="document.getElementById('ob-age-val').innerText=this.value">
+    
+    <label>Mesleğiniz</label>
+    <select id="ob-job" onchange="handleJobChange()">
+        <option value="Özel Sektör">Özel Sektör Çalışanı</option>
+        <option value="Hekim">Hekim</option>
+        <option value="Memur">Kamu Personeli</option>
+        <option value="Serbest">Serbest Meslek</option>
+    </select>
+    
+    <div id="ob-job-sub-container" style="display:none;">
+        <label>Branş / Statü</label>
+        <select id="ob-job-sub">
+            <option value="Aile Hekimi">Aile Hekimi</option>
+            <option value="Uzman Hekim">Uzman Hekim</option>
+            <option value="Pratisyen Hekim">Pratisyen Hekim</option>
+            <option value="Asistan Hekim">Asistan Hekim</option>
+        </select>
     </div>
-</section>
 
-<section id="onboarding" class="page-section">
-    <div class="container">
-        <div class="card" id="ob-step-1">
-            <h2 class="section-title">👤 Profil Bilgileri</h2>
-            <label>Adınız</label>
-            <input type="text" id="user-name" class="btn-main" style="background: var(--soft-gray); color: var(--ink); text-align: left; margin: 10px 0;">
-            
-            <label>Meslek</label>
-            <select id="user-job" class="btn-main" style="background: var(--soft-gray); color: var(--ink); text-align: left;" onchange="checkJobDetails()">
-                <option value="diger">Diğer</option>
-                <option value="hekim">Hekim</option>
-                <option value="muhendis">Mühendis</option>
-                <option value="memur">Kamu Çalışanı</option>
-            </select>
-            <div id="job-detail-area" style="margin-top:10px; display:none;">
-                <select id="user-job-sub" class="btn-main" style="background: var(--soft-gray); color: var(--ink);"></select>
-            </div>
-            
-            <label style="margin-top:20px; display:block;">Yaşınız: <span id="val-age">30</span></label>
-            <input type="range" min="18" max="75" value="30" oninput="document.getElementById('val-age').innerText=this.value">
-            
-            <button class="btn-main" onclick="saveAndNext(1)" style="margin-top:20px;">Devam Et →</button>
-        </div>
+    <button class="btn" onclick="saveProfileAndStart()" style="margin-top: 30px; background:var(--gold);">Planımı Oluştur ✨</button>
+</div>
+
+<div id="screen-dashboard" class="page" style="padding-bottom: 100px;">
+    <h2 class="section-title">Merhaba, <span id="dash-name" style="margin-left:8px; color:var(--gold)"></span> 👋</h2>
+    
+    <div class="card">
+        <h3 class="section-title">🎯 Portföy Stratejisi</h3>
+        <p id="dash-strategy" style="font-size:0.95rem; color:var(--ink2);"></p>
+        <hr style="margin:15px 0; border:0; border-top:1px solid var(--border);">
+        <h3 class="section-title">🧮 Portföy Hesap Makinesi</h3>
+        <p style="font-size:0.85rem; color:var(--ink3);">* Yakında buraya detaylı dağılım araçları eklenecek.</p>
     </div>
-</section>
 
-<section id="dashboard" class="page-section">
-    <div class="container" style="padding-bottom: 100px;">
-        <h2 class="section-title">📊 Özet <span id="display-name" style="font-size: 0.9rem; margin-left: auto; opacity: 0.6;"></span></h2>
+    <div class="card">
+        <h3 class="section-title">🛡️ Vergi & Sigorta Avantajı</h3>
+        <p style="font-size:0.9rem; margin-bottom:10px;">Bordronuzdan vergi iadesi almak için Hayat Sigortanız var mı?</p>
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+            <button class="btn btn-outline" id="btn-ins-yes" onclick="toggleInsurance(true)" style="padding:10px;">Evet, var</button>
+            <button class="btn btn-outline" id="btn-ins-no" onclick="toggleInsurance(false)" style="padding:10px;">Hayır, yok</button>
+        </div>
         
-        <div class="card">
-            <h3 class="section-title"><span class="h-icon">🛡️</span>Vergi & Sigorta</h3>
-            <p>Hayat Sigortası Poliçeniz var mı?</p>
-            <div style="display:flex; gap:10px; margin: 10px 0;">
-                <button onclick="setInsurance(true)" class="btn-main" style="flex:1; font-size:0.8rem;">Evet</button>
-                <button onclick="setInsurance(false)" class="btn-main" style="flex:1; font-size:0.8rem; background:var(--border); color:var(--ink);">Hayır</button>
+        <div id="insurance-form" style="display:none; background:var(--soft-gray); padding:15px; border-radius:12px;">
+            <label style="margin-top:0;">Aylık Ödenen Prim Tutarı</label>
+            <div style="display:flex; gap:10px;">
+                <input type="number" id="ins-amount" placeholder="0" style="flex:2;" oninput="calculateTax()">
+                <select id="ins-currency" style="flex:1;" onchange="calculateTax()">
+                    <option value="TRY">TL</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
             </div>
-            <div id="insurance-details" style="display:none;">
-                <label>Aylık Prim Miktarı</label>
-                <div style="display:flex; gap:5px;">
-                    <input type="number" id="ins-amount" placeholder="0" style="flex:2; padding:10px; border-radius:8px; border:1px solid var(--border);">
-                    <select id="ins-curr" style="flex:1; border-radius:8px;">
-                        <option value="TRY">TL</option>
-                        <option value="USD">USD</option>
-                        <option value="EUR">EUR</option>
-                    </select>
-                </div>
-                <div id="tax-advantage-result" style="margin-top:15px; padding:10px; background:var(--cream); border-radius:12px; font-size:0.9rem;">
-                    Aylık Vergi Avantajı: <strong>0 TL</strong>
-                </div>
+            <div style="margin-top:15px; padding:10px; background:var(--white); border-radius:8px; border:1px solid var(--border);">
+                <span style="font-size:0.85rem; color:var(--ink2)">Tahmini Aylık Vergi İadesi:</span><br>
+                <strong style="font-size:1.2rem; color:var(--green);" id="tax-result">0.00 TL</strong>
             </div>
-        </div>
-
-        <div class="card">
-            <h3 class="section-title"><span class="h-icon">📈</span>Strateji (Yaşa Göre)</h3>
-            <div id="strategy-box">
-                </div>
-            <hr style="margin:15px 0; border:0; border-top:1px solid var(--border);">
-            <h3 class="section-title"><span class="h-icon">⚖️</span>Portföy Hesap Makinesi</h3>
-            </div>
-
-        <div class="card" style="background: var(--ink); color: var(--white);">
-            <h3 class="section-title" style="color:var(--white)"><span class="h-icon">🗺️</span>Yol Haritası</h3>
-            <ul id="roadmap-list" style="list-style:none; font-size:0.9rem;">
-                <li style="margin-bottom:10px;">⚪ Acil Durum Fonu Oluştur</li>
-                <li style="margin-bottom:10px;">⚪ Bireysel Emeklilik Başlat</li>
-                <li style="margin-bottom:10px;">⚪ Vergi İadesini Yatırıma Dönüştür</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h3 class="section-title"><span class="h-icon">🔔</span>Aktif Alarmlar</h3>
-            <p style="font-size:0.8rem; color:var(--ink3)">Gram Altın > 3500 TL olduğunda haber ver.</p>
         </div>
     </div>
-</section>
+
+    <div class="card" style="background: var(--ink); color: var(--white);">
+        <h3 class="section-title" style="color:var(--white)">🗺️ Yol Haritası & Aksiyon</h3>
+        <div style="display:flex; align-items:center; margin-bottom:10px;">
+            <input type="checkbox" style="width:20px; height:20px; margin-right:10px;" id="task1">
+            <label for="task1" style="color:var(--white); margin:0; font-weight:400;">Acil durum fonunu (3 aylık gider) tamamla.</label>
+        </div>
+        <div style="display:flex; align-items:center; margin-bottom:10px;">
+            <input type="checkbox" style="width:20px; height:20px; margin-right:10px;" id="task2">
+            <label for="task2" style="color:var(--white); margin:0; font-weight:400;">Hayat sigortası vergi iadesi başvurusu yap.</label>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="section-title">🔔 Alarmlar</h3>
+        <p style="font-size:0.9rem; color:var(--ink2)">Henüz kurulu bir alarmınız yok.</p>
+    </div>
+    
+    <button class="btn btn-outline" onclick="logout()" style="color:red; border-color:red; margin-top:10px;">Profilden Çıkış Yap</button>
+</div>
 
 <script>
-let P = { name: "", job: "", age: 30, hasInsurance: false, insAmount: 0, insCurr: "TRY" };
-let profiles = JSON.parse(localStorage.getItem('mn_profiles') || '[]');
+// --- VERİ MODELİ ---
+let currentUser = null;
+const exchangeRates = { USD: 32.50, EUR: 35.10, TRY: 1 }; // Örnek kurlar
 
+// --- BAŞLANGIÇ (INIT) ---
 window.onload = function() {
-    renderProfiles();
+    checkSavedProfile();
 };
 
-function renderProfiles() {
-    const box = document.getElementById('saved-profiles');
-    box.innerHTML = profiles.length ? '' : '<p>Henüz profil yok.</p>';
-    profiles.forEach((p, index) => {
-        box.innerHTML += `
-            <div class="profile-item" onclick="loadProfile(${index})">
-                <div style="font-size:2rem; margin-right:15px;">👤</div>
+function checkSavedProfile() {
+    const saved = localStorage.getItem('mangir_profile');
+    if (saved) {
+        // Kayıtlı profil varsa listeyi göster
+        currentUser = JSON.parse(saved);
+        const list = document.getElementById('profile-list');
+        list.innerHTML = `
+            <div class="profile-card" onclick="login()">
+                <span style="font-size:2rem; margin-right:15px;">👤</span>
                 <div>
-                    <strong>${p.name}</strong><br>
-                    <small>${p.job} - ${p.age} Yaş</small>
+                    <h3 style="margin:0; font-size:1.1rem;">${currentUser.name}</h3>
+                    <p style="margin:0; font-size:0.85rem; color:var(--ink2)">${currentUser.job} • ${currentUser.age} Yaş</p>
                 </div>
             </div>
         `;
-    });
-}
-
-function startNewOnboarding() {
-    document.getElementById('auth-screen').classList.remove('visible');
-    document.getElementById('onboarding').classList.add('visible');
-}
-
-function checkJobDetails() {
-    const job = document.getElementById('user-job').value;
-    const area = document.getElementById('job-detail-area');
-    const sub = document.getElementById('user-job-sub');
-    if(job === 'hekim') {
-        area.style.display = 'block';
-        sub.innerHTML = '<option>Pratisyen Hekim</option><option>Uzman Hekim</option><option>Asistan Hekim</option>';
     } else {
-        area.style.display = 'none';
+        document.getElementById('profile-list').innerHTML = '<p style="font-size:0.9rem; color:var(--ink3);">Kayıtlı profil bulunamadı.</p>';
     }
 }
 
-function saveAndNext(step) {
-    if(step === 1) {
-        P.name = document.getElementById('user-name').value || "Yatırımcı";
-        P.job = document.getElementById('user-job').value;
-        P.age = parseInt(document.querySelector('input[type=range]').value);
-        
-        profiles.push(P);
-        localStorage.setItem('mn_profiles', JSON.stringify(profiles));
-        
-        goToDashboard();
+// --- EKRAN GEÇİŞ YÖNETİMİ ---
+function showScreen(screenId) {
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
+    document.getElementById(screenId).classList.add('active-page');
+    window.scrollTo(0, 0); // Ekranın en üstüne al
+}
+
+// --- ONBOARDING MANTIĞI ---
+function handleJobChange() {
+    const job = document.getElementById('ob-job').value;
+    const subBox = document.getElementById('ob-job-sub-container');
+    if (job === 'Hekim') {
+        subBox.style.display = 'block';
+    } else {
+        subBox.style.display = 'none';
     }
 }
 
-function loadProfile(index) {
-    P = profiles[index];
-    goToDashboard();
+function saveProfileAndStart() {
+    const name = document.getElementById('ob-name').value || "Yatırımcı";
+    const age = parseInt(document.getElementById('ob-age').value);
+    let job = document.getElementById('ob-job').value;
+    
+    // Eğer hekimse alt branşı da mesleğe ekle
+    if (job === 'Hekim') {
+        job = document.getElementById('ob-job-sub').value;
+    }
+
+    currentUser = { name, age, job };
+    localStorage.setItem('mangir_profile', JSON.stringify(currentUser));
+    
+    login(); // Direkt giriş yap
 }
 
-function goToDashboard() {
-    document.getElementById('auth-screen').classList.remove('visible');
-    document.getElementById('onboarding').classList.remove('visible');
-    document.getElementById('dashboard').classList.add('visible');
-    document.getElementById('display-name').innerText = P.name;
-    updateStrategy();
+// --- SİSTEME GİRİŞ VE EKRANI DOLDURMA ---
+function login() {
+    document.getElementById('dash-name').innerText = currentUser.name;
+    
+    // Yaşa göre strateji metnini belirle
+    let strategyText = "";
+    if (currentUser.age < 35) {
+        strategyText = "Yaşınız gereği uzun vadeli büyüme odaklı, hisse senedi ve fon ağırlıklı (Agresif) bir sepet önerilir.";
+    } else if (currentUser.age < 50) {
+        strategyText = "Risklerinizi dengelemek adına Altın, Mevduat ve Hisse Senedi karışımı (Dengeli) bir sepet oluşturabilirsiniz.";
+    } else {
+        strategyText = "Sermaye koruma odaklı, düşük riskli araçlar (Mevduat, Kira Sertifikası, Altın) tercih etmeniz önerilir.";
+    }
+    document.getElementById('dash-strategy').innerText = strategyText;
+
+    showScreen('screen-dashboard');
 }
 
-function setInsurance(val) {
-    P.hasInsurance = val;
-    document.getElementById('insurance-details').style.display = val ? 'block' : 'none';
+function logout() {
+    localStorage.removeItem('mangir_profile');
+    currentUser = null;
+    checkSavedProfile();
+    showScreen('screen-auth');
+    
+    // Vergi formunu sıfırla
+    toggleInsurance(false);
+    document.getElementById('ins-amount').value = '';
+    document.getElementById('tax-result').innerText = '0.00 TL';
 }
 
-function updateStrategy() {
-    const box = document.getElementById('strategy-box');
-    let risk = P.age < 35 ? "Agresif (Hisse Ağırlıklı)" : (P.age < 50 ? "Dengeli" : "Muhafazakar (Altın/Mevduat)");
-    box.innerHTML = `<p>Yaşınıza uygun strateji: <strong>${risk}</strong></p>`;
+// --- VERGİ VE SİGORTA HESAPLAMASI ---
+function toggleInsurance(hasInsurance) {
+    const btnYes = document.getElementById('btn-ins-yes');
+    const btnNo = document.getElementById('btn-ins-no');
+    const form = document.getElementById('insurance-form');
+
+    if (hasInsurance) {
+        btnYes.style.background = "var(--ink)"; btnYes.style.color = "var(--white)";
+        btnNo.style.background = "transparent"; btnNo.style.color = "var(--ink)";
+        form.style.display = "block";
+    } else {
+        btnNo.style.background = "var(--ink)"; btnNo.style.color = "var(--white)";
+        btnYes.style.background = "transparent"; btnYes.style.color = "var(--ink)";
+        form.style.display = "none";
+    }
 }
 
-// Basit Vergi Avantajı Hesaplama (Simüle)
-document.getElementById('ins-amount')?.addEventListener('input', function() {
-    let amt = this.value;
-    let advantage = amt * 0.15; // %15 dilim varsayımı
-    document.getElementById('tax-advantage-result').innerHTML = `Aylık Vergi Avantajı: <strong>${advantage.toFixed(2)} TL</strong> <br> <small>Bu tutar net maaşınıza eklenir.</small>`;
-});
-
+function calculateTax() {
+    const amount = parseFloat(document.getElementById('ins-amount').value) || 0;
+    const currency = document.getElementById('ins-currency').value;
+    
+    // Tutarı TL'ye çevir
+    const tlAmount = amount * exchangeRates[currency];
+    
+    // Basit Vergi İadesi Formülü (%15 Vergi Dilimi Varsayımı)
+    // Gerçekte brüt maaşın %15'ini ve asgari ücreti geçemez kuralı vardır, burası simülasyondur.
+    const advantage = tlAmount * 0.15; 
+    
+    document.getElementById('tax-result').innerText = advantage.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL";
+}
 </script>
 </body>
 </html>
