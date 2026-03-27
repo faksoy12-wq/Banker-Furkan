@@ -557,6 +557,14 @@ html{scroll-behavior:smooth;}
           </div>
           <div class="card" style="margin-bottom:0;">
             <div class="ct">📅 Yaşa Göre Strateji</div>
+            <div style="background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+               <div style="font-size:11px;color:var(--ink3);font-weight:600;">MEVCUT YAŞ (SİMÜLASYON)</div>
+               <div style="display:flex;align-items:center;gap:8px;">
+                  <button onclick="changeMevcutYas(-1)" style="width:24px;height:24px;border-radius:12px;border:1px solid var(--border);background:var(--white);color:var(--ink);cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:0;padding-bottom:2px;">-</button>
+                  <span id="yas-edit-val" style="font-size:14px;font-weight:700;min-width:20px;text-align:center;">27</span>
+                  <button onclick="changeMevcutYas(1)" style="width:24px;height:24px;border-radius:12px;border:1px solid var(--border);background:var(--white);color:var(--ink);cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:0;padding-bottom:2px;">+</button>
+               </div>
+            </div>
             <div id="yas-strateji"></div>
           </div>
           <div class="card" style="margin-bottom:0;">
@@ -841,13 +849,13 @@ var S = { yatirim:30000, maas:75000, brut:0, vergiBrut:0,
   bordrolar:[], bakiye:[], araclar:[], alarmlar:[], alarmGecmis:[], sigortaBaslangic:null, giderler:[] };
 
 // ── GİZLİLİK (Privacy Mask) ───────────────────────────────────────────────
-var GIZLI = false;
+var GIZLI = false; try{ GIZLI = localStorage.getItem('mn-gizli')==='1'; }catch(e){}
 function maskVal(v) { return GIZLI ? '••••••' : v; }
 function toggleGizlilik() {
   GIZLI = !GIZLI;
+  try{ localStorage.setItem('mn-gizli', GIZLI ? '1' : '0'); }catch(e){}
   var btn = document.getElementById('gizlilik-btn');
   if (btn) btn.textContent = GIZLI ? '🙈' : '👁️';
-  // Tüm maskelenecek elementleri güncelle
   updateAll();
   renderBakiye();
   renderHedef();
@@ -1179,7 +1187,7 @@ function initDashboard() {
   var actions=document.querySelector('.h-actions');
   if(actions && !document.getElementById('gizlilik-btn')) {
     var gbtn=document.createElement('button');
-    gbtn.id='gizlilik-btn';gbtn.textContent='👁️';
+    gbtn.id='gizlilik-btn';gbtn.textContent=GIZLI ? '🙈' : '👁️';
     gbtn.title='Rakamları maskele';
     gbtn.className='reset-btn';
     gbtn.onclick=toggleGizlilik;
@@ -1206,6 +1214,7 @@ function initDashboard() {
 }
 
 function buildYasStrateji() {
+  var d=document.getElementById('yas-edit-val');if(d)d.textContent=P.yas||27;
   var yas=P.yas||27;
   var strats=[{range:'18–35',desc:'Altın ağır, agresif büyüme',c:yas>=18&&yas<35},{range:'35–44',desc:'BİST artır, BES başlat',c:yas>=35&&yas<44},{range:'44–50',desc:'BES artır, denge kur',c:yas>=44&&yas<50},{range:'50–56',desc:'BES maksimize, korumaya geç',c:yas>=50&&yas<56},{range:'56+',desc:'Finansal özgürlük, pasif gelir',c:yas>=56}];
   document.getElementById('yas-strateji').innerHTML=strats.map(function(s){
@@ -1214,6 +1223,15 @@ function buildYasStrateji() {
       '<span style="font-size:12px;'+(s.c?'font-weight:700;color:var(--green);':'color:var(--ink3);')+'">'+s.range+' yaş</span></div>'+
       '<span style="font-size:11px;color:'+(s.c?'var(--green)':'var(--ink3)')+';">'+s.desc+'</span></div>';
   }).join('');
+}
+
+function changeMevcutYas(dif){
+  var y=P.yas||27; y+=dif;
+  if(y<18||y>=(P.emekYas||55))return;
+  P.yas=y; S.yas=y;
+  var idx=TUM_PROFILLER.findIndex(function(x){return x.id===P.id;});
+  if(idx>=0){TUM_PROFILLER[idx]=P;try{localStorage.setItem('mn-profiller',JSON.stringify(TUM_PROFILLER));}catch(e){}}
+  saveState(); updateAll(); buildYasStrateji(); renderHedef(); buildAksiyon(); if(typeof cu==='function')cu();
 }
 
 function changeEmekYas(dif){
@@ -1306,7 +1324,7 @@ function sigortaKaydet(){
 // ── KURLAR ────────────────────────────────────────────────────────────────
 async function fetchRates(){
   try{
-    var u=location.hostname==='localhost'||location.hostname==='127.0.0.1'?'https://banker-furkan.vercel.app/api/rates':'/api/rates';
+    var u=(location.protocol==='file:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')?'https://banker-furkan.vercel.app/api/rates':'/api/rates';
     var r=await fetch(u),d=await r.json();
     S.prev=Object.assign({},S.rates);S.rates.usd=d.usd||42.8;S.rates.eur=d.eur||50.2;S.rates.altin=d.altin||7100;S.rates.ons=d.ons||3000;
     var n=new Date();document.getElementById('upd-time').textContent='Canlı · '+n.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
