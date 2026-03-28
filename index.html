@@ -54,16 +54,16 @@ input[type=range]{appearance:slider-horizontal;-webkit-appearance:slider-horizon
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  background-image:url('lion-coin.jpg'); /* LÜTFEN GÖRSELİ lion-coin.jpg ADIYLA KAYDET */
+  background-image:url('lion-coin.jpg'); /* IŞIKLI (ALTIN) GÖRSEL: lion-coin.jpg */
   background-size:cover;
   background-position:center;
   box-shadow:0 10px 40px rgba(212, 175, 55, 0.5), inset 0 0 15px rgba(0,0,0,0.5);
-  transition: filter 0.3s ease;
+  transition: all 0.3s ease;
 }
-/* Gece modunda aslan sikkeyi "Gümüş/Platin" versiyonuna dönüştürür (daha yumuşak efektle detayları korur) */
+/* Gece modunda doğrudan Kullanıcının ürettiği Gümüş Aslan görseli dev devreye girer */
 [data-theme="dark"] .l-coin{
-  filter: grayscale(1) brightness(1.1) contrast(1.05);
-  box-shadow:0 10px 40px rgba(156, 163, 175, 0.3), inset 0 0 15px rgba(0,0,0,0.5);
+  background-image:url('lion-coin-dark.jpg'); /* KARANLIK (GÜMÜŞ) GÖRSEL: lion-coin-dark.jpg */
+  box-shadow:0 10px 40px rgba(156, 163, 175, 0.4), inset 0 0 15px rgba(0,0,0,0.5);
 }
 .l-coin-lg{width:160px;height:160px;animation:floatLion 3.5s ease-in-out infinite;margin-bottom:32px;border:3px solid #D4AF37;}
 [data-theme="dark"] .l-coin-lg{border-color:#E5E7EB;}
