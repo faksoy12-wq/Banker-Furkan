@@ -507,7 +507,7 @@ function calculateHealthScore() {
   var lblEl = document.getElementById('health-label');
   var grdEl = document.getElementById('health-grade');
   if(lblEl && grdEl) {
-    if(score >= 80) { lblEl.textContent="Mükemmel Yoldaşı"; grdEl.textContent="A Sınıfı Finansal Sağlık"; grdEl.style.color="var(--green)"; grdEl.style.background="var(--green-bg)"; }
+    if(score >= 80) { lblEl.textContent="Mükemmel"; grdEl.textContent="A Sınıfı Finansal Sağlık"; grdEl.style.color="var(--green)"; grdEl.style.background="var(--green-bg)"; }
     else if(score >= 50) { lblEl.textContent="İyi İlerliyorsun"; grdEl.textContent="B Sınıfı Finansal Sağlık"; grdEl.style.color="var(--gold)"; grdEl.style.background="var(--gold-bg)"; }
     else { lblEl.textContent="Biraz Düzenleme Şart"; grdEl.textContent="C Sınıfı Finansal Sağlık"; grdEl.style.color="var(--red)"; grdEl.style.background="var(--red-bg)"; }
   }
