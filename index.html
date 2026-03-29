@@ -367,8 +367,9 @@ html{scroll-behavior:smooth;}
 /* ── BOTTOM NAV (FLOATING PILL) ── */
 .bottom-nav{display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);width:calc(100% - 48px);max-width:400px;background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:32px;z-index:200;padding:8px 12px;box-shadow:0 12px 32px rgba(0,0,0,0.12);}
 [data-theme="dark"] .bottom-nav{background:rgba(20,20,20,0.85);border:1px solid rgba(255,255,255,0.1);box-shadow:0 12px 32px rgba(0,0,0,0.5);}
-.bottom-nav-inner{display:flex;justify-content:space-around;align-items:center;width:100%;}
-.bnav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;cursor:pointer;border:none;background:none;font-family:var(--sans);flex:1;position:relative;transition:transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);z-index:1;border-radius:18px;min-height:48px;}
+.bottom-nav-inner{display:flex;align-items:center;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px;padding:0 4px;}
+.bottom-nav-inner::-webkit-scrollbar{display:none;}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 12px;cursor:pointer;border:none;background:none;font-family:var(--sans);flex-shrink:0;position:relative;transition:transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);z-index:1;border-radius:18px;min-height:48px;}
 .bnav-item::before{content:"";position:absolute;inset:4px;border-radius:14px;background:var(--ink);opacity:0;transform:scale(0.8);transition:all 0.3s cubic-bezier(0.25, 1, 0.5, 1);z-index:-1;}
 [data-theme="dark"] .bnav-item::before{background:var(--white);}
 .bnav-item.active::before{opacity:0.06;transform:scale(1);}
@@ -982,7 +983,6 @@ html{scroll-behavior:smooth;}
     </div>
   </div>
 
-<!-- BOTTOM NAV (inside dashboard) -->
 <div class="bottom-nav" id="bottom-nav">
   <div class="bottom-nav-inner">
     <button class="bnav-item active" onclick="goTabBottom('portfolio',this)"><span>📊</span><span>Portföy</span></button>
@@ -990,7 +990,11 @@ html{scroll-behavior:smooth;}
     <button class="bnav-item" onclick="goTabBottom('hedef',this)"><span>🎯</span><span>Hedef</span></button>
     <button class="bnav-item" onclick="goTabBottom('calculator',this)"><span>🧮</span><span>Hesap</span></button>
     <button class="bnav-item" onclick="goTabBottom('gider',this)"><span>🧾</span><span>Giderler</span></button>
-    <button class="bnav-item" onclick="toggleBottomMore()" id="bnav-more"><span>⋯</span><span>Diğer</span></button>
+    <button class="bnav-item" onclick="goTabBottom('yolharitasi',this)"><span>🗺️</span><span>Harita</span></button>
+    <button class="bnav-item" onclick="goTabBottom('aksiyon',this)"><span>✅</span><span>Aksiyon</span></button>
+    <button class="bnav-item" onclick="goTabBottom('alarmlar',this)"><span>🔔</span><span>Alarmlar</span></button>
+    <button class="bnav-item" onclick="goTabBottom('bordro',this)"><span>📋</span><span>Bordro</span></button>
+    <button class="bnav-item" onclick="goTabBottom('vergi',this)"><span>💸</span><span>Vergi</span></button>
   </div>
 </div>
 
