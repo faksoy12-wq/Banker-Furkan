@@ -10,8 +10,11 @@ var currentTabIdx=0;
 function haptic(){try{if(navigator.vibrate)navigator.vibrate(50);}catch(e){}}
 function scrollToEl(id){var el=document.getElementById(id);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){el.focus();},300);}}
 function emptyState(icon,title,desc,btnText,btnAction){
+  var iconHtml = (icon.indexOf('.png') !== -1 || icon.indexOf('.webp') !== -1) ? 
+    '<img src="'+icon+'" style="width:120px;height:auto;margin:0 auto 15px auto;display:block;opacity:0.9;">' : 
+    '<div class="empty-state-icon">'+icon+'</div>';
   return '<div class="empty-state">'+
-    '<div class="empty-state-icon">'+icon+'</div>'+
+    iconHtml+
     '<div class="empty-state-title">'+title+'</div>'+
     '<div class="empty-state-desc">'+desc+'</div>'+
     (btnText?'<button class="empty-state-btn" onclick="'+btnAction+'">'+btnText+'</button>':'')+
