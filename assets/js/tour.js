@@ -12,7 +12,7 @@ var TOUR_STEPS = [
 var tourStep = 0;
 
 function startTour() {
-  try { if (localStorage.getItem('mn-tour-v2') === '1') return; } catch(e) {}
+  try { if (localStorage.getItem('mn-tour-done') === '1') return; } catch(e) {}
   tourStep = 0;
   showTourStep();
 }
@@ -40,8 +40,10 @@ function showTourStep() {
   highlight.style.cssText = 'top:' + (rect.top + window.scrollY - 6) + 'px;left:' + (rect.left - 6) + 'px;width:' + (rect.width + 12) + 'px;height:' + (rect.height + 12) + 'px;';
   document.body.appendChild(highlight);
 
+  var isTop = rect.top < 150;
+  var pos = isTop ? 'bottom' : step.pos;
   var tip = document.createElement('div');
-  tip.className = 'tour-tooltip tour-tooltip--' + step.pos;
+  tip.className = 'tour-tooltip tour-tooltip--' + pos;
   tip.innerHTML =
     '<div class="tour-text">' + step.text + '</div>' +
     '<div class="tour-footer">' +
@@ -52,7 +54,7 @@ function showTourStep() {
       '</div>' +
     '</div>';
 
-  if (step.pos === 'bottom') {
+  if (pos === 'bottom') {
     tip.style.top = (rect.bottom + window.scrollY + 16) + 'px';
   } else {
     tip.style.top = (rect.top + window.scrollY - 16) + 'px';
@@ -60,13 +62,21 @@ function showTourStep() {
   }
   tip.style.left = Math.max(16, Math.min(rect.left, window.innerWidth - 300)) + 'px';
   document.body.appendChild(tip);
+  
+  // Ensure tooltip is visible
+  setTimeout(function(){
+    var tipRect = tip.getBoundingClientRect();
+    if (tipRect.top < 0 || tipRect.bottom > window.innerHeight) {
+        tip.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }
+  }, 50);
 }
 
 function nextTourStep() { tourStep++; showTourStep(); }
 
 function endTour() {
   removeTourOverlay();
-  try { localStorage.setItem('mn-tour-v2', '1'); } catch(e) {}
+  try { localStorage.setItem('mn-tour-done', '1'); } catch(e) {}
 }
 
 function removeTourOverlay() {

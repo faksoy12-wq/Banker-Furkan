@@ -75,7 +75,7 @@ function initTheme(){
   if(!saved){saved=window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';}
   document.documentElement.setAttribute('data-theme',saved);
   var btn=document.getElementById('theme-btn');
-  if(btn)btn.textContent=saved==='dark'?'☀️':'🌙';
+  if(btn){ btn.innerHTML=saved==='dark'?'<i data-lucide="sun" class="lu"></i>':'<i data-lucide="moon" class="lu"></i>'; if(typeof lucide!=='undefined')lucide.createIcons(); }
 }
 
 // ── EXPORT / IMPORT ──────────────────────────────────────────────────────

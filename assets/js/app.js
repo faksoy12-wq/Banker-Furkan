@@ -16,7 +16,7 @@ function initDashboard() {
 
   // Gizlilik butonu ikonunu güncelle
   var gbtn=document.getElementById('gizlilik-btn');
-  if(gbtn) gbtn.textContent=GIZLI ? '🙈' : '👁️';
+  if(gbtn) { gbtn.innerHTML=GIZLI ? '<i data-lucide="eye-off" class="lu"></i>' : '<i data-lucide="eye" class="lu"></i>'; if(typeof lucide!=='undefined')lucide.createIcons(); }
 
   document.getElementById('s-maas').textContent=fmtN(P.gelir)+' ₺';
   document.getElementById('s-yatirim').textContent=fmtN(S.yatirim)+' ₺';
