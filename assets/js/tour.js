@@ -60,6 +60,9 @@ function showTourStep() {
   highlight.style.cssText += 'top:' + (rect.top + scrollY - 6) + 'px;left:' + (rect.left - 6) + 'px;width:' + (rect.width + 12) + 'px;height:' + (rect.height + 12) + 'px;';
   document.body.appendChild(highlight);
 
+  // Determine if target is in the bottom nav (fixed, near screen bottom)
+  var isBottomNav = isFixed && rect.top > window.innerHeight * 0.7;
+  
   var isTop = rect.top < 150;
   var pos = isTop ? 'bottom' : step.pos;
   var tip = document.createElement('div');
@@ -75,22 +78,21 @@ function showTourStep() {
       '</div>' +
     '</div>';
 
-  if (pos === 'bottom') {
+  if (isBottomNav) {
+    // For bottom nav buttons: consistent position above the nav bar
+    tip.style.bottom = (window.innerHeight - rect.top + 16) + 'px';
+    tip.style.left = '50%';
+    tip.style.transform = 'translateX(-50%)';
+    tip.style.maxWidth = 'calc(100vw - 40px)';
+  } else if (pos === 'bottom') {
     tip.style.top = (rect.bottom + scrollY + 16) + 'px';
+    tip.style.left = Math.max(16, Math.min(rect.left, window.innerWidth - 300)) + 'px';
   } else {
     tip.style.top = (rect.top + scrollY - 16) + 'px';
     tip.style.transform = 'translateY(-100%)';
+    tip.style.left = Math.max(16, Math.min(rect.left, window.innerWidth - 300)) + 'px';
   }
-  tip.style.left = Math.max(16, Math.min(rect.left, window.innerWidth - 300)) + 'px';
   document.body.appendChild(tip);
-  
-  // Ensure tooltip is visible
-  setTimeout(function(){
-    var tipRect = tip.getBoundingClientRect();
-    if (tipRect.top < 0 || tipRect.bottom > window.innerHeight) {
-        tip.scrollIntoView({behavior: 'smooth', block: 'center'});
-    }
-  }, 50);
 }
 
 function nextTourStep() { tourStep++; showTourStep(); }

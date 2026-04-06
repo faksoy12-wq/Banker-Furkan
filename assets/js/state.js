@@ -302,7 +302,7 @@ function buildSummary() {
   var kalan=obData.emekYas-obData.yas;
   var hedef=calcPortfoy(obData.yatirim,18,kalan,obData.artis);
   var aylik=Math.round(hedef*0.18/12);
-  var rA={konser:'Muhafazakâr <i data-lucide="shield" class="lu"></i>',dengeli:'Dengeli <i data-lucide="scale" class="lu"></i>',agresif:'Agresif <i data-lucide="rocket" class="lu"></i>'};
+  var rA={konser:'Muhafazakâr <i data-lucide="shield" class="lu"></i>',dengeli:'Dengeli <i data-lucide="scale" class="lu"></i>',agresif:'Agresif <i data-lucide="rocket" class="lu"></i>',katilim:'Katılım (Faizsiz) <i data-lucide="hand-coins" class="lu"></i>'};
   var mA={doktor:'Doktor/Hekim',ogretmen:'Öğretmen',muhendis:'Mühendis',memur:'Devlet Memuru',ozel:'Özel Sektör',serbest:'Serbest/Girişimci'};
   var sigStr=obData.sigorta==='var'?obData.sigortaPrim+' '+obData.sigortaPB.toUpperCase()+'/ay':'Yok';
   document.getElementById('ob-ozet').innerHTML=
