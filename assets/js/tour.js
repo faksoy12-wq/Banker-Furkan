@@ -12,7 +12,7 @@ var TOUR_STEPS = [
 var tourStep = 0;
 
 function startTour() {
-  try { if (localStorage.getItem('mn-tour-done') === '1') return; } catch(e) {}
+  try { if (localStorage.getItem('mn-tour-v3') === '1') return; } catch(e) {}
   var ws = document.getElementById('welcome-slider');
   if (ws && ws.classList.contains('visible')) return; // Will be triggered when welcome slider closes
   tourStep = 0;
@@ -84,7 +84,7 @@ function nextTourStep() { tourStep++; showTourStep(); }
 
 function endTour() {
   removeTourOverlay();
-  try { localStorage.setItem('mn-tour-done', '1'); } catch(e) {}
+  try { localStorage.setItem('mn-tour-v3', '1'); } catch(e) {}
 }
 
 function removeTourOverlay() {
