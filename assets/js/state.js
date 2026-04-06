@@ -143,7 +143,7 @@ function profilSec(i) {
   setTimeout(initScrollHints, 300);
   setTimeout(initPullToRefresh, 500);
   setTimeout(function(){ if(typeof startTour==='function') startTour(); }, 1500);
-  showToast('Hoşgeldin, '+esc(P.ad)+'! 👋','success',2500);
+  showToast('Hoşgeldin, '+esc(P.ad)+'!','success',2500);
 }
 
 function showHata(form, msg) {
@@ -239,7 +239,7 @@ function selectSigorta(val) {
 function updateSlider(type) {
   if(type==='yas'){var v=parseInt(document.getElementById('ob-yas').value);document.getElementById('yas-val').textContent=v+' yaş';var t=document.getElementById('ob-yas-txt');if(t)t.value=v;obData.yas=v;}
   if(type==='gelir'){var v=parseInt(document.getElementById('ob-gelir').value);document.getElementById('gelir-val').textContent=fmtR(v)+' ₺';document.getElementById('ob-gelir-txt').value=v;obData.gelir=v;}
-  if(type==='yatirim'){var v=parseInt(document.getElementById('ob-yatirim').value);document.getElementById('yatirim-val').textContent=fmtR(v)+' ₺';document.getElementById('ob-yatirim-txt').value=v;obData.yatirim=v;var pct=obData.gelir>0?Math.round(v/obData.gelir*100):0;document.getElementById('yatirim-pct-sub').textContent='Gelirinizin %'+pct+"'i";var h=document.getElementById('yatirim-hint');if(pct>=30){h.style.background='var(--green-bg)';h.style.color='var(--green)';h.textContent='🎉 Harika! %'+pct+' tasarruf oranı.';}else if(pct>=20){h.style.background='var(--gold-bg)';h.style.color='var(--gold)';h.textContent='👍 İyi! Minimum %20 hedefliyorsun.';}else{h.style.background='var(--red-bg)';h.style.color='var(--red)';h.textContent='⚠️ Uzmanlar minimum %20 öneriyor.';}}
+  if(type==='yatirim'){var v=parseInt(document.getElementById('ob-yatirim').value);document.getElementById('yatirim-val').textContent=fmtR(v)+' ₺';document.getElementById('ob-yatirim-txt').value=v;obData.yatirim=v;var pct=obData.gelir>0?Math.round(v/obData.gelir*100):0;document.getElementById('yatirim-pct-sub').textContent='Gelirinizin %'+pct+"'i";var h=document.getElementById('yatirim-hint');if(pct>=30){h.style.background='var(--green-bg)';h.style.color='var(--green)';h.textContent='Harika! %'+pct+' tasarruf oranı.';}else if(pct>=20){h.style.background='var(--gold-bg)';h.style.color='var(--gold)';h.textContent='İyi! Minimum %20 hedefliyorsun.';}else{h.style.background='var(--red-bg)';h.style.color='var(--red)';h.textContent='Uzmanlar minimum %20 öneriyor.';}}
   if(type==='emek'){var v=parseInt(document.getElementById('ob-emek').value);document.getElementById('emek-val').textContent=v+' yaş';var t=document.getElementById('ob-emek-txt');if(t)t.value=v;obData.emekYas=v;document.getElementById('emek-kalan-sub').textContent=(v-obData.yas)+' yıl sonra';}
   if(type==='artis'){var v=parseInt(document.getElementById('ob-artis').value);document.getElementById('artis-val').textContent=v>0?'%'+v:'%0';var t=document.getElementById('ob-artis-txt');if(t)t.value=v;obData.artis=v;var s=document.getElementById('artis-sub');if(v===0){s.textContent='Sabit yatırımla devam';}else{var artisli=calcPortfoy(obData.yatirim,18,obData.emekYas-obData.yas,v),sabit=calcPortfoy(obData.yatirim,18,obData.emekYas-obData.yas,0);s.textContent='%'+v+' artışla +'+fmtR(artisli-sabit)+' ₺ fazla';}}
 }
@@ -265,9 +265,9 @@ function syncManual(type,v) {
     if(sub)sub.textContent='Gelirinizin %'+pct+"'i";
     var h=document.getElementById('yatirim-hint');
     if(h){
-      if(pct>=30){h.style.background='var(--green-bg)';h.style.color='var(--green)';h.textContent='🎉 Harika! %'+pct+' tasarruf oranı.';}
-      else if(pct>=20){h.style.background='var(--gold-bg)';h.style.color='var(--gold)';h.textContent='👍 İyi! Minimum %20 hedefliyorsun.';}
-      else{h.style.background='var(--red-bg)';h.style.color='var(--red)';h.textContent='⚠️ Uzmanlar minimum %20 öneriyor.';}
+      if(pct>=30){h.style.background='var(--green-bg)';h.style.color='var(--green)';h.textContent='Harika! %'+pct+' tasarruf oranı.';}
+      else if(pct>=20){h.style.background='var(--gold-bg)';h.style.color='var(--gold)';h.textContent='İyi! Minimum %20 hedefliyorsun.';}
+      else{h.style.background='var(--red-bg)';h.style.color='var(--red)';h.textContent='Uzmanlar minimum %20 öneriyor.';}
     }
   }
   if(type==='emek'){
@@ -347,5 +347,5 @@ function finalizeOnboarding() {
   rateInterval=setInterval(fetchRates,30000);
   setTimeout(initScrollHints, 300);
   setTimeout(initPullToRefresh, 500);
-  showToast('Profilin oluşturuldu! 🎉','success',3000);
+  showToast('Profilin oluşturuldu!','success',3000);
 }
