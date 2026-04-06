@@ -15,8 +15,11 @@ function startTour() {
   try { if (localStorage.getItem('mn-tour-v4') === '1') return; } catch(e) {}
   var ws = document.getElementById('welcome-slider');
   if (ws && ws.classList.contains('visible')) return; // Will be triggered when welcome slider closes
+  // Ensure icons are rendered and layout is settled before measuring positions
+  if (typeof lucide !== 'undefined') lucide.createIcons();
   tourStep = 0;
-  showTourStep();
+  // Wait a frame so layout is stable before measuring element positions
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ showTourStep(); }); });
 }
 
 function showTourStep() {

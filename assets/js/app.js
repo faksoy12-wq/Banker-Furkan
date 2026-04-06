@@ -633,7 +633,24 @@ setTimeout(function(){
   document.getElementById('splash').classList.add('fade');
   setTimeout(function(){ document.getElementById('splash').style.display='none'; }, 500);
   TUM_PROFILLER = JSON.parse((function(){ try{ return localStorage.getItem('mn-profiller')||'[]' }catch(e){ return '[]' } })());
-  showAuthScreen();
+
+  // For first-time users: show welcome slider BEFORE auth screen to prevent flash
+  var welcomeNeeded = false;
+  try { welcomeNeeded = localStorage.getItem('mn-welcome-seen') !== '1'; } catch(e){}
+  
+  if (welcomeNeeded && TUM_PROFILLER.length === 0 && typeof initWelcomeSlider === 'function') {
+    // First-time user: show welcome first, auth will show when welcome closes
+    initWelcomeSlider();
+    // Override closeWelcome to chain into auth
+    var _origClose = window.closeWelcome;
+    window.closeWelcome = function() {
+      _origClose();
+      setTimeout(showAuthScreen, 450);
+    };
+  } else {
+    showAuthScreen();
+  }
+
   // URL Routing Init
   window.addEventListener('hashchange', function(){
     var h = location.hash.replace('#','');
@@ -647,3 +664,4 @@ setTimeout(function(){
   // Initialize scroll hints after dashboard is ready
   setTimeout(initScrollHints, 500);
 }, 1800);
+

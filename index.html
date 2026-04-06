@@ -20,6 +20,12 @@
 <script>
 // Sayfa yüklenince hemen yönlendir - tek sayfalık uygulama
 window.MANGIR_VERSION = '2.0';
+// CRITICAL: Set theme BEFORE any render to prevent light→dark flash
+(function(){
+  var t;try{t=localStorage.getItem('mn-theme');}catch(e){}
+  if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';}
+  document.documentElement.setAttribute('data-theme',t);
+})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
@@ -708,15 +714,19 @@ window.MANGIR_VERSION = '2.0';
 <script src="assets/js/app.js"></script>
 <script>
 if(typeof lucide!=='undefined')lucide.createIcons();
-if(typeof initWelcomeSlider==='function')setTimeout(initWelcomeSlider,2000);
-// Re-init icons whenever dashboard changes
+// Welcome slider is now handled by app.js init sequence — do NOT call here
+
+// Re-init icons ONLY when switching to a new tab (debounced to avoid layout thrash)
+var _iconTimer = null;
+function _debouncedIcons(){ clearTimeout(_iconTimer); _iconTimer = setTimeout(function(){ if(typeof lucide!=='undefined') lucide.createIcons(); }, 80); }
+
 var _origGoTab=window.goTab;
-if(_origGoTab)window.goTab=function(t,b){_origGoTab(t,b);setTimeout(function(){if(typeof lucide!=='undefined')lucide.createIcons();},50);};
+if(_origGoTab)window.goTab=function(t,b,s){_origGoTab(t,b,s);_debouncedIcons();};
 var _origGoTabB=window.goTabBottom;
-if(_origGoTabB)window.goTabBottom=function(t,b){_origGoTabB(t,b);setTimeout(function(){if(typeof lucide!=='undefined')lucide.createIcons();},50);};
+if(_origGoTabB)window.goTabBottom=function(t,b,s){_origGoTabB(t,b,s);_debouncedIcons();};
 // Re-init after profile load
 var _origProfilSec=window.profilSec;
-if(_origProfilSec)window.profilSec=function(i){_origProfilSec(i);setTimeout(function(){if(typeof lucide!=='undefined')lucide.createIcons();},300);};
+if(_origProfilSec)window.profilSec=function(i){_origProfilSec(i);setTimeout(_debouncedIcons,300);};
 </script>
 </body>
 </html>

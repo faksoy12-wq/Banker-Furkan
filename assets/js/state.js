@@ -142,7 +142,7 @@ function profilSec(i) {
   rateInterval=setInterval(fetchRates,30000);
   setTimeout(initScrollHints, 300);
   setTimeout(initPullToRefresh, 500);
-  setTimeout(function(){ if(typeof startTour==='function') startTour(); }, 1500);
+  setTimeout(function(){ if(typeof startTour==='function') startTour(); }, 2500);
   showToast('Hoşgeldin, '+esc(P.ad)+'!','success',2500);
 }
 
@@ -348,4 +348,6 @@ function finalizeOnboarding() {
   setTimeout(initScrollHints, 300);
   setTimeout(initPullToRefresh, 500);
   showToast('Profilin oluşturuldu!','success',3000);
+  // Start tour after layout settles for new profiles
+  setTimeout(function(){ if(typeof startTour==='function') startTour(); }, 3000);
 }
