@@ -100,7 +100,7 @@ function generateInsights() {
   // 11. High savings rate
   if (gel > 0 && yat / gel >= 0.30) {
     insights.push({ id: 'p-high-save', type: 'positive', priority: 3,
-      text: 'Bu ay %' + Math.round(yat / gel * 100) + ' tasarruf oranına ulaştın. Harika gidiyorsun! 💪' });
+      text: 'Bu ay %' + Math.round(yat / gel * 100) + ' tasarruf oranına ulaştın. Harika gidiyorsun!' });
   }
   // 12. Portfolio milestone
   if (totalBakiye >= 100000) {

@@ -11,10 +11,10 @@ var GOAL_TYPES = {
 };
 
 var GOAL_MILESTONES = [
-  { pct: 10,  msg: 'Harika başlangıç! Yolculuk başladı. 🌱' },
-  { pct: 25,  msg: 'Çeyrek yoldasın, devam et! 💪' },
-  { pct: 50,  msg: 'Yarısına geldin! En zor kısım bitti. 🔥' },
-  { pct: 75,  msg: 'Neredeyse oradasın! Son sprint! 🏃' },
+  { pct: 10,  msg: 'Harika başlangıç! Yolculuk başladı.' },
+  { pct: 25,  msg: 'Çeyrek yoldasın, devam et!' },
+  { pct: 50,  msg: 'Yarısına geldin! En zor kısım bitti.' },
+  { pct: 75,  msg: 'Neredeyse oradasın! Son sprint!' },
   { pct: 100, msg: 'Tebrikler! Hedefine ulaştın!' }
 ];
 
