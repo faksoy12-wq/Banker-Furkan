@@ -12,7 +12,7 @@ var TOUR_STEPS = [
 var tourStep = 0;
 
 function startTour() {
-  try { if (localStorage.getItem('mn-tour-done') === '1') return; } catch(e) {}
+  try { if (localStorage.getItem('mn-tour-v2') === '1') return; } catch(e) {}
   tourStep = 0;
   showTourStep();
 }
@@ -66,7 +66,7 @@ function nextTourStep() { tourStep++; showTourStep(); }
 
 function endTour() {
   removeTourOverlay();
-  try { localStorage.setItem('mn-tour-done', '1'); } catch(e) {}
+  try { localStorage.setItem('mn-tour-v2', '1'); } catch(e) {}
 }
 
 function removeTourOverlay() {

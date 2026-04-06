@@ -7,7 +7,8 @@ function toggleGizlilik() {
   GIZLI = !GIZLI;
   try{ localStorage.setItem('mn-gizli', GIZLI ? '1' : '0'); }catch(e){}
   var btn = document.getElementById('gizlilik-btn');
-  if (btn) btn.textContent = GIZLI ? '🙈' : '👁️';
+  if (btn) btn.innerHTML = GIZLI ? '<i data-lucide="eye-off" class="lu"></i>' : '<i data-lucide="eye" class="lu"></i>';
+  if(typeof lucide!=='undefined') lucide.createIcons();
   updateAll();
   renderBakiye();
   renderHedef();
@@ -61,7 +62,8 @@ function toggleTheme(){
   var isDark=html.getAttribute('data-theme')==='dark';
   html.setAttribute('data-theme',isDark?'light':'dark');
   var btn=document.getElementById('theme-btn');
-  if(btn)btn.textContent=isDark?'🌙':'☀️';
+  if(btn)btn.innerHTML=isDark?'<i data-lucide="moon" class="lu"></i>':'<i data-lucide="sun" class="lu"></i>';
+  if(typeof lucide!=='undefined') lucide.createIcons();
   try{localStorage.setItem('mn-theme',isDark?'light':'dark');}catch(e){}
   // Chart.js renk güncelle
   if(typeof cc!=='undefined'&&cc)try{cu();}catch(e){}
