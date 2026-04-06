@@ -51,13 +51,12 @@ function showProfileSelect() {
   document.getElementById('profile-select-mode').style.display='block';
   document.getElementById('auth-form-mode').style.display='none';
   var listEl = document.getElementById('profile-list');
-  var meslekEmoji = {doktor:'<i data-lucide="heart-pulse" class="lu"></i>',ogretmen:'<i data-lucide="book-open" class="lu"></i>',muhendis:'<i data-lucide="laptop" class="lu"></i>',memur:'<i data-lucide="landmark" class="lu"></i>',ozel:'<i data-lucide="building" class="lu"></i>',serbest:'<i data-lucide="rocket" class="lu"></i>'};
   listEl.innerHTML = TUM_PROFILLER.map(function(p,i){
     var initial = p.ad ? esc(p.ad.charAt(0).toUpperCase()) : '?';
     var pct = p.gelir > 0 ? Math.round((p.yatirim/p.gelir)*100) : 0;
     return '<div class="profile-item" onclick="profilSec('+i+')">' +
       '<div class="profile-avatar">'+initial+'</div>' +
-      '<div class="profile-info"><div class="profile-name" style="display:flex;align-items:center;gap:6px;">'+(meslekEmoji[p.meslek]||'<i data-lucide="user" class="lu"></i>')+' '+esc(p.ad)+'</div>' +
+      '<div class="profile-info"><div class="profile-name">'+esc(p.ad)+'</div>' +
       '<div class="profile-meta">'+p.yas+' yaş · '+p.emekYas+' hedef · %'+pct+' tasarruf</div></div>' +
       '<div style="display:flex;align-items:center;gap:6px;">' +
       '<button onclick="profilSil(event,'+i+')" style="font-size:10px;padding:3px 8px;border-radius:10px;border:1px solid var(--red-bd);background:var(--red-bg);color:var(--red);cursor:pointer;font-family:var(--sans);">Sil</button>' +
@@ -118,8 +117,28 @@ function girisYap() {
 function kayitOl() {
   var ad = document.getElementById('kayit-ad').value.trim();
   if (!ad) { showHata('kayit','Lütfen adını gir.'); return; }
-  // Aynı isimli kayıt ARTIK ENGELLENMEZ — benzersiz ID ile ayrılır
-  obData.ad = ad;
+  // Reset onboarding data to defaults
+  obData = {ad:ad,yas:27,meslek:'',gelir:75000,yatirim:30000,risk:'dengeli',emekYas:55,artis:0,sigorta:'yok',sigortaPrim:0,sigortaPB:'tl'};
+  // Clear all previous selections in onboarding UI
+  document.querySelectorAll('.ob-card.selected,.ob-card-row.selected').forEach(function(c){c.classList.remove('selected');});
+  // Reset sliders/inputs to defaults
+  var yasEl=document.getElementById('ob-yas');if(yasEl)yasEl.value=27;
+  var yasV=document.getElementById('ob-yas-val');if(yasV)yasV.textContent='27';
+  var gelirEl=document.getElementById('ob-gelir');if(gelirEl)gelirEl.value=75000;
+  var gelirV=document.getElementById('ob-gelir-val');if(gelirV)gelirV.textContent='75.000';
+  var yatEl=document.getElementById('ob-yatirim');if(yatEl)yatEl.value=30000;
+  var yatV=document.getElementById('ob-yatirim-val');if(yatV)yatV.textContent='30.000';
+  var emekEl=document.getElementById('ob-emek');if(emekEl)emekEl.value=55;
+  var emekV=document.getElementById('ob-emek-val');if(emekV)emekV.textContent='55';
+  var artEl=document.getElementById('ob-artis');if(artEl)artEl.value=0;
+  var artV=document.getElementById('ob-artis-val');if(artV)artV.textContent='0';
+  // Reset sigorta UI
+  var sigYok=document.getElementById('sig-yok-card');if(sigYok)sigYok.classList.remove('selected');
+  var sigVar=document.getElementById('sig-var-card');if(sigVar)sigVar.classList.remove('selected');
+  var sigDetay=document.getElementById('sig-detay');if(sigDetay)sigDetay.style.display='none';
+  // Clear name input
+  document.getElementById('kayit-ad').value='';
+  // Start onboarding
   document.getElementById('auth-screen').classList.remove('visible');
   document.getElementById('onboarding').classList.add('visible');
   obStep = 1;
