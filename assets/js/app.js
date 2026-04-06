@@ -21,7 +21,7 @@ function initDashboard() {
   document.getElementById('s-maas').textContent=fmtN(P.gelir)+' ₺';
   document.getElementById('s-yatirim').textContent=fmtN(S.yatirim)+' ₺';
   document.getElementById('s-oran').textContent="Gelirin %"+pct+"'i yatırıma";
-  var rA={konser:'Muhafazakâr ',dengeli:'Dengeli ',agresif:'Agresif ',katilim:'Katılım '};
+  var rA={konser:'Muhafazakâr',dengeli:'Dengeli',agresif:'Agresif',katilim:'Katılım'};
   document.getElementById('s-risk').textContent=rA[P.risk]||P.risk;
   document.getElementById('s-risk-sub').textContent=kalan+' yıl planlama';
   document.getElementById('c-m').value=S.yatirim;
@@ -231,7 +231,7 @@ function updateAll(){
   var kalan=(P.emekYas||55)-(P.yas||27);
   var yasP=document.getElementById('d-yas-pill');if(yasP)yasP.textContent=(P.yas||27)+' yaş · '+(P.emekYas||55)+"'a "+kalan+' yıl';
   // Risk profili
-  var rA={konser:'Muhafazakâr ',dengeli:'Dengeli ',agresif:'Agresif ',katilim:'Katılım '};
+  var rA={konser:'Muhafazakâr',dengeli:'Dengeli',agresif:'Agresif',katilim:'Katılım'};
   document.getElementById('s-risk').textContent=rA[P.risk]||P.risk;
   document.getElementById('s-risk-sub').textContent=kalan+' yıl planlama';
   buildSenaryolar();

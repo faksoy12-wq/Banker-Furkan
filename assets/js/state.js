@@ -350,6 +350,7 @@ function finalizeOnboarding() {
   setTimeout(initScrollHints, 300);
   setTimeout(initPullToRefresh, 500);
   showToast('Profilin oluşturuldu!','success',3000);
-  // Start tour after layout settles for new profiles
+  // Reset and start tour for every new profile
+  try { localStorage.removeItem('mn-tour-v4'); } catch(e) {}
   setTimeout(function(){ if(typeof startTour==='function') startTour(); }, 3000);
 }
