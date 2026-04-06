@@ -48,13 +48,13 @@ function showProfileSelect() {
   document.getElementById('profile-select-mode').style.display='block';
   document.getElementById('auth-form-mode').style.display='none';
   var listEl = document.getElementById('profile-list');
-  var meslekEmoji = {doktor:'👨‍⚕️',ogretmen:'👨‍🏫',muhendis:'👨‍💻',memur:'🏛️',ozel:'🏢',serbest:'🚀'};
+  var meslekEmoji = {doktor:'<i data-lucide="heart-pulse" class="lu"></i>',ogretmen:'<i data-lucide="book-open" class="lu"></i>',muhendis:'<i data-lucide="laptop" class="lu"></i>',memur:'<i data-lucide="landmark" class="lu"></i>',ozel:'<i data-lucide="building" class="lu"></i>',serbest:'<i data-lucide="rocket" class="lu"></i>'};
   listEl.innerHTML = TUM_PROFILLER.map(function(p,i){
     var initial = p.ad ? esc(p.ad.charAt(0).toUpperCase()) : '?';
     var pct = p.gelir > 0 ? Math.round((p.yatirim/p.gelir)*100) : 0;
     return '<div class="profile-item" onclick="profilSec('+i+')">' +
       '<div class="profile-avatar">'+initial+'</div>' +
-      '<div class="profile-info"><div class="profile-name">'+(meslekEmoji[p.meslek]||'👤')+' '+esc(p.ad)+'</div>' +
+      '<div class="profile-info"><div class="profile-name" style="display:flex;align-items:center;gap:6px;">'+(meslekEmoji[p.meslek]||'<i data-lucide="user" class="lu"></i>')+' '+esc(p.ad)+'</div>' +
       '<div class="profile-meta">'+p.yas+' yaş · '+p.emekYas+' hedef · %'+pct+' tasarruf</div></div>' +
       '<div style="display:flex;align-items:center;gap:6px;">' +
       '<button onclick="profilSil(event,'+i+')" style="font-size:10px;padding:3px 8px;border-radius:10px;border:1px solid var(--red-bd);background:var(--red-bg);color:var(--red);cursor:pointer;font-family:var(--sans);">Sil</button>' +
@@ -300,20 +300,20 @@ function buildSummary() {
   var kalan=obData.emekYas-obData.yas;
   var hedef=calcPortfoy(obData.yatirim,18,kalan,obData.artis);
   var aylik=Math.round(hedef*0.18/12);
-  var rA={konser:'Muhafazakâr 🛡️',dengeli:'Dengeli ⚖️',agresif:'Agresif 🚀'};
+  var rA={konser:'Muhafazakâr <i data-lucide="shield" class="lu"></i>',dengeli:'Dengeli <i data-lucide="scale" class="lu"></i>',agresif:'Agresif <i data-lucide="rocket" class="lu"></i>'};
   var mA={doktor:'Doktor/Hekim',ogretmen:'Öğretmen',muhendis:'Mühendis',memur:'Devlet Memuru',ozel:'Özel Sektör',serbest:'Serbest/Girişimci'};
   var sigStr=obData.sigorta==='var'?obData.sigortaPrim+' '+obData.sigortaPB.toUpperCase()+'/ay':'Yok';
   document.getElementById('ob-ozet').innerHTML=
-    '<div class="ob-sum-row"><span class="ob-sum-lbl">👤 Profil</span><span class="ob-sum-val">'+obData.ad+', '+obData.yas+' yaş</span></div>'+
-    '<div class="ob-sum-row"><span class="ob-sum-lbl">💼 Meslek</span><span class="ob-sum-val">'+(mA[obData.meslek]||obData.meslek)+'</span></div>'+
-    '<div class="ob-sum-row"><span class="ob-sum-lbl">💰 Aylık gelir</span><span class="ob-sum-val">'+fmtR(obData.gelir)+' ₺</span></div>'+
-    '<div class="ob-sum-row"><span class="ob-sum-lbl">📈 Yatırım</span><span class="ob-sum-val" style="color:var(--green);">'+fmtR(obData.yatirim)+' ₺ (%'+Math.round(obData.yatirim/obData.gelir*100)+')</span></div>'+
-    '<div class="ob-sum-row"><span class="ob-sum-lbl">⚖️ Risk</span><span class="ob-sum-val">'+(rA[obData.risk])+'</span></div>'+
-    '<div class="ob-sum-row"><span class="ob-sum-lbl">🎯 Hedef</span><span class="ob-sum-val">'+obData.emekYas+' yaş ('+kalan+' yıl)</span></div>'+
-    (obData.artis>0?'<div class="ob-sum-row"><span class="ob-sum-lbl">📊 Artış</span><span class="ob-sum-val" style="color:var(--gold);">%'+obData.artis+'</span></div>':'')+
-    '<div class="ob-sum-row"><span class="ob-sum-lbl">🛡️ Sigorta</span><span class="ob-sum-val">'+sigStr+'</span></div>';
+    '<div class="ob-sum-row"><span class="ob-sum-lbl" style="display:flex;align-items:center;gap:4px;"><i data-lucide="user" class="lu"></i> Profil</span><span class="ob-sum-val">'+obData.ad+', '+obData.yas+' yaş</span></div>'+
+    '<div class="ob-sum-row"><span class="ob-sum-lbl" style="display:flex;align-items:center;gap:4px;"><i data-lucide="briefcase" class="lu"></i> Meslek</span><span class="ob-sum-val">'+(mA[obData.meslek]||obData.meslek)+'</span></div>'+
+    '<div class="ob-sum-row"><span class="ob-sum-lbl" style="display:flex;align-items:center;gap:4px;"><i data-lucide="coins" class="lu"></i> Aylık gelir</span><span class="ob-sum-val">'+fmtR(obData.gelir)+' ₺</span></div>'+
+    '<div class="ob-sum-row"><span class="ob-sum-lbl" style="display:flex;align-items:center;gap:4px;"><i data-lucide="line-chart" class="lu"></i> Yatırım</span><span class="ob-sum-val" style="color:var(--green);">'+fmtR(obData.yatirim)+' ₺ (%'+Math.round(obData.yatirim/obData.gelir*100)+')</span></div>'+
+    '<div class="ob-sum-row"><span class="ob-sum-lbl" style="display:flex;align-items:center;gap:4px;"><i data-lucide="scale" class="lu"></i> Risk</span><span class="ob-sum-val">'+(rA[obData.risk])+'</span></div>'+
+    '<div class="ob-sum-row"><span class="ob-sum-lbl" style="display:flex;align-items:center;gap:4px;"><i data-lucide="crosshair" class="lu"></i> Hedef</span><span class="ob-sum-val">'+obData.emekYas+' yaş ('+kalan+' yıl)</span></div>'+
+    (obData.artis>0?'<div class="ob-sum-row"><span class="ob-sum-lbl" style="display:flex;align-items:center;gap:4px;"><i data-lucide="trending-up" class="lu"></i> Artış</span><span class="ob-sum-val" style="color:var(--gold);">%'+obData.artis+'</span></div>':'')+
+    '<div class="ob-sum-row"><span class="ob-sum-lbl" style="display:flex;align-items:center;gap:4px;"><i data-lucide="shield-check" class="lu"></i> Sigorta</span><span class="ob-sum-val">'+sigStr+'</span></div>';
   document.getElementById('ob-projeksiyon').innerHTML=
-    '<div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:6px;">🎯 Tahminî Hedef Portföy</div>'+
+    '<div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:4px;"><i data-lucide="target" class="lu"></i> Tahminî Hedef Portföy</div>'+
     '<div style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--gold);margin-bottom:8px;">'+fmtR(hedef)+' ₺</div>'+
     '<div style="font-size:12px;color:var(--ink2);">Bu portföyle aylık <strong>'+fmtR(aylik)+' ₺</strong> pasif gelir (anapara korunarak, %18 getiri).</div>';
 }

@@ -42,16 +42,26 @@ function showTourStep() {
   overlay.onclick = function(e) { if (e.target === overlay) nextTourStep(); };
   document.body.appendChild(overlay);
 
+  var isFixed = false;
+  var fel = targetEl;
+  while(fel && fel !== document.body && fel !== document.documentElement) {
+    if (window.getComputedStyle(fel).position === 'fixed') { isFixed = true; break; }
+    fel = fel.parentElement;
+  }
+
   var rect = targetEl.getBoundingClientRect();
   var highlight = document.createElement('div');
   highlight.className = 'tour-highlight';
-  highlight.style.cssText = 'top:' + (rect.top + window.scrollY - 6) + 'px;left:' + (rect.left - 6) + 'px;width:' + (rect.width + 12) + 'px;height:' + (rect.height + 12) + 'px;';
+  var scrollY = isFixed ? 0 : window.scrollY;
+  highlight.style.position = isFixed ? 'fixed' : 'absolute';
+  highlight.style.cssText += 'top:' + (rect.top + scrollY - 6) + 'px;left:' + (rect.left - 6) + 'px;width:' + (rect.width + 12) + 'px;height:' + (rect.height + 12) + 'px;';
   document.body.appendChild(highlight);
 
   var isTop = rect.top < 150;
   var pos = isTop ? 'bottom' : step.pos;
   var tip = document.createElement('div');
   tip.className = 'tour-tooltip tour-tooltip--' + pos;
+  tip.style.position = isFixed ? 'fixed' : 'absolute';
   tip.innerHTML =
     '<div class="tour-text">' + step.text + '</div>' +
     '<div class="tour-footer">' +
@@ -63,9 +73,9 @@ function showTourStep() {
     '</div>';
 
   if (pos === 'bottom') {
-    tip.style.top = (rect.bottom + window.scrollY + 16) + 'px';
+    tip.style.top = (rect.bottom + scrollY + 16) + 'px';
   } else {
-    tip.style.top = (rect.top + window.scrollY - 16) + 'px';
+    tip.style.top = (rect.top + scrollY - 16) + 'px';
     tip.style.transform = 'translateY(-100%)';
   }
   tip.style.left = Math.max(16, Math.min(rect.left, window.innerWidth - 300)) + 'px';
