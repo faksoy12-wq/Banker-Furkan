@@ -1,9 +1,13 @@
 // ── PRODUCT TOUR ───────────────────────────────────────────────────────────
 var TOUR_STEPS = [
-  { target: '.g4', text: 'Gelir, yatırım ve risk profilini burada görürsün.', pos: 'bottom' },
-  { target: '.ticker', text: 'Canlı altın ve döviz kurları anlık güncellenir.', pos: 'bottom' },
-  { target: '.bottom-nav, .nav-wrapper', text: 'Sekmeler arasında kaydırarak geçiş yap.', pos: 'top' },
-  { target: '#gizlilik-btn', text: 'Rakamlarını gizlemek için bu butonu kullan.', pos: 'bottom' }
+  { target: '.g4', text: 'Gelir, yatırım ve risk profilini burada takip edersin. Düzenlemek için karta dokun.', pos: 'bottom' },
+  { target: '.ticker', text: 'Canlı altın ve döviz kurları anlık güncellenir. Piyasayı her zaman takipte tut.', pos: 'bottom' },
+  { target: '[onclick*="bakiye"]', text: 'Bakiyem: Altın, döviz ve fon pozisyonlarını ekle, portföy değerini anlık izle.', pos: 'top' },
+  { target: '[onclick*="hedef"]', text: 'Hedef: Finansal hedeflerini oluştur, ilerlemeyi SVG halkaları ile takip et.', pos: 'top' },
+  { target: '[onclick*="calculator"]', text: 'Hesap Makinesi: Bileşik getiri hesapla, farklı senaryoları simüle et.', pos: 'top' },
+  { target: '[onclick*="gider"]', text: 'Giderler: Harcamalarını kategorize et, bütçe limitleri belirle, trendleri gör.', pos: 'top' },
+  { target: '#gizlilik-btn', text: 'Gizlilik: Rakamlarını tek tuşla maskele, yanında biri varken kullan.', pos: 'bottom' },
+  { target: '#theme-btn', text: 'Tema: Açık ve koyu mod arasında geçiş yap.', pos: 'bottom' }
 ];
 var tourStep = 0;
 
@@ -17,31 +21,35 @@ function showTourStep() {
   removeTourOverlay();
   if (tourStep >= TOUR_STEPS.length) { endTour(); return; }
   var step = TOUR_STEPS[tourStep];
-  var targetEl = document.querySelector(step.target);
+  var targetEl = null;
+  step.target.split(',').some(function(sel) {
+    targetEl = document.querySelector(sel.trim());
+    return targetEl;
+  });
   if (!targetEl) { tourStep++; showTourStep(); return; }
 
-  // Overlay
   var overlay = document.createElement('div');
   overlay.id = 'tour-overlay';
   overlay.className = 'tour-overlay';
   overlay.onclick = function(e) { if (e.target === overlay) nextTourStep(); };
   document.body.appendChild(overlay);
 
-  // Highlight
   var rect = targetEl.getBoundingClientRect();
   var highlight = document.createElement('div');
   highlight.className = 'tour-highlight';
   highlight.style.cssText = 'top:' + (rect.top + window.scrollY - 6) + 'px;left:' + (rect.left - 6) + 'px;width:' + (rect.width + 12) + 'px;height:' + (rect.height + 12) + 'px;';
   document.body.appendChild(highlight);
 
-  // Tooltip
   var tip = document.createElement('div');
   tip.className = 'tour-tooltip tour-tooltip--' + step.pos;
   tip.innerHTML =
     '<div class="tour-text">' + step.text + '</div>' +
     '<div class="tour-footer">' +
       '<span class="tour-counter">' + (tourStep + 1) + ' / ' + TOUR_STEPS.length + '</span>' +
-      '<button class="tour-next-btn" onclick="nextTourStep()">' + (tourStep === TOUR_STEPS.length - 1 ? 'Bitir' : 'Sonraki →') + '</button>' +
+      '<div style="display:flex;gap:6px;">' +
+        (tourStep > 0 ? '<button class="tour-skip-btn" onclick="endTour()">Atla</button>' : '') +
+        '<button class="tour-next-btn" onclick="nextTourStep()">' + (tourStep === TOUR_STEPS.length - 1 ? 'Bitir' : 'Sonraki →') + '</button>' +
+      '</div>' +
     '</div>';
 
   if (step.pos === 'bottom') {

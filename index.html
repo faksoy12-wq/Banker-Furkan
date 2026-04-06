@@ -46,7 +46,7 @@ window.MANGIR_VERSION = '2.0';
   <div class="auth-header"><div class="auth-logo" style="display:flex;align-items:center;justify-content:center;"><div class="l-coin l-coin-sm"></div>Mangır</div><div class="auth-sub">Finansal özgürlüğe giden yol</div></div>
   <div class="auth-body">
     <div id="profile-select-mode" style="display:none;">
-      <div style="font-size:18px;font-weight:700;margin-bottom:6px;">Hoşgeldin 👋</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px;">Hoşgeldin </div>
       <div style="font-size:13px;color:var(--ink3);margin-bottom:20px;">Hangi profille devam etmek istiyorsun?</div>
       <div class="profile-list" id="profile-list"></div>
       <button class="new-profile-btn" onclick="showNewProfile()">+ Yeni Profil Oluştur</button>
@@ -77,7 +77,7 @@ window.MANGIR_VERSION = '2.0';
   <!-- ADIM 1: Yaş -->
   <div class="ob-step active" id="step-1">
     <div class="ob-step-content">
-      <span class="ob-emoji">🎂</span>
+      <span class="ob-emoji"><i data-lucide="calendar" class="lu"></i></span>
       <div class="ob-title">Kaç yaşındasın?</div>
       <div class="ob-sub">Sana özel emeklilik ve yatırım planı hazırlayalım.</div>
       <div class="ob-slider-wrap">
@@ -93,16 +93,16 @@ window.MANGIR_VERSION = '2.0';
   <!-- ADIM 2: Meslek -->
   <div class="ob-step" id="step-2">
     <div class="ob-step-content">
-      <span class="ob-emoji">💼</span>
+      <span class="ob-emoji"><i data-lucide="briefcase" class="lu"></i></span>
       <div class="ob-title">Mesleğin ne?</div>
       <div class="ob-sub">Bordro yapına göre sana özel öneriler sunacağız.</div>
       <div class="ob-cards">
-        <div class="ob-card" onclick="selectCard(this,'meslek','doktor')"><span class="ob-card-icon">👨‍⚕️</span><div class="ob-card-title">Doktor/Hekim</div><div class="ob-card-sub">Kamu veya özel</div></div>
-        <div class="ob-card" onclick="selectCard(this,'meslek','ogretmen')"><span class="ob-card-icon">👨‍🏫</span><div class="ob-card-title">Öğretmen</div><div class="ob-card-sub">Devlet memuru</div></div>
-        <div class="ob-card" onclick="selectCard(this,'meslek','muhendis')"><span class="ob-card-icon">👨‍💻</span><div class="ob-card-title">Mühendis</div><div class="ob-card-sub">Özel sektör</div></div>
-        <div class="ob-card" onclick="selectCard(this,'meslek','memur')"><span class="ob-card-icon">🏛️</span><div class="ob-card-title">Devlet Memuru</div><div class="ob-card-sub">Kamu sektörü</div></div>
-        <div class="ob-card" onclick="selectCard(this,'meslek','ozel')"><span class="ob-card-icon">🏢</span><div class="ob-card-title">Özel Sektör</div><div class="ob-card-sub">Şirket çalışanı</div></div>
-        <div class="ob-card" onclick="selectCard(this,'meslek','serbest')"><span class="ob-card-icon">🚀</span><div class="ob-card-title">Serbest/Girişimci</div><div class="ob-card-sub">Değişken gelir</div></div>
+        <div class="ob-card" onclick="selectCard(this,'meslek','doktor')"><span class="ob-card-icon"><i data-lucide="stethoscope" class="lu"></i></span><div class="ob-card-title">Doktor/Hekim</div><div class="ob-card-sub">Kamu veya özel</div></div>
+        <div class="ob-card" onclick="selectCard(this,'meslek','ogretmen')"><span class="ob-card-icon"><i data-lucide="book-open" class="lu"></i></span><div class="ob-card-title">Öğretmen</div><div class="ob-card-sub">Devlet memuru</div></div>
+        <div class="ob-card" onclick="selectCard(this,'meslek','muhendis')"><span class="ob-card-icon"><i data-lucide="code" class="lu"></i></span><div class="ob-card-title">Mühendis</div><div class="ob-card-sub">Özel sektör</div></div>
+        <div class="ob-card" onclick="selectCard(this,'meslek','memur')"><span class="ob-card-icon"><i data-lucide="landmark" class="lu"></i></span><div class="ob-card-title">Devlet Memuru</div><div class="ob-card-sub">Kamu sektörü</div></div>
+        <div class="ob-card" onclick="selectCard(this,'meslek','ozel')"><span class="ob-card-icon"><i data-lucide="building-2" class="lu"></i></span><div class="ob-card-title">Özel Sektör</div><div class="ob-card-sub">Şirket çalışanı</div></div>
+        <div class="ob-card" onclick="selectCard(this,'meslek','serbest')"><span class="ob-card-icon"><i data-lucide="rocket" class="lu"></i></span><div class="ob-card-title">Serbest/Girişimci</div><div class="ob-card-sub">Değişken gelir</div></div>
       </div>
     </div>
     <div class="ob-step-footer"><button class="ob-btn" onclick="nextStep()">Devam Et →</button><button class="ob-btn-back" onclick="prevStep()">← Geri</button></div>
@@ -110,7 +110,7 @@ window.MANGIR_VERSION = '2.0';
   <!-- ADIM 3: Gelir -->
   <div class="ob-step" id="step-3">
     <div class="ob-step-content">
-      <span class="ob-emoji">💰</span>
+      <span class="ob-emoji"><i data-lucide="wallet" class="lu"></i></span>
       <div class="ob-title">Aylık net gelirin ne kadar?</div>
       <div class="ob-sub">Tüm gelirlerin toplamı. Yaklaşık olabilir.</div>
       <div class="ob-slider-wrap">
@@ -126,7 +126,7 @@ window.MANGIR_VERSION = '2.0';
   <!-- ADIM 4: Yatırım -->
   <div class="ob-step" id="step-4">
     <div class="ob-step-content">
-      <span class="ob-emoji">📈</span>
+      <span class="ob-emoji"><i data-lucide="trending-up" class="lu"></i></span>
       <div class="ob-title">Her ay ne kadar yatırım yapabilirsin?</div>
       <div class="ob-sub">Masraflar düştükten sonra kalan tutar.</div>
       <div class="ob-slider-wrap">
@@ -143,14 +143,14 @@ window.MANGIR_VERSION = '2.0';
   <!-- ADIM 5: Risk -->
   <div class="ob-step" id="step-5">
     <div class="ob-step-content">
-      <span class="ob-emoji">⚖️</span>
+      <span class="ob-emoji"><i data-lucide="scale" class="lu"></i></span>
       <div class="ob-title">Risk toleransın nasıl?</div>
       <div class="ob-sub">Bu, yatırım dağılımını belirleyecek.</div>
       <div class="ob-card-list">
-        <div class="ob-card-row" onclick="selectCard(this,'risk','konser')"><span class="ob-card-row-icon">🛡️</span><div><div class="ob-card-row-title">Muhafazakâr</div><div class="ob-card-row-sub">Kaybetmek istemiyorum, düşük getiri olsa da olur</div></div></div>
-        <div class="ob-card-row" onclick="selectCard(this,'risk','dengeli')"><span class="ob-card-row-icon">⚖️</span><div><div class="ob-card-row-title">Dengeli</div><div class="ob-card-row-sub">Biraz risk alabilirim, uzun vadede büyümek istiyorum</div></div></div>
-        <div class="ob-card-row" onclick="selectCard(this,'risk','agresif')"><span class="ob-card-row-icon">🚀</span><div><div class="ob-card-row-title">Agresif</div><div class="ob-card-row-sub">Yüksek getiri için yüksek risk alabilirim</div></div></div>
-        <div class="ob-card-row" onclick="selectCard(this,'risk','katilim')"><span class="ob-card-row-icon">☪️</span><div><div class="ob-card-row-title">Katılım (Faizsiz)</div><div class="ob-card-row-sub">İslami finans prensiplerine uygun, kâr payı bazlı yatırım</div></div></div>
+        <div class="ob-card-row" onclick="selectCard(this,'risk','konser')"><span class="ob-card-row-icon"><i data-lucide="shield-check" class="lu"></i></span><div><div class="ob-card-row-title">Muhafazakâr</div><div class="ob-card-row-sub">Kaybetmek istemiyorum, düşük getiri olsa da olur</div></div></div>
+        <div class="ob-card-row" onclick="selectCard(this,'risk','dengeli')"><span class="ob-card-row-icon"><i data-lucide="scale" class="lu"></i></span><div><div class="ob-card-row-title">Dengeli</div><div class="ob-card-row-sub">Biraz risk alabilirim, uzun vadede büyümek istiyorum</div></div></div>
+        <div class="ob-card-row" onclick="selectCard(this,'risk','agresif')"><span class="ob-card-row-icon"><i data-lucide="rocket" class="lu"></i></span><div><div class="ob-card-row-title">Agresif</div><div class="ob-card-row-sub">Yüksek getiri için yüksek risk alabilirim</div></div></div>
+        <div class="ob-card-row" onclick="selectCard(this,'risk','katilim')"><span class="ob-card-row-icon"><i data-lucide="moon-star" class="lu"></i></span><div><div class="ob-card-row-title">Katılım (Faizsiz)</div><div class="ob-card-row-sub">İslami finans prensiplerine uygun, kâr payı bazlı yatırım</div></div></div>
       </div>
     </div>
     <div class="ob-step-footer"><button class="ob-btn" onclick="nextStep()">Devam Et →</button><button class="ob-btn-back" onclick="prevStep()">← Geri</button></div>
@@ -158,7 +158,7 @@ window.MANGIR_VERSION = '2.0';
   <!-- ADIM 6: Hedef Yaş -->
   <div class="ob-step" id="step-6">
     <div class="ob-step-content">
-      <span class="ob-emoji">🎯</span>
+      <span class="ob-emoji"><i data-lucide="crosshair" class="lu"></i></span>
       <div class="ob-title">Kaç yaşında finansal özgürlüğe ulaşmak istiyorsun?</div>
       <div class="ob-sub">Çalışmak zorunda olmadığın yaş.</div>
       <div class="ob-slider-wrap">
@@ -174,7 +174,7 @@ window.MANGIR_VERSION = '2.0';
   <!-- ADIM 7: Artış -->
   <div class="ob-step" id="step-7">
     <div class="ob-step-content">
-      <span class="ob-emoji">📊</span>
+      <span class="ob-emoji"><i data-lucide="bar-chart-3" class="lu"></i></span>
       <div class="ob-title">6 ayda bir yatırımını ne kadar artırabilirsin?</div>
       <div class="ob-sub">0 seçersen sabit kalır.</div>
       <div class="ob-slider-wrap">
@@ -190,12 +190,12 @@ window.MANGIR_VERSION = '2.0';
   <!-- ADIM 8: Sigorta -->
   <div class="ob-step" id="step-8">
     <div class="ob-step-content">
-      <span class="ob-emoji">🛡️</span>
+      <span class="ob-emoji"><i data-lucide="shield-check" class="lu"></i></span>
       <div class="ob-title">Hayat sigortanız var mı?</div>
       <div class="ob-sub">Prim üzerinden yıllık vergi iadesi alabilirsiniz.</div>
       <div class="ob-card-list" style="margin-bottom:16px;">
-        <div class="ob-card-row" id="sig-yok-card" onclick="selectSigorta('yok')"><span class="ob-card-row-icon">❌</span><div><div class="ob-card-row-title">Hayır, sigortam yok</div><div class="ob-card-row-sub">Şimdilik geç</div></div></div>
-        <div class="ob-card-row" id="sig-var-card" onclick="selectSigorta('var')"><span class="ob-card-row-icon">✅</span><div><div class="ob-card-row-title">Evet, hayat sigortam var</div><div class="ob-card-row-sub">Prim detaylarını gir</div></div></div>
+        <div class="ob-card-row" id="sig-yok-card" onclick="selectSigorta('yok')"><span class="ob-card-row-icon"><i data-lucide="x-circle" class="lu"></i></span><div><div class="ob-card-row-title">Hayır, sigortam yok</div><div class="ob-card-row-sub">Şimdilik geç</div></div></div>
+        <div class="ob-card-row" id="sig-var-card" onclick="selectSigorta('var')"><span class="ob-card-row-icon"><i data-lucide="check-circle" class="lu"></i></span><div><div class="ob-card-row-title">Evet, hayat sigortam var</div><div class="ob-card-row-sub">Prim detaylarını gir</div></div></div>
       </div>
       <div id="sig-detay" style="display:none;">
         <label class="ob-label">Aylık Prim</label>
@@ -215,13 +215,13 @@ window.MANGIR_VERSION = '2.0';
   <!-- ADIM 9: Özet -->
   <div class="ob-step" id="step-9">
     <div class="ob-step-content">
-      <span class="ob-emoji">✨</span>
+      <span class="ob-emoji"><i data-lucide="sparkles" class="lu"></i></span>
       <div class="ob-title">Planın hazır!</div>
       <div class="ob-sub">Girdiğin bilgilere göre kişisel yatırım planın oluşturuldu.</div>
       <div class="ob-summary" id="ob-ozet"></div>
       <div class="ob-projeksiyon" id="ob-projeksiyon"></div>
     </div>
-    <div class="ob-step-footer"><button class="ob-btn" onclick="finalizeOnboarding()">🚀 Ana Ekrana Git</button><button class="ob-btn-back" onclick="prevStep()">← Geri</button></div>
+    <div class="ob-step-footer"><button class="ob-btn" onclick="finalizeOnboarding()"><i data-lucide="rocket" class="lu"></i> Ana Ekrana Git</button><button class="ob-btn-back" onclick="prevStep()">← Geri</button></div>
   </div>
 </div>
 
@@ -236,11 +236,11 @@ window.MANGIR_VERSION = '2.0';
       <span class="pill pill-gold h-pill" id="d-yas-pill">—</span>
       <span class="pill pill-green h-pill" id="d-tasarruf-pill">—</span>
       <span class="h-live" id="upd-time">Yükleniyor...</span>
-      <button class="h-icon-btn" id="gizlilik-btn" onclick="toggleGizlilik()" title="Rakamları maskele" aria-label="Rakamları maskele">👁️</button>
-      <button class="h-icon-btn" onclick="showAuthScreen()" title="Profil değiştir" aria-label="Profil değiştir">👤</button>
-      <button class="export-btn" onclick="exportData()" aria-label="Verileri yedekle">📥 Yedekle</button>
-      <label class="export-btn" style="cursor:pointer;" aria-label="Veri Yükle">📤 Yükle<input type="file" id="import-file" accept=".json" onchange="importData(event)" style="display:none;"></label>
-      <button class="h-icon-btn" id="theme-btn" onclick="toggleTheme()" title="Tema değiştir" aria-label="Tema değiştir">🌙</button>
+      <button class="h-icon-btn" id="gizlilik-btn" onclick="toggleGizlilik()" title="Rakamları maskele" aria-label="Rakamları maskele"><i data-lucide="eye" class="lu"></i></button>
+      <button class="h-icon-btn" onclick="showAuthScreen()" title="Profil değiştir" aria-label="Profil değiştir"><i data-lucide="user" class="lu"></i></button>
+      <button class="export-btn" onclick="exportData()" aria-label="Verileri yedekle"><i data-lucide="download" class="lu"></i> Yedekle</button>
+      <label class="export-btn" style="cursor:pointer;" aria-label="Veri Yükle"><i data-lucide="upload" class="lu"></i> Yükle<input type="file" id="import-file" accept=".json" onchange="importData(event)" style="display:none;"></label>
+      <button class="h-icon-btn" id="theme-btn" onclick="toggleTheme()" title="Tema değiştir" aria-label="Tema değiştir"><i data-lucide="moon" class="lu"></i></button>
     </div>
   </div>
   <div class="ticker">
@@ -259,16 +259,16 @@ window.MANGIR_VERSION = '2.0';
   <div class="nav-wrapper">
     <div class="nav-container" id="nav-container">
       <div class="nav" id="top-nav">
-        <button class="nb active" onclick="goTab('portfolio',this)">📊 Portföy</button>
-        <button class="nb" onclick="goTab('bakiye',this)">💼 Bakiyem</button>
-        <button class="nb" onclick="goTab('hedef',this)">🎯 Hedef</button>
-        <button class="nb" onclick="goTab('yolharitasi',this)">🗺️ Yol Haritası</button>
-        <button class="nb" onclick="goTab('aksiyon',this)">✅ Aksiyon</button>
-        <button class="nb" onclick="goTab('calculator',this)">🧮 Hesap Makinesi</button>
-        <button class="nb" onclick="goTab('alarmlar',this)">🔔 Alarmlar</button>
-        <button class="nb" onclick="goTab('bordro',this)">📋 Bordro</button>
-        <button class="nb" onclick="goTab('vergi',this)">💸 Vergi</button>
-        <button class="nb" onclick="goTab('gider',this)">🧾 Giderler</button>
+        <button class="nb active" onclick="goTab('portfolio',this)"><i data-lucide="bar-chart-3" class="lu"></i> Portföy</button>
+        <button class="nb" onclick="goTab('bakiye',this)"><i data-lucide="briefcase" class="lu"></i> Bakiyem</button>
+        <button class="nb" onclick="goTab('hedef',this)"><i data-lucide="crosshair" class="lu"></i> Hedef</button>
+        <button class="nb" onclick="goTab('yolharitasi',this)"><i data-lucide="map" class="lu"></i> Yol Haritası</button>
+        <button class="nb" onclick="goTab('aksiyon',this)"><i data-lucide="check-circle" class="lu"></i> Aksiyon</button>
+        <button class="nb" onclick="goTab('calculator',this)"><i data-lucide="calculator" class="lu"></i> Hesap Makinesi</button>
+        <button class="nb" onclick="goTab('alarmlar',this)"><i data-lucide="bell" class="lu"></i> Alarmlar</button>
+        <button class="nb" onclick="goTab('bordro',this)"><i data-lucide="clipboard-list" class="lu"></i> Bordro</button>
+        <button class="nb" onclick="goTab('vergi',this)"><i data-lucide="banknote" class="lu"></i> Vergi</button>
+        <button class="nb" onclick="goTab('gider',this)"><i data-lucide="receipt" class="lu"></i> Giderler</button>
       </div>
       <div class="scroll-hint-arrow" id="nav-scroll-hint"><span></span><span></span><span></span></div>
     </div>
@@ -278,9 +278,9 @@ window.MANGIR_VERSION = '2.0';
     <div class="tab active" id="tab-portfolio">
       <div id="insight-container"></div>
       <div class="g4">
-        <div class="stat"><div class="sl">💰 Aylık Gelir</div><div class="sv" id="s-maas" style="font-size:16px;">—</div><div class="ss" id="s-maas-sub">Net gelir</div></div>
+        <div class="stat"><div class="sl"><i data-lucide="wallet" class="lu"></i> Aylık Gelir</div><div class="sv" id="s-maas" style="font-size:16px;">—</div><div class="ss" id="s-maas-sub">Net gelir</div></div>
         <div class="stat" style="cursor:pointer;border:1px solid var(--green-bd);background:var(--green-bg);" onclick="toggleYatirimEdit()">
-          <div class="sl" style="color:var(--green);">📈 Aylık Yatırım <button class="settings-icon" style="margin-left:auto;" onclick="event.stopPropagation();toggleYatirimEdit()">⚙️</button></div>
+          <div class="sl" style="color:var(--green);"><i data-lucide="trending-up" class="lu"></i> Aylık Yatırım <button class="settings-icon" style="margin-left:auto;" onclick="event.stopPropagation();toggleYatirimEdit()"><i data-lucide="settings" class="lu"></i></button></div>
           <div id="yatirim-display"><div class="sv" id="s-yatirim" style="font-size:16px;color:var(--green);">—</div><div class="ss" id="s-oran">—</div></div>
           <div id="yatirim-edit" style="display:none;" onclick="event.stopPropagation()">
             <input type="number" id="yatirim-input" inputmode="numeric" autocomplete="off" style="width:100%;padding:6px 10px;border:1.5px solid var(--green-bd);border-radius:8px;font-size:16px;font-weight:700;color:var(--green);background:var(--white);outline:none;margin-top:4px;font-family:var(--sans);">
@@ -291,14 +291,14 @@ window.MANGIR_VERSION = '2.0';
           </div>
         </div>
         <div class="stat" style="cursor:pointer;border:1px solid var(--gold-bd);background:var(--gold-bg);" onclick="toggleRiskEdit()">
-          <div class="sl" style="color:var(--gold);">⚖️ Risk Profili <button class="settings-icon" style="margin-left:auto;" onclick="event.stopPropagation();toggleRiskEdit()">⚙️</button></div>
+          <div class="sl" style="color:var(--gold);"><i data-lucide="scale" class="lu"></i> Risk Profili <button class="settings-icon" style="margin-left:auto;" onclick="event.stopPropagation();toggleRiskEdit()"><i data-lucide="settings" class="lu"></i></button></div>
           <div id="risk-display"><div class="sv" id="s-risk" style="font-size:14px;color:var(--gold);margin-top:4px;font-weight:700;">—</div><div class="ss" id="s-risk-sub" style="color:var(--ink3);">—</div></div>
           <div id="risk-edit" style="display:none;" onclick="event.stopPropagation()">
             <select id="risk-input" style="width:100%;padding:6px 10px;border:1.5px solid var(--gold-bd);border-radius:8px;font-size:13px;font-weight:700;color:var(--gold);background:var(--white);outline:none;margin-top:4px;font-family:var(--sans);">
-              <option value="konser">🛡️ Muhafazakâr</option>
-              <option value="dengeli">⚖️ Dengeli</option>
-              <option value="agresif">🚀 Agresif</option>
-              <option value="katilim">☪️ Katılım (Faizsiz)</option>
+              <option value="konser">Muhafazakâr</option>
+              <option value="dengeli">Dengeli</option>
+              <option value="agresif">Agresif</option>
+              <option value="katilim">Katılım (Faizsiz)</option>
             </select>
             <div style="display:flex;gap:5px;margin-top:6px;">
               <button onclick="saveRisk()" style="flex:1;padding:6px;background:var(--gold);color:white;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans);">✓ Kaydet</button>
@@ -306,23 +306,23 @@ window.MANGIR_VERSION = '2.0';
             </div>
           </div>
         </div>
-        <div class="stat"><div class="sl">💸 Yıllık Vergi Avantajı</div><div class="sv" id="s-vergi" style="font-size:16px;color:var(--green);">—</div><div class="ss">Hesaplanıyor</div></div>
+        <div class="stat"><div class="sl"><i data-lucide="banknote" class="lu"></i> Yıllık Vergi Avantajı</div><div class="sv" id="s-vergi" style="font-size:16px;color:var(--green);">—</div><div class="ss">Hesaplanıyor</div></div>
       </div>
       <div class="g21">
         <div class="card" style="margin-bottom:0;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <div class="ct" style="margin-bottom:0;">📊 Aylık <span id="yatirim-baslik">—</span> Dağılımı</div>
-            <button onclick="toggleAracDuzenle()" id="arac-btn" class="edit-pill">⚙️ Düzenle</button>
+            <div class="ct" style="margin-bottom:0;"><i data-lucide="bar-chart-3" class="lu"></i> Aylık <span id="yatirim-baslik">—</span> Dağılımı</div>
+            <button onclick="toggleAracDuzenle()" id="arac-btn" class="edit-pill"><i data-lucide="settings" class="lu"></i> Düzenle</button>
           </div>
           <div id="dagılım-normal"><div id="dagılım-satirlar"></div><div class="arow" style="opacity:.4;"><div class="adot" style="background:#aaa;"></div><div class="an"><div class="an-m">Zorunlu BES</div><div class="an-s">Bordrodan otomatik</div></div><div class="abw"></div><div class="ap">—</div><div class="aa" style="color:#aaa;">Otomatik</div></div></div>
           <div id="dagılım-duzenle" style="display:none;">
             <div style="font-size:11px;color:var(--ink3);margin-bottom:10px;background:var(--gold-bg);border-radius:6px;padding:8px 10px;">Oranları değiştir. Toplam %100 olmalı.</div>
             <div id="arac-liste"></div>
             <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
-              <button onclick="aracEkle('🥈 Gümüş','#9E9E9E','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ Gümüş</button>
-              <button onclick="aracEkle('📈 BIST 50','#1A5FAA','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ BIST 50</button>
-              <button onclick="aracEkle('🌍 Eurobond','#E8A020','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ Eurobond</button>
-              <button onclick="aracEkle('⭐ Özel','#888','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ Özel</button>
+              <button onclick="aracEkle('Gümüş','#9E9E9E','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ Gümüş</button>
+              <button onclick="aracEkle('BIST 50','#1A5FAA','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ BIST 50</button>
+              <button onclick="aracEkle('Eurobond','#E8A020','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ Eurobond</button>
+              <button onclick="aracEkle('Özel','#888','5')" style="font-size:11px;padding:5px 10px;border:1px solid var(--border);background:var(--cream);border-radius:6px;cursor:pointer;font-family:var(--sans);">+ Özel</button>
             </div>
             <div id="toplam-oran-uyari" style="font-size:11px;font-weight:600;margin-top:8px;padding:6px 10px;border-radius:6px;display:none;"></div>
             <div style="display:flex;gap:6px;margin-top:10px;">
@@ -333,22 +333,22 @@ window.MANGIR_VERSION = '2.0';
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <div class="card" style="margin-bottom:0;">
-            <div class="ct">⚡ Anlık Hesaplamalar</div>
+            <div class="ct"><i data-lucide="zap" class="lu"></i> Anlık Hesaplamalar</div>
             <div style="font-size:12px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--ink3);">🥇 Bu ay altın alımı</span><span id="c-gram" style="font-weight:700;color:#C9A84C;">—</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--ink3);">💵 Bu ay dolar alımı</span><span id="c-usd" style="font-weight:700;color:#7B3FBE;">—</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--ink3);">🛡️ Sigorta toplam birikim</span><span id="c-sig-toplam" style="font-weight:700;color:var(--green);">—</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--ink3);">🛡️ Bu ay sigorta biriktirilen</span><span id="c-sig-bu-ay" style="font-weight:700;color:var(--green);">—</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="color:var(--ink3);">🎯 Hedefe kalan</span><span id="c-sure" style="font-weight:700;color:var(--gold);">—</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--ink3);"><i data-lucide="gem" class="lu"></i> Bu ay altın alımı</span><span id="c-gram" style="font-weight:700;color:#C9A84C;">—</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--ink3);"><i data-lucide="dollar-sign" class="lu"></i> Bu ay dolar alımı</span><span id="c-usd" style="font-weight:700;color:#7B3FBE;">—</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--ink3);"><i data-lucide="shield-check" class="lu"></i> Sigorta toplam birikim</span><span id="c-sig-toplam" style="font-weight:700;color:var(--green);">—</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--ink3);"><i data-lucide="shield-check" class="lu"></i> Bu ay sigorta biriktirilen</span><span id="c-sig-bu-ay" style="font-weight:700;color:var(--green);">—</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="color:var(--ink3);"><i data-lucide="crosshair" class="lu"></i> Hedefe kalan</span><span id="c-sure" style="font-weight:700;color:var(--gold);">—</span></div>
             </div>
           </div>
           <div class="card" style="margin-bottom:0;">
             <div class="ct" style="justify-content:space-between; margin-bottom:16px;">
-              <span>📅 Yaşa Göre Strateji</span>
+              <span><i data-lucide="calendar-days" class="lu"></i> Yaşa Göre Strateji</span>
               <div style="display:flex; align-items:baseline; gap:8px;">
                 <span style="font-size:12px; font-weight:500; color:var(--ink3);">Mevcut Yaş</span>
                 <span id="yas-edit-val" style="font-family:var(--serif); font-size:20px; font-weight:700; color:var(--ink);">27</span>
-                <button class="settings-icon" style="margin-left:2px; font-size:16px;" onclick="toggleStepperPanel('yas-panel')" title="Yaş ayarla">⚙️</button>
+                <button class="settings-icon" style="margin-left:2px; font-size:16px;" onclick="toggleStepperPanel('yas-panel')" title="Yaş ayarla"><i data-lucide="settings" class="lu"></i></button>
               </div>
             </div>
             <div class="inline-stepper-panel" id="yas-panel">
@@ -363,11 +363,11 @@ window.MANGIR_VERSION = '2.0';
           </div>
           <div class="card" style="margin-bottom:0;">
             <div class="ct" style="justify-content:space-between; margin-bottom:16px;">
-              <span>📉 Senaryo Analizi</span>
+              <span><i data-lucide="trending-down" class="lu"></i> Senaryo Analizi</span>
               <div style="display:flex; align-items:baseline; gap:8px;">
                 <span style="font-size:12px; font-weight:500; color:var(--ink3);">Hedef Yaş</span>
                 <span id="emek-edit-val" style="font-family:var(--serif); font-size:20px; font-weight:700; color:var(--ink);">55</span>
-                <button class="settings-icon" style="margin-left:2px; font-size:16px;" onclick="toggleStepperPanel('emek-panel')" title="Hedef ayarla">⚙️</button>
+                <button class="settings-icon" style="margin-left:2px; font-size:16px;" onclick="toggleStepperPanel('emek-panel')" title="Hedef ayarla"><i data-lucide="settings" class="lu"></i></button>
               </div>
             </div>
             <div class="inline-stepper-panel" id="emek-panel">
@@ -382,7 +382,7 @@ window.MANGIR_VERSION = '2.0';
           </div>
         </div>
         <div class="card" id="health-card" style="margin-bottom:0;">
-          <div style="font-size:12px;font-weight:700;color:var(--ink3);margin-bottom:15px;text-transform:uppercase;">💪 Finansal Sağlık Skoru</div>
+          <div style="font-size:12px;font-weight:700;color:var(--ink3);margin-bottom:15px;text-transform:uppercase;"><i data-lucide="heart-pulse" class="lu"></i> Finansal Sağlık Skoru</div>
           <div style="display:flex;justify-content:center;align-items:center;position:relative;">
             <svg width="140" height="140" viewBox="0 0 140 140" style="transform:rotate(-90deg);">
               <circle cx="70" cy="70" r="60" fill="none" class="health-ring-bg" stroke="var(--border)" stroke-width="12"></circle>
@@ -407,9 +407,9 @@ window.MANGIR_VERSION = '2.0';
     <div class="tab" id="tab-bakiye">
       <div class="g2">
         <div class="card" style="margin-bottom:0;">
-          <div class="ct">➕ Pozisyon Ekle</div>
+          <div class="ct"><i data-lucide="plus-circle" class="lu"></i> Pozisyon Ekle</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-            <div><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Araç</label><select id="bk-arac" class="month-select" style="font-size:14px;padding:8px 10px;"><option value="altin">🥇 Gram Altın</option><option value="ppf">📊 Para Piy. Fonu</option><option value="bist">📈 BİST 30</option><option value="usd">💵 Döviz (USD)</option><option value="diger">⭐ Diğer</option></select></div>
+            <div><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Araç</label><select id="bk-arac" class="month-select" style="font-size:14px;padding:8px 10px;"><option value="altin">Gram Altın</option><option value="ppf">Para Piy. Fonu</option><option value="bist">BİST 30</option><option value="usd">Döviz (USD)</option><option value="diger">Diğer</option></select></div>
             <div><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Miktar</label><input type="number" id="bk-miktar" class="form-input" placeholder="örn: 8.5" inputmode="decimal" autocomplete="off" style="padding:8px 10px;"></div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
@@ -417,12 +417,12 @@ window.MANGIR_VERSION = '2.0';
             <div><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Toplam Maliyet</label><input type="number" id="bk-maliyet" class="form-input" placeholder="Otomatik" style="padding:8px 10px;background:var(--cream);color:var(--ink3);" tabindex="-1"></div>
           </div>
           <button onclick="bakiyeEkle()" style="width:100%;padding:10px;background:var(--green);color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);">+ Pozisyon Ekle</button>
-          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;"><div class="ct">📋 Pozisyonlarım</div><div id="bakiye-liste"><div style="font-size:12px;color:var(--ink3);text-align:center;padding:16px 0;">Henüz pozisyon eklenmedi.</div></div></div>
+          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;"><div class="ct"><i data-lucide="clipboard-list" class="lu"></i> Pozisyonlarım</div><div id="bakiye-liste"><div style="font-size:12px;color:var(--ink3);text-align:center;padding:16px 0;">Henüz pozisyon eklenmedi.</div></div></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
-          <div class="card" style="margin-bottom:0;background:var(--green-bg);border-color:var(--green-bd);"><div class="ct" style="color:var(--green);">💰 Toplam Portföy Değeri</div><div id="bk-toplam-deger" style="font-family:var(--serif);font-size:28px;color:var(--green);">—</div><div id="bk-toplam-maliyet" style="font-size:11px;color:var(--green);margin-top:3px;">—</div></div>
-          <div class="card" style="margin-bottom:0;"><div class="ct">📊 Kar / Zarar</div><div id="bk-karzarar" style="font-size:22px;font-weight:700;">—</div><div id="bk-karzarar-pct" style="font-size:12px;color:var(--ink3);margin-top:3px;">—</div></div>
-          <div class="card" style="margin-bottom:0;"><div class="ct">📈 Araç Bazlı Özet</div><div id="bk-ozet"></div></div>
+          <div class="card" style="margin-bottom:0;background:var(--green-bg);border-color:var(--green-bd);"><div class="ct" style="color:var(--green);"><i data-lucide="wallet" class="lu"></i> Toplam Portföy Değeri</div><div id="bk-toplam-deger" style="font-family:var(--serif);font-size:28px;color:var(--green);">—</div><div id="bk-toplam-maliyet" style="font-size:11px;color:var(--green);margin-top:3px;">—</div></div>
+          <div class="card" style="margin-bottom:0;"><div class="ct"><i data-lucide="bar-chart-3" class="lu"></i> Kar / Zarar</div><div id="bk-karzarar" style="font-size:22px;font-weight:700;">—</div><div id="bk-karzarar-pct" style="font-size:12px;color:var(--ink3);margin-top:3px;">—</div></div>
+          <div class="card" style="margin-bottom:0;"><div class="ct"><i data-lucide="trending-up" class="lu"></i> Araç Bazlı Özet</div><div id="bk-ozet"></div></div>
         </div>
       </div>
     </div>
@@ -430,13 +430,13 @@ window.MANGIR_VERSION = '2.0';
     <div class="tab" id="tab-hedef">
       <div id="goals-container"></div>
       <div class="g4">
-        <div class="stat" style="background:var(--gold-bg);border-color:var(--gold-bd);"><div class="sl" style="color:var(--gold);">🎯 Hedef Portföy</div><div class="sv" id="hd-hedef" style="font-size:15px;color:var(--gold);">—</div><div class="ss" id="hd-hedef-sub">—</div></div>
-        <div class="stat"><div class="sl">💰 Gerçek Birikim</div><div class="sv" id="hd-gercek" style="font-size:15px;color:var(--green);">—</div><div class="ss">Bakiyem sekmesinden</div></div>
-        <div class="stat"><div class="sl">📊 Hedefe Ulaşma</div><div class="sv" id="hd-pct" style="font-size:15px;">—</div><div class="ss" id="hd-pct-sub">—</div></div>
-        <div class="stat"><div class="sl">⏳ Kalan Süre</div><div class="sv" id="hd-kalan" style="font-size:15px;color:var(--blue);">—</div><div class="ss" id="hd-kalan-sub">—</div></div>
+        <div class="stat" style="background:var(--gold-bg);border-color:var(--gold-bd);"><div class="sl" style="color:var(--gold);"><i data-lucide="crosshair" class="lu"></i> Hedef Portföy</div><div class="sv" id="hd-hedef" style="font-size:15px;color:var(--gold);">—</div><div class="ss" id="hd-hedef-sub">—</div></div>
+        <div class="stat"><div class="sl"><i data-lucide="wallet" class="lu"></i> Gerçek Birikim</div><div class="sv" id="hd-gercek" style="font-size:15px;color:var(--green);">—</div><div class="ss">Bakiyem sekmesinden</div></div>
+        <div class="stat"><div class="sl"><i data-lucide="bar-chart-3" class="lu"></i> Hedefe Ulaşma</div><div class="sv" id="hd-pct" style="font-size:15px;">—</div><div class="ss" id="hd-pct-sub">—</div></div>
+        <div class="stat"><div class="sl"><i data-lucide="timer" class="lu"></i> Kalan Süre</div><div class="sv" id="hd-kalan" style="font-size:15px;color:var(--blue);">—</div><div class="ss" id="hd-kalan-sub">—</div></div>
       </div>
       <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="ct" style="margin-bottom:0;">📊 İlerleme</div><div id="hd-rozet" style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--cream);color:var(--ink3);border:1px solid var(--border);">—</div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="ct" style="margin-bottom:0;"><i data-lucide="bar-chart-3" class="lu"></i> İlerleme</div><div id="hd-rozet" style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--cream);color:var(--ink3);border:1px solid var(--border);">—</div></div>
         <div style="margin-bottom:14px;">
           <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink3);margin-bottom:4px;"><span id="hd-baslangic-lbl">—</span><span id="hd-simdi-label">Şimdi</span><span id="hd-hedef-yas-lbl">—</span></div>
           <div style="height:10px;background:#F2F2F7;border-radius:5px;overflow:hidden;"><div id="hd-zaman-bar" style="height:100%;background:var(--gold);border-radius:5px;transition:width .5s;width:0%;"></div></div>
@@ -449,13 +449,13 @@ window.MANGIR_VERSION = '2.0';
       </div>
       <div class="g2">
         <div class="card" style="margin-bottom:0;">
-          <div class="ct">📊 Beklenen vs Gerçek</div>
+          <div class="ct"><i data-lucide="bar-chart-3" class="lu"></i> Beklenen vs Gerçek</div>
           <div class="tx-r"><span style="color:var(--ink3);">Bu aşamada olmalıydın</span><span id="hd-beklenen" style="font-weight:700;color:var(--gold);">—</span></div>
           <div class="tx-r"><span style="color:var(--ink3);">Gerçek birikimin</span><span id="hd-gercek2" style="font-weight:700;color:var(--green);">—</span></div>
           <div class="tx-r"><span style="font-weight:600;">Fark</span><span id="hd-fark" style="font-size:14px;font-weight:700;">—</span></div>
           <div id="hd-yorum" style="font-size:11px;padding:8px 10px;border-radius:8px;line-height:1.6;margin-top:8px;"></div>
         </div>
-        <div class="card" style="margin-bottom:0;"><div class="ct">🏁 Kilometre Taşları</div><div id="hd-taslar"></div></div>
+        <div class="card" style="margin-bottom:0;"><div class="ct"><i data-lucide="flag" class="lu"></i> Kilometre Taşları</div><div id="hd-taslar"></div></div>
       </div>
     </div>
     <!-- YOL HARİTASI -->
@@ -465,17 +465,17 @@ window.MANGIR_VERSION = '2.0';
         <div class="card" style="text-align:center;margin-bottom:0;padding:14px 8px;"><div class="ct">Hedef yaş</div><div id="yh-hedef-yas" style="font-family:var(--serif);font-size:36px;color:var(--ink);margin:4px 0 2px;line-height:1;">—</div><div style="font-size:10px;color:var(--ink3);">Özgürlük</div></div>
         <div class="card" style="text-align:center;background:var(--green-bg);border-color:var(--green-bd);margin-bottom:0;padding:14px 8px;"><div class="ct" style="color:var(--green);">Aylık</div><div id="yh-aylik" style="font-size:18px;font-weight:700;color:var(--green);margin:4px 0 2px;line-height:1.2;">—</div><div style="font-size:10px;color:var(--green);">Her ay</div></div>
       </div>
-      <div class="card"><div class="ct">🗺️ Yol Haritası — %18 Gerçekçi Senaryo</div><div id="tl-list"></div></div>
+      <div class="card"><div class="ct"><i data-lucide="map" class="lu"></i> Yol Haritası — %18 Gerçekçi Senaryo</div><div id="tl-list"></div></div>
     </div>
     <!-- AKSİYON -->
     <div class="tab" id="tab-aksiyon">
       <div class="g2">
-        <div class="card" style="margin-bottom:0;"><div class="ct">📋 Bu Hafta Yapılacaklar</div><div id="act-list"></div></div>
+        <div class="card" style="margin-bottom:0;"><div class="ct"><i data-lucide="clipboard-list" class="lu"></i> Bu Hafta Yapılacaklar</div><div id="act-list"></div></div>
         <div class="card" style="margin-bottom:0;">
-          <div class="ct">🔄 Her Ay Tekrar Et</div>
+          <div class="ct"><i data-lucide="refresh-cw" class="lu"></i> Her Ay Tekrar Et</div>
           <div id="act-aylik"></div>
           <div class="warn" style="margin-top:10px;">Her ay fiyata bakmadan aynı miktarı al. Ortalama maliyet stratejisi.</div>
-          <div style="margin-top:10px;"><a style="display:inline-flex;align-items:center;gap:5px;background:#C8102E;color:white;font-size:11px;font-weight:600;padding:6px 13px;border-radius:20px;text-decoration:none;" href="https://bireysel.ziraatbank.com.tr" target="_blank">🏦 Ziraat Mobil</a></div>
+          <div style="margin-top:10px;"><a style="display:inline-flex;align-items:center;gap:5px;background:#C8102E;color:white;font-size:11px;font-weight:600;padding:6px 13px;border-radius:20px;text-decoration:none;" href="https://bireysel.ziraatbank.com.tr" target="_blank"><i data-lucide="landmark" class="lu"></i> Ziraat Mobil</a></div>
         </div>
       </div>
     </div>
@@ -483,41 +483,41 @@ window.MANGIR_VERSION = '2.0';
     <div class="tab" id="tab-calculator">
       <div class="g2">
         <div class="card" style="margin-bottom:0;">
-          <div class="ct">🧮 Parametreler</div>
-          <div class="srow"><span class="slbl">💰 Başlangıç yatırım</span><input type="range" id="c-m" min="1000" max="400000" step="1000" value="30000" oninput="cu()"><span class="sval" id="c-m-o">30K ₺</span></div>
-          <div class="srow"><span class="slbl">📈 Yıllık getiri</span><input type="range" id="c-r" min="10" max="40" step="1" value="18" oninput="cu()"><span class="sval" id="c-r-o">%18</span></div>
-          <div class="srow"><span class="slbl">⏳ Süre</span><input type="range" id="c-y" min="5" max="40" step="1" value="25" oninput="cu()"><span class="sval" id="c-y-o">25 yıl</span></div>
-          <div class="srow" style="background:var(--gold-bg);border-radius:8px;padding:8px 10px;border:1px solid var(--gold-bd);margin-top:4px;"><span class="slbl" style="color:var(--gold);font-weight:600;">📊 6 ayda artış</span><input type="range" id="c-inc" min="0" max="20" step="1" value="0" oninput="cu()" style="accent-color:var(--gold);"><span class="sval" id="c-inc-o" style="color:var(--gold);">%0</span></div>
+          <div class="ct"><i data-lucide="calculator" class="lu"></i> Parametreler</div>
+          <div class="srow"><span class="slbl"><i data-lucide="wallet" class="lu"></i> Başlangıç yatırım</span><input type="range" id="c-m" min="1000" max="400000" step="1000" value="30000" oninput="cu()"><span class="sval" id="c-m-o">30K ₺</span></div>
+          <div class="srow"><span class="slbl"><i data-lucide="trending-up" class="lu"></i> Yıllık getiri</span><input type="range" id="c-r" min="10" max="40" step="1" value="18" oninput="cu()"><span class="sval" id="c-r-o">%18</span></div>
+          <div class="srow"><span class="slbl"><i data-lucide="timer" class="lu"></i> Süre</span><input type="range" id="c-y" min="5" max="40" step="1" value="25" oninput="cu()"><span class="sval" id="c-y-o">25 yıl</span></div>
+          <div class="srow" style="background:var(--gold-bg);border-radius:8px;padding:8px 10px;border:1px solid var(--gold-bd);margin-top:4px;"><span class="slbl" style="color:var(--gold);font-weight:600;"><i data-lucide="bar-chart-3" class="lu"></i> 6 ayda artış</span><input type="range" id="c-inc" min="0" max="20" step="1" value="0" oninput="cu()" style="accent-color:var(--gold);"><span class="sval" id="c-inc-o" style="color:var(--gold);">%0</span></div>
           <div class="res-box"><div class="res-lbl">Dönem Sonu Portföy</div><div class="res-val" id="c-res">—</div></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-            <div style="background:var(--cream);border-radius:8px;padding:10px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--ink3);margin-bottom:2px;">💸 Toplam yatırdığın</div><div id="c-inv" style="font-size:14px;font-weight:700;">—</div></div>
-            <div style="background:var(--green-bg);border-radius:8px;padding:10px;border:1px solid var(--green-bd);"><div style="font-size:10px;color:var(--green);margin-bottom:2px;">🤑 Faizden kazancın</div><div id="c-gain" style="font-size:14px;font-weight:700;color:var(--green);">—</div></div>
+            <div style="background:var(--cream);border-radius:8px;padding:10px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--ink3);margin-bottom:2px;"><i data-lucide="banknote" class="lu"></i> Toplam yatırdığın</div><div id="c-inv" style="font-size:14px;font-weight:700;">—</div></div>
+            <div style="background:var(--green-bg);border-radius:8px;padding:10px;border:1px solid var(--green-bd);"><div style="font-size:10px;color:var(--green);margin-bottom:2px;"><i data-lucide="badge-percent" class="lu"></i> Faizden kazancın</div><div id="c-gain" style="font-size:14px;font-weight:700;color:var(--green);">—</div></div>
           </div>
-          <div style="background:var(--gold-bg);border-radius:8px;padding:10px;margin-top:8px;border:1px solid var(--gold-bd);"><div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:2px;">💎 Aylık güvenli çekim</div><div id="c-income" style="font-size:18px;font-weight:700;color:var(--gold);">—</div></div>
+          <div style="background:var(--gold-bg);border-radius:8px;padding:10px;margin-top:8px;border:1px solid var(--gold-bd);"><div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:2px;"><i data-lucide="diamond" class="lu"></i> Aylık güvenli çekim</div><div id="c-income" style="font-size:18px;font-weight:700;color:var(--gold);">—</div></div>
         </div>
-        <div class="card" style="margin-bottom:0;"><div class="ct">📈 Büyüme Grafiği</div><div class="chart-wrap"><canvas id="cc"></canvas></div><div style="margin-top:14px;"><div class="ct">🏁 Kilometre Taşları</div><div id="ms"></div></div></div>
+        <div class="card" style="margin-bottom:0;"><div class="ct"><i data-lucide="trending-up" class="lu"></i> Büyüme Grafiği</div><div class="chart-wrap"><canvas id="cc"></canvas></div><div style="margin-top:14px;"><div class="ct"><i data-lucide="flag" class="lu"></i> Kilometre Taşları</div><div id="ms"></div></div></div>
       </div>
     </div>
     <!-- ALARMLAR -->
     <div class="tab" id="tab-alarmlar">
       <div class="g2">
         <div class="card" style="margin-bottom:0;">
-          <div class="ct">🔔 Fiyat Alarmı Ekle</div>
+          <div class="ct"><i data-lucide="bell" class="lu"></i> Fiyat Alarmı Ekle</div>
           <div id="bildirim-banner" style="background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:8px;padding:10px 12px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
             <div style="font-size:11px;color:var(--blue);line-height:1.5;">📲 Anlık bildirim almak için izin ver.</div>
             <button onclick="bildirimIzniIste()" style="flex-shrink:0;padding:6px 12px;background:var(--blue);color:white;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans);">İzin Ver</button>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-            <div><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Araç</label><select id="al-arac" class="month-select" style="font-size:14px;padding:8px 10px;" onchange="updateAlarmHint()"><option value="altin">🥇 Gram Altın (₺)</option><option value="usd">💵 USD/TL</option><option value="eur">💶 EUR/TL</option><option value="ons">⭐ ONS ($)</option></select></div>
+            <div><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Araç</label><select id="al-arac" class="month-select" style="font-size:14px;padding:8px 10px;" onchange="updateAlarmHint()"><option value="altin">Gram Altın (₺)</option><option value="usd">USD/TL</option><option value="eur">EUR/TL</option><option value="ons">ONS ($)</option></select></div>
             <div><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Yön</label><select id="al-yon" class="month-select" style="font-size:14px;padding:8px 10px;"><option value="yukari">↑ Yukarı geçince</option><option value="asagi">↓ Aşağı düşünce</option></select></div>
           </div>
           <div style="margin-bottom:12px;"><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Hedef Fiyat</label><div style="display:flex;align-items:center;gap:8px;"><input type="number" id="al-fiyat" class="form-input" placeholder="örn: 7500" inputmode="decimal" autocomplete="off" style="flex:1;"><div id="al-simdi" style="font-size:11px;color:var(--ink3);white-space:nowrap;flex-shrink:0;">Şu an: —</div></div></div>
           <button onclick="alarmEkle()" style="width:100%;padding:9px;background:var(--gold);color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);">+ Alarm Ekle</button>
-          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;"><div class="ct">🔔 Aktif Alarmlar</div><div id="alarm-liste"><div style="font-size:12px;color:var(--ink3);text-align:center;padding:16px 0;">Henüz alarm yok.</div></div></div>
+          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;"><div class="ct"><i data-lucide="bell" class="lu"></i> Aktif Alarmlar</div><div id="alarm-liste"><div style="font-size:12px;color:var(--ink3);text-align:center;padding:16px 0;">Henüz alarm yok.</div></div></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <div class="card" style="margin-bottom:0;">
-            <div class="ct">📅 Maaş Günü Hatırlatıcısı</div>
+            <div class="ct"><i data-lucide="calendar-days" class="lu"></i> Maaş Günü Hatırlatıcısı</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
               <div><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Her ayın kaçı?</label><input type="number" id="maas-gun" value="15" min="1" max="31" inputmode="numeric" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:16px;font-weight:600;font-family:var(--sans);"></div>
               <div><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Hatırlatıcı</label><select id="maas-hatir" class="month-select" style="font-size:14px;padding:8px 10px;"><option value="0">Aynı gün</option><option value="1">1 gün önce</option><option value="2">2 gün önce</option></select></div>
@@ -529,7 +529,7 @@ window.MANGIR_VERSION = '2.0';
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><div class="ct" style="margin-bottom:0;">📜 Son Bildirimler</div><button onclick="gecmisiTemizle()" style="font-size:10px;color:var(--red);background:none;border:none;cursor:pointer;font-family:var(--sans);">Temizle</button></div>
             <div id="alarm-gecmis"><div style="font-size:12px;color:var(--ink3);text-align:center;padding:12px 0;">Henüz bildirim yok.</div></div>
           </div>
-          <div class="info">📱 <strong>iOS Notu:</strong> iPhone'da bildirimler uygulama açıkken çalışır.</div>
+          <div class="info"><i data-lucide="smartphone" class="lu"></i> <strong>iOS Notu:</strong> iPhone'da bildirimler uygulama açıkken çalışır.</div>
         </div>
       </div>
     </div>
@@ -537,7 +537,7 @@ window.MANGIR_VERSION = '2.0';
     <div class="tab" id="tab-bordro">
       <div class="g2">
         <div class="card" style="margin-bottom:0;">
-          <div class="ct">📋 Her Ay Bordrodan Gir</div>
+          <div class="ct"><i data-lucide="clipboard-list" class="lu"></i> Her Ay Bordrodan Gir</div>
           <p style="font-size:12px;color:var(--ink3);margin-bottom:16px;line-height:1.7;">3 rakam gir — vergi dilimi otomatik hesaplanır.</p>
           <div style="margin-bottom:12px;"><label style="font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:6px;">Hangi Ay?</label><select class="month-select" id="f-ay"></select></div>
           <div style="margin-bottom:12px;"><label style="font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:6px;">ÖDEME TOPLAMI (Net) ₺</label><input class="form-input" type="number" id="f-net" placeholder="örn: 85000" oninput="calcPreview()" inputmode="numeric" autocomplete="off"><div class="form-hint">Bordrodaki ÖDEME TOPLAMI satırı</div></div>
@@ -556,9 +556,9 @@ window.MANGIR_VERSION = '2.0';
           <div id="success-box" class="success-box"><div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:4px;">✓ Güncellendi!</div><div id="success-msg" style="font-size:12px;color:var(--ink3);"></div></div>
         </div>
         <div class="card" style="margin-bottom:0;">
-          <div class="ct">📊 Bordro Geçmişi</div>
+          <div class="ct"><i data-lucide="bar-chart-3" class="lu"></i> Bordro Geçmişi</div>
           <div id="bordro-history"><div style="font-size:12px;color:var(--ink3);text-align:center;padding:24px 0;">Henüz bordro girilmedi.</div></div>
-          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;"><div class="ct">📈 Ortalama Net Maaş</div><div style="font-family:var(--serif);font-size:26px;color:var(--gold);" id="avg-maas">—</div><div style="font-size:11px;color:var(--ink3);margin-top:3px;" id="avg-sub">Bordro girildikçe hesaplanacak</div></div>
+          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;"><div class="ct"><i data-lucide="trending-up" class="lu"></i> Ortalama Net Maaş</div><div style="font-family:var(--serif);font-size:26px;color:var(--gold);" id="avg-maas">—</div><div style="font-size:11px;color:var(--ink3);margin-top:3px;" id="avg-sub">Bordro girildikçe hesaplanacak</div></div>
         </div>
       </div>
     </div>
@@ -566,22 +566,22 @@ window.MANGIR_VERSION = '2.0';
     <div class="tab" id="tab-vergi">
       <div class="g2">
         <div class="card" style="margin-bottom:0;">
-          <div class="ct">💸 Yıllık Vergi Avantajı</div>
-          <div class="tx-r"><span style="color:var(--ink2);">🛡️ Hayat sigortası vergi iadesi</span><span class="tx-v" id="v-yillik">—</span></div>
-          <div class="tx-r"><span style="color:var(--ink2);">📊 PPF stopaj avantajı</span><span class="tx-v">+~4.500 ₺</span></div>
-          <div class="tx-r"><span style="color:var(--ink2);">🏛️ Zorunlu BES devlet katkısı</span><span class="tx-v">Otomatik ✓</span></div>
-          <div class="tx-r" style="border-top:2px solid var(--border);margin-top:4px;padding-top:12px;"><span style="font-weight:700;">🎯 Toplam yıllık avantaj</span><span style="font-size:18px;font-weight:700;color:var(--green);" id="v-toplam">—</span></div>
+          <div class="ct"><i data-lucide="banknote" class="lu"></i> Yıllık Vergi Avantajı</div>
+          <div class="tx-r"><span style="color:var(--ink2);"><i data-lucide="shield-check" class="lu"></i> Hayat sigortası vergi iadesi</span><span class="tx-v" id="v-yillik">—</span></div>
+          <div class="tx-r"><span style="color:var(--ink2);"><i data-lucide="bar-chart-3" class="lu"></i> PPF stopaj avantajı</span><span class="tx-v">+~4.500 ₺</span></div>
+          <div class="tx-r"><span style="color:var(--ink2);"><i data-lucide="landmark" class="lu"></i> Zorunlu BES devlet katkısı</span><span class="tx-v">Otomatik ✓</span></div>
+          <div class="tx-r" style="border-top:2px solid var(--border);margin-top:4px;padding-top:12px;"><span style="font-weight:700;"><i data-lucide="crosshair" class="lu"></i> Toplam yıllık avantaj</span><span style="font-size:18px;font-weight:700;color:var(--green);" id="v-toplam">—</span></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <div class="card" style="margin-bottom:0;">
-            <div class="ct">📊 Vergi Dilimin</div>
+            <div class="ct"><i data-lucide="bar-chart-3" class="lu"></i> Vergi Dilimin</div>
             <div style="font-family:var(--serif);font-size:44px;text-align:center;margin:10px 0;" id="v-dilim-big">—</div>
             <div class="info" id="v-dilim-acikla">Bordro girince hesaplanacak.</div>
           </div>
           <div class="card" style="margin-bottom:0;">
-            <div class="ct">🛡️ Hayat Sigortası Vergi Detayı</div>
+            <div class="ct"><i data-lucide="shield-check" class="lu"></i> Hayat Sigortası Vergi Detayı</div>
             <div id="v-sigorta-detay"><div style="font-size:12px;color:var(--ink3);padding:10px 0;text-align:center;">Sigorta bilgisi girilmedi.</div></div>
-            <button onclick="toggleSigortaForm()" style="width:100%;margin-top:10px;padding:9px;background:var(--cream);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--sans);color:var(--ink3);">✏️ Sigorta Bilgisini Güncelle</button>
+            <button onclick="toggleSigortaForm()" style="width:100%;margin-top:10px;padding:9px;background:var(--cream);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--sans);color:var(--ink3);"><i data-lucide="pencil" class="lu"></i> Sigorta Bilgisini Güncelle</button>
             <div id="sig-form-vergi" style="display:none;margin-top:12px;background:var(--cream);border-radius:10px;padding:14px;border:1px solid var(--border);">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
                 <select id="v-sig-pb" class="month-select" style="font-size:14px;padding:8px 10px;"><option value="tl">₺ TL</option><option value="usd">$ USD</option><option value="eur">€ EUR</option></select>
@@ -594,7 +594,7 @@ window.MANGIR_VERSION = '2.0';
             </div>
           </div>
           <div class="card" style="margin-bottom:0;">
-            <div class="ct">📋 2026 Gelir Vergisi Dilimleri</div>
+            <div class="ct"><i data-lucide="clipboard-list" class="lu"></i> 2026 Gelir Vergisi Dilimleri</div>
             <div style="font-size:11px;line-height:2.2;color:var(--ink3);">
               <div>%15 → Yıllık 0 – 96.000 ₺</div><div>%20 → 96.001 – 230.000 ₺</div>
               <div>%27 → 230.001 – 870.000 ₺</div><div>%35 → 870.001 – 3.000.000 ₺</div>
@@ -608,17 +608,17 @@ window.MANGIR_VERSION = '2.0';
     <div class="tab" id="tab-gider">
       <div class="g2">
         <div class="card" style="margin-bottom:0;">
-          <div class="ct">🧾 Gider Ekle</div>
+          <div class="ct"><i data-lucide="receipt" class="lu"></i> Gider Ekle</div>
           <div class="gider-cat-grid" id="gider-cats">
-            <div class="gider-cat" onclick="selectGiderCat(this,'market')" data-cat="market"><span class="gider-cat-icon">🛒</span><span class="gider-cat-name">Market</span></div>
-            <div class="gider-cat" onclick="selectGiderCat(this,'kira')" data-cat="kira"><span class="gider-cat-icon">🏠</span><span class="gider-cat-name">Kira</span></div>
-            <div class="gider-cat" onclick="selectGiderCat(this,'fatura')" data-cat="fatura"><span class="gider-cat-icon">💡</span><span class="gider-cat-name">Faturalar</span></div>
-            <div class="gider-cat" onclick="selectGiderCat(this,'ulasim')" data-cat="ulasim"><span class="gider-cat-icon">🚗</span><span class="gider-cat-name">Ulaşım</span></div>
-            <div class="gider-cat" onclick="selectGiderCat(this,'yemek')" data-cat="yemek"><span class="gider-cat-icon">🍽️</span><span class="gider-cat-name">Yemek</span></div>
-            <div class="gider-cat" onclick="selectGiderCat(this,'saglik')" data-cat="saglik"><span class="gider-cat-icon">🏥</span><span class="gider-cat-name">Sağlık</span></div>
-            <div class="gider-cat" onclick="selectGiderCat(this,'giyim')" data-cat="giyim"><span class="gider-cat-icon">👕</span><span class="gider-cat-name">Giyim</span></div>
-            <div class="gider-cat" onclick="selectGiderCat(this,'eglence')" data-cat="eglence"><span class="gider-cat-icon">🎬</span><span class="gider-cat-name">Eğlence</span></div>
-            <div class="gider-cat" onclick="selectGiderCat(this,'diger')" data-cat="diger"><span class="gider-cat-icon">📦</span><span class="gider-cat-name">Diğer</span></div>
+            <div class="gider-cat" onclick="selectGiderCat(this,'market')" data-cat="market"><span class="gider-cat-icon"><i data-lucide="shopping-cart" class="lu"></i></span><span class="gider-cat-name">Market</span></div>
+            <div class="gider-cat" onclick="selectGiderCat(this,'kira')" data-cat="kira"><span class="gider-cat-icon"><i data-lucide="home" class="lu"></i></span><span class="gider-cat-name">Kira</span></div>
+            <div class="gider-cat" onclick="selectGiderCat(this,'fatura')" data-cat="fatura"><span class="gider-cat-icon"><i data-lucide="lightbulb" class="lu"></i></span><span class="gider-cat-name">Faturalar</span></div>
+            <div class="gider-cat" onclick="selectGiderCat(this,'ulasim')" data-cat="ulasim"><span class="gider-cat-icon"><i data-lucide="car" class="lu"></i></span><span class="gider-cat-name">Ulaşım</span></div>
+            <div class="gider-cat" onclick="selectGiderCat(this,'yemek')" data-cat="yemek"><span class="gider-cat-icon"><i data-lucide="utensils" class="lu"></i></span><span class="gider-cat-name">Yemek</span></div>
+            <div class="gider-cat" onclick="selectGiderCat(this,'saglik')" data-cat="saglik"><span class="gider-cat-icon"><i data-lucide="hospital" class="lu"></i></span><span class="gider-cat-name">Sağlık</span></div>
+            <div class="gider-cat" onclick="selectGiderCat(this,'giyim')" data-cat="giyim"><span class="gider-cat-icon"><i data-lucide="shirt" class="lu"></i></span><span class="gider-cat-name">Giyim</span></div>
+            <div class="gider-cat" onclick="selectGiderCat(this,'eglence')" data-cat="eglence"><span class="gider-cat-icon"><i data-lucide="clapperboard" class="lu"></i></span><span class="gider-cat-name">Eğlence</span></div>
+            <div class="gider-cat" onclick="selectGiderCat(this,'diger')" data-cat="diger"><span class="gider-cat-icon"><i data-lucide="package" class="lu"></i></span><span class="gider-cat-name">Diğer</span></div>
           </div>
           <div style="display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-bottom:10px;">
             <div><label style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;display:block;margin-bottom:4px;">Açıklama</label><input type="text" id="gider-aciklama" class="form-input" placeholder="örn: Migros alışveriş" autocomplete="off" style="padding:8px 10px;"></div>
@@ -626,34 +626,34 @@ window.MANGIR_VERSION = '2.0';
           </div>
           <button onclick="giderEkle()" style="width:100%;padding:10px;background:var(--red);color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:transform .15s;">− Gider Ekle</button>
           <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div class="ct" style="margin-bottom:0;">📋 Bu Ayki Giderler</div><select id="gider-ay-filtre" class="month-select" style="font-size:12px;padding:4px 8px;width:auto;" onchange="renderGiderler()"></select></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div class="ct" style="margin-bottom:0;"><i data-lucide="clipboard-list" class="lu"></i> Bu Ayki Giderler</div><select id="gider-ay-filtre" class="month-select" style="font-size:12px;padding:4px 8px;width:auto;" onchange="renderGiderler()"></select></div>
             <div id="gider-liste"><div style="font-size:12px;color:var(--ink3);text-align:center;padding:16px 0;">Henüz gider eklenmedi.</div></div>
           </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <div class="card" style="margin-bottom:0;background:var(--red-bg);border-color:var(--red-bd);">
-            <div class="ct" style="color:var(--red);">💸 Bu Ay Toplam Gider</div>
+            <div class="ct" style="color:var(--red);"><i data-lucide="banknote" class="lu"></i> Bu Ay Toplam Gider</div>
             <div id="gider-toplam" style="font-family:var(--serif);font-size:28px;color:var(--red);">0 ₺</div>
             <div id="gider-kalan" style="font-size:11px;color:var(--ink3);margin-top:3px;">—</div>
           </div>
           <div class="card" style="margin-bottom:0;">
-            <div class="ct">📊 Kategori Dağılımı</div>
+            <div class="ct"><i data-lucide="bar-chart-3" class="lu"></i> Kategori Dağılımı</div>
             <div class="pie-wrap"><canvas id="gider-pie"></canvas></div>
             <div id="gider-cats-ozet"></div>
           </div>
           <div class="card" style="margin-bottom:0;">
-            <div class="ct">📈 Aylık Gider Trendi</div>
+            <div class="ct"><i data-lucide="trending-up" class="lu"></i> Aylık Gider Trendi</div>
             <div class="chart-wrap"><canvas id="gider-trend"></canvas></div>
           </div>
           <div class="card" style="margin-bottom:0;">
             <div style="font-size:12px;font-weight:700;color:var(--ink3);margin-bottom:12px;display:flex;justify-content:space-between;">
-              <div>🔄 TEKRARLAYAN GİDERLER</div>
+              <div><i data-lucide="refresh-cw" class="lu"></i> TEKRARLAYAN GİDERLER</div>
             </div>
             <div style="font-size:12px;color:var(--ink3);margin-bottom:10px;">Her ay otomatik eklenen sabit giderler.</div>
             <div id="recur-liste" style="background:var(--cream);border-radius:8px;padding:10px;margin-bottom:10px;border:1px solid var(--border);"></div>
             <div style="display:flex;gap:8px;">
               <select id="recur-kat" class="form-input" style="flex:1;">
-                <option value="kira">🏠 Kira</option><option value="fatura">💡 Faturalar</option><option value="diger">📦 Diğer</option>
+                <option value="kira">Kira</option><option value="fatura">Faturalar</option><option value="diger">Diğer</option>
               </select>
               <input type="number" id="recur-tutar" class="form-input" placeholder="Tutar ₺" style="width:100px;">
               <button onclick="recurEkle()" style="background:var(--gold);color:white;border:none;border-radius:8px;padding:0 15px;font-weight:bold;">+</button>
@@ -661,8 +661,8 @@ window.MANGIR_VERSION = '2.0';
           </div>
           <div class="card" style="margin-bottom:0;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-              <div style="font-size:12px;font-weight:700;color:var(--ink3);">🎯 BÜTÇE PLANI</div>
-              <button onclick="toggleBudgetEdit()" style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:4px 10px;font-size:11px;color:var(--ink2);">⚙️ Düzenle</button>
+              <div style="font-size:12px;font-weight:700;color:var(--ink3);"><i data-lucide="crosshair" class="lu"></i> BÜTÇE PLANI</div>
+              <button onclick="toggleBudgetEdit()" style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:4px 10px;font-size:11px;color:var(--ink2);"><i data-lucide="settings" class="lu"></i> Düzenle</button>
             </div>
             <div id="budget-edit" style="display:none;background:var(--cream);padding:12px;border-radius:8px;margin-bottom:15px;border:1px solid var(--border);">
               <div style="font-size:12px;color:var(--ink3);margin-bottom:10px;">Kategori bazlı aylık limit belirle.</div>
@@ -678,16 +678,16 @@ window.MANGIR_VERSION = '2.0';
 
 <div class="bottom-nav" id="bottom-nav">
   <div class="bottom-nav-inner" id="bottom-nav-inner">
-    <button class="bnav-item active" onclick="goTabBottom('portfolio',this)"><span>📊</span><span>Portföy</span></button>
-    <button class="bnav-item" onclick="goTabBottom('bakiye',this)"><span>💼</span><span>Bakiyem</span></button>
-    <button class="bnav-item" onclick="goTabBottom('hedef',this)"><span>🎯</span><span>Hedef</span></button>
-    <button class="bnav-item" onclick="goTabBottom('calculator',this)"><span>🧮</span><span>Hesap</span></button>
-    <button class="bnav-item" onclick="goTabBottom('gider',this)"><span>🧾</span><span>Giderler</span></button>
-    <button class="bnav-item" onclick="goTabBottom('yolharitasi',this)"><span>🗺️</span><span>Harita</span></button>
-    <button class="bnav-item" onclick="goTabBottom('aksiyon',this)"><span>✅</span><span>Aksiyon</span></button>
-    <button class="bnav-item" onclick="goTabBottom('alarmlar',this)"><span>🔔</span><span>Alarmlar</span></button>
-    <button class="bnav-item" onclick="goTabBottom('bordro',this)"><span>📋</span><span>Bordro</span></button>
-    <button class="bnav-item" onclick="goTabBottom('vergi',this)"><span>💸</span><span>Vergi</span></button>
+    <button class="bnav-item active" onclick="goTabBottom('portfolio',this)"><span><i data-lucide="bar-chart-3" class="lu"></i></span><span>Portföy</span></button>
+    <button class="bnav-item" onclick="goTabBottom('bakiye',this)"><span><i data-lucide="briefcase" class="lu"></i></span><span>Bakiyem</span></button>
+    <button class="bnav-item" onclick="goTabBottom('hedef',this)"><span><i data-lucide="crosshair" class="lu"></i></span><span>Hedef</span></button>
+    <button class="bnav-item" onclick="goTabBottom('calculator',this)"><span><i data-lucide="calculator" class="lu"></i></span><span>Hesap</span></button>
+    <button class="bnav-item" onclick="goTabBottom('gider',this)"><span><i data-lucide="receipt" class="lu"></i></span><span>Giderler</span></button>
+    <button class="bnav-item" onclick="goTabBottom('yolharitasi',this)"><span><i data-lucide="map" class="lu"></i></span><span>Harita</span></button>
+    <button class="bnav-item" onclick="goTabBottom('aksiyon',this)"><span><i data-lucide="check-circle" class="lu"></i></span><span>Aksiyon</span></button>
+    <button class="bnav-item" onclick="goTabBottom('alarmlar',this)"><span><i data-lucide="bell" class="lu"></i></span><span>Alarmlar</span></button>
+    <button class="bnav-item" onclick="goTabBottom('bordro',this)"><span><i data-lucide="clipboard-list" class="lu"></i></span><span>Bordro</span></button>
+    <button class="bnav-item" onclick="goTabBottom('vergi',this)"><span><i data-lucide="banknote" class="lu"></i></span><span>Vergi</span></button>
   </div>
   <div class="bnav-scroll-hint" id="bnav-scroll-hint"><span></span><span></span><span></span></div>
   <div class="swipe-hint-tooltip" id="swipe-hint-tooltip">← Kaydır →</div>
@@ -706,6 +706,17 @@ window.MANGIR_VERSION = '2.0';
 <script src="assets/js/goals.js"></script>
 <script src="assets/js/microux.js"></script>
 <script src="assets/js/app.js"></script>
-<script>if(typeof lucide!=='undefined')lucide.createIcons();if(typeof initWelcomeSlider==='function')setTimeout(initWelcomeSlider,2000);</script>
+<script>
+if(typeof lucide!=='undefined')lucide.createIcons();
+if(typeof initWelcomeSlider==='function')setTimeout(initWelcomeSlider,2000);
+// Re-init icons whenever dashboard changes
+var _origGoTab=window.goTab;
+if(_origGoTab)window.goTab=function(t,b){_origGoTab(t,b);setTimeout(function(){if(typeof lucide!=='undefined')lucide.createIcons();},50);};
+var _origGoTabB=window.goTabBottom;
+if(_origGoTabB)window.goTabBottom=function(t,b){_origGoTabB(t,b);setTimeout(function(){if(typeof lucide!=='undefined')lucide.createIcons();},50);};
+// Re-init after profile load
+var _origProfilSec=window.profilSec;
+if(_origProfilSec)window.profilSec=function(i){_origProfilSec(i);setTimeout(function(){if(typeof lucide!=='undefined')lucide.createIcons();},300);};
+</script>
 </body>
 </html>
