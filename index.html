@@ -24,9 +24,18 @@ window.MANGIR_VERSION = '2.0';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+<div id="toast-container"></div>
+<div id="welcome-slider">
+  <div class="l-coin l-coin-lg" style="width:100px;height:100px;margin-bottom:24px;"></div>
+  <div id="ws-body" class="ws-body"></div>
+  <div id="ws-dots" class="ws-dots"></div>
+  <button class="ws-next btn-press" id="ws-next-btn" onclick="wsNext()">Devam →</button>
+  <button class="ws-skip" onclick="closeWelcome()">Geç</button>
+</div>
 <div id="splash">
   <div class="l-coin l-coin-lg"></div>
   <div class="splash-logo">Mangır</div>
@@ -141,6 +150,7 @@ window.MANGIR_VERSION = '2.0';
         <div class="ob-card-row" onclick="selectCard(this,'risk','konser')"><span class="ob-card-row-icon">🛡️</span><div><div class="ob-card-row-title">Muhafazakâr</div><div class="ob-card-row-sub">Kaybetmek istemiyorum, düşük getiri olsa da olur</div></div></div>
         <div class="ob-card-row" onclick="selectCard(this,'risk','dengeli')"><span class="ob-card-row-icon">⚖️</span><div><div class="ob-card-row-title">Dengeli</div><div class="ob-card-row-sub">Biraz risk alabilirim, uzun vadede büyümek istiyorum</div></div></div>
         <div class="ob-card-row" onclick="selectCard(this,'risk','agresif')"><span class="ob-card-row-icon">🚀</span><div><div class="ob-card-row-title">Agresif</div><div class="ob-card-row-sub">Yüksek getiri için yüksek risk alabilirim</div></div></div>
+        <div class="ob-card-row" onclick="selectCard(this,'risk','katilim')"><span class="ob-card-row-icon">☪️</span><div><div class="ob-card-row-title">Katılım (Faizsiz)</div><div class="ob-card-row-sub">İslami finans prensiplerine uygun, kâr payı bazlı yatırım</div></div></div>
       </div>
     </div>
     <div class="ob-step-footer"><button class="ob-btn" onclick="nextStep()">Devam Et →</button><button class="ob-btn-back" onclick="prevStep()">← Geri</button></div>
@@ -266,6 +276,7 @@ window.MANGIR_VERSION = '2.0';
   <div class="content">
     <!-- PORTFÖY -->
     <div class="tab active" id="tab-portfolio">
+      <div id="insight-container"></div>
       <div class="g4">
         <div class="stat"><div class="sl">💰 Aylık Gelir</div><div class="sv" id="s-maas" style="font-size:16px;">—</div><div class="ss" id="s-maas-sub">Net gelir</div></div>
         <div class="stat" style="cursor:pointer;border:1px solid var(--green-bd);background:var(--green-bg);" onclick="toggleYatirimEdit()">
@@ -287,6 +298,7 @@ window.MANGIR_VERSION = '2.0';
               <option value="konser">🛡️ Muhafazakâr</option>
               <option value="dengeli">⚖️ Dengeli</option>
               <option value="agresif">🚀 Agresif</option>
+              <option value="katilim">☪️ Katılım (Faizsiz)</option>
             </select>
             <div style="display:flex;gap:5px;margin-top:6px;">
               <button onclick="saveRisk()" style="flex:1;padding:6px;background:var(--gold);color:white;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans);">✓ Kaydet</button>
@@ -385,6 +397,11 @@ window.MANGIR_VERSION = '2.0';
           <div id="health-factors" style="margin-top:20px;display:flex;flex-direction:column;gap:10px;padding-top:15px;border-top:1px solid var(--border);"></div>
         </div>
       </div>
+      <!-- Achievement Gallery -->
+      <div class="card" style="margin-bottom:0;">
+        <div class="ct"><i data-lucide="trophy" style="width:14px;height:14px;"></i> Başarılar & Serileri</div>
+        <div id="achievement-gallery"></div>
+      </div>
     </div>
     <!-- BAKİYEM -->
     <div class="tab" id="tab-bakiye">
@@ -411,6 +428,7 @@ window.MANGIR_VERSION = '2.0';
     </div>
     <!-- HEDEF -->
     <div class="tab" id="tab-hedef">
+      <div id="goals-container"></div>
       <div class="g4">
         <div class="stat" style="background:var(--gold-bg);border-color:var(--gold-bd);"><div class="sl" style="color:var(--gold);">🎯 Hedef Portföy</div><div class="sv" id="hd-hedef" style="font-size:15px;color:var(--gold);">—</div><div class="ss" id="hd-hedef-sub">—</div></div>
         <div class="stat"><div class="sl">💰 Gerçek Birikim</div><div class="sv" id="hd-gercek" style="font-size:15px;color:var(--green);">—</div><div class="ss">Bakiyem sekmesinden</div></div>
@@ -681,6 +699,13 @@ window.MANGIR_VERSION = '2.0';
 <script src="assets/js/utils.js"></script>
 <script src="assets/js/state.js"></script>
 <script src="assets/js/charts.js"></script>
+<script src="assets/js/welcome.js"></script>
+<script src="assets/js/tour.js"></script>
+<script src="assets/js/insights.js"></script>
+<script src="assets/js/gamification.js"></script>
+<script src="assets/js/goals.js"></script>
+<script src="assets/js/microux.js"></script>
 <script src="assets/js/app.js"></script>
+<script>if(typeof lucide!=='undefined')lucide.createIcons();if(typeof initWelcomeSlider==='function')setTimeout(initWelcomeSlider,2000);</script>
 </body>
 </html>

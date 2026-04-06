@@ -2,6 +2,7 @@
 function getDefaultAraclar(risk) {
   if(risk==='konser')return[{id:'ppf',ad:'📊 Para Piyasası Fonu',renk:'#1A7A4A',oran:50,platform:'Ziraat → ZPP',aciklama:'faiz'},{id:'altin',ad:'🥇 Gram Altın',renk:'#C9A84C',oran:30,platform:'Ziraat → Altın',aciklama:'gram'},{id:'usd',ad:'💵 Döviz (USD)',renk:'#7B3FBE',oran:20,platform:'Ziraat → Döviz',aciklama:'usd'}];
   if(risk==='agresif')return[{id:'bist',ad:'📈 BİST 30',renk:'#1A5FAA',oran:40,platform:'Ziraat → Endeks',aciklama:''},{id:'altin',ad:'🥇 Gram Altın',renk:'#C9A84C',oran:35,platform:'Ziraat → Altın',aciklama:'gram'},{id:'ppf',ad:'📊 Para Piy. Fonu',renk:'#1A7A4A',oran:15,platform:'Ziraat → ZPP',aciklama:'faiz'},{id:'usd',ad:'💵 Döviz (USD)',renk:'#7B3FBE',oran:10,platform:'Ziraat → Döviz',aciklama:'usd'}];
+  if(risk==='katilim')return[{id:'altin',ad:'🥇 Gram Altın',renk:'#C9A84C',oran:40,platform:'Katılım Bankası → Altın',aciklama:'gram'},{id:'katfon',ad:'📊 Katılım Fonu',renk:'#1A7A4A',oran:30,platform:'Katılım Bankası → Fon',aciklama:'karpay'},{id:'katilim30',ad:'📈 Katılım 30',renk:'#1A5FAA',oran:20,platform:'Katılım Bankası → Endeks',aciklama:''},{id:'usd',ad:'💵 Döviz (USD)',renk:'#7B3FBE',oran:10,platform:'Katılım Bankası → Döviz',aciklama:'usd'}];
   return[{id:'altin',ad:'🥇 Gram Altın',renk:'#C9A84C',oran:45,platform:'Ziraat → Altın',aciklama:'gram'},{id:'ppf',ad:'📊 Para Piy. Fonu',renk:'#1A7A4A',oran:30,platform:'Ziraat → ZPP',aciklama:'faiz'},{id:'bist',ad:'📈 BİST 30',renk:'#1A5FAA',oran:15,platform:'Ziraat → Endeks',aciklama:''},{id:'usd',ad:'💵 Döviz (USD)',renk:'#7B3FBE',oran:10,platform:'Ziraat → Döviz',aciklama:'usd'}];
 }
 
@@ -20,7 +21,7 @@ function initDashboard() {
   document.getElementById('s-maas').textContent=fmtN(P.gelir)+' ₺';
   document.getElementById('s-yatirim').textContent=fmtN(S.yatirim)+' ₺';
   document.getElementById('s-oran').textContent="Gelirin %"+pct+"'i yatırıma";
-  var rA={konser:'Muhafazakâr 🛡️',dengeli:'Dengeli ⚖️',agresif:'Agresif 🚀'};
+  var rA={konser:'Muhafazakâr 🛡️',dengeli:'Dengeli ⚖️',agresif:'Agresif 🚀',katilim:'Katılım ☪️'};
   document.getElementById('s-risk').textContent=rA[P.risk]||P.risk;
   document.getElementById('s-risk-sub').textContent=kalan+' yıl planlama';
   document.getElementById('c-m').value=S.yatirim;
@@ -34,7 +35,14 @@ function initDashboard() {
   renderAlarmListe(); renderAlarmGecmis(); bildirimBannerKontrol();
   try{var mg=JSON.parse(localStorage.getItem('mn-maas-'+(P.id||P.ad))||'null');if(mg){document.getElementById('maas-gun').value=mg.gun;document.getElementById('maas-hatir').value=mg.hatirlatma||0;}}catch(e){}
   updateSigortaDetay(); renderDagılım(); renderBakiye(); renderHistory(); cu();
-  setTimeout(function(){ applyRecurring(); renderRecur(); renderBudget(); calculateHealthScore(); }, 150);
+  setTimeout(function(){
+    applyRecurring(); renderRecur(); renderBudget(); calculateHealthScore();
+    if(typeof renderInsights==='function') renderInsights();
+    if(typeof checkAchievements==='function') checkAchievements();
+    if(typeof renderAchievementGallery==='function') renderAchievementGallery();
+    if(typeof renderGoals==='function') renderGoals();
+    if(typeof updateStreaks==='function') updateStreaks();
+  }, 150);
 }
 
 function buildYasStrateji() {
@@ -222,7 +230,7 @@ function updateAll(){
   var kalan=(P.emekYas||55)-(P.yas||27);
   var yasP=document.getElementById('d-yas-pill');if(yasP)yasP.textContent=(P.yas||27)+' yaş · '+(P.emekYas||55)+"'a "+kalan+' yıl';
   // Risk profili
-  var rA={konser:'Muhafazakâr 🛡️',dengeli:'Dengeli ⚖️',agresif:'Agresif 🚀'};
+  var rA={konser:'Muhafazakâr 🛡️',dengeli:'Dengeli ⚖️',agresif:'Agresif 🚀',katilim:'Katılım ☪️'};
   document.getElementById('s-risk').textContent=rA[P.risk]||P.risk;
   document.getElementById('s-risk-sub').textContent=kalan+' yıl planlama';
   buildSenaryolar();
@@ -282,7 +290,7 @@ function saveRisk(){
   var idx=TUM_PROFILLER.findIndex(function(x){return x.id===P.id;});
   if(idx>=0){TUM_PROFILLER[idx]=P;try{localStorage.setItem('mn-profiller',JSON.stringify(TUM_PROFILLER));}catch(e){}}
   saveState();updateAll();buildYasStrateji();buildSenaryolar();buildTimeline();renderHedef();buildAksiyon();cancelRisk();cu();
-  var rA={konser:'Muhafazakâr',dengeli:'Dengeli',agresif:'Agresif'};
+  var rA={konser:'Muhafazakâr',dengeli:'Dengeli',agresif:'Agresif',katilim:'Katılım'};
   showToast('Risk profili: '+(rA[r]||r),'success');
 }
 

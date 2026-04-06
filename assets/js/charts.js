@@ -1,5 +1,5 @@
 // ── DAĞILIM ───────────────────────────────────────────────────────────────
-var ARAC_FN={altin:function(){return S.rates.altin||7100;},usd:function(){return S.rates.usd||44;},ppf:function(){return 1;},bist:function(){return 1;},diger:function(){return 1;}};
+var ARAC_FN={altin:function(){return S.rates.altin||7100;},usd:function(){return S.rates.usd||44;},ppf:function(){return 1;},bist:function(){return 1;},katfon:function(){return 1;},katilim30:function(){return 1;},diger:function(){return 1;}};
 
 function renderDagılım(){
   if(!S.araclar||!S.araclar.length)S.araclar=getDefaultAraclar(P.risk||'dengeli');
@@ -9,6 +9,7 @@ function renderDagılım(){
     if(a.aciklama==='gram'&&S.rates.altin&&!GIZLI)extra=(t/S.rates.altin).toFixed(2)+' gram alınır';
     else if(a.aciklama==='usd'&&S.rates.usd&&!GIZLI)extra='~'+Math.round(t/S.rates.usd)+' USD';
     else if(a.aciklama==='faiz')extra='Günlük ~%0.10 faiz';
+    else if(a.aciklama==='karpay')extra='Günlük kâr payı dağıtımı';
     return '<div class="arow"><div class="adot" style="background:'+a.renk+';"></div>'+
       '<div class="an"><div class="an-m">'+a.ad+'</div><div class="an-s">'+a.platform+(extra?' · '+extra:'')+'</div></div>'+
       '<div class="abw"><div class="ab" style="width:'+Math.min(a.oran,100)+'%;background:'+a.renk+';"></div></div>'+

@@ -2,7 +2,8 @@
 var P = {};
 var S = { yatirim:30000, maas:75000, brut:0, vergiBrut:0,
   rates:{altin:null,usd:null,eur:null,ons:null}, prev:{altin:null,usd:null,eur:null,ons:null},
-  bordrolar:[], bakiye:[], araclar:[], alarmlar:[], alarmGecmis:[], sigortaBaslangic:null, giderler:[], tekrarlayan:[], butce:{} };
+  bordrolar:[], bakiye:[], araclar:[], alarmlar:[], alarmGecmis:[], sigortaBaslangic:null, giderler:[], tekrarlayan:[], butce:{},
+  dismissedInsights:[], achievements:{}, streaks:{tasarruf:0,butce:0,giris:0}, lastInteraction:null, goals:[] };
 var rateInterval = null; // Memory leak fix: tek global interval
 var TAB_ORDER=['portfolio','bakiye','hedef','yolharitasi','aksiyon','calculator','alarmlar','bordro','vergi','gider'];
 var currentTabIdx=0;
@@ -141,6 +142,7 @@ function profilSec(i) {
   rateInterval=setInterval(fetchRates,30000);
   setTimeout(initScrollHints, 300);
   setTimeout(initPullToRefresh, 500);
+  setTimeout(function(){ if(typeof startTour==='function') startTour(); }, 1500);
   showToast('Hoşgeldin, '+esc(P.ad)+'! 👋','success',2500);
 }
 
@@ -167,6 +169,11 @@ function loadProfileState() {
     S.giderler      = st.giderler || [];
     S.tekrarlayan   = st.tekrarlayan || [];
     S.butce         = st.butce || {};
+    S.dismissedInsights = st.dismissedInsights || [];
+    S.achievements  = st.achievements || {};
+    S.streaks       = st.streaks || {tasarruf:0,butce:0,giris:0};
+    S.lastInteraction = st.lastInteraction || null;
+    S.goals         = st.goals || [];
   } catch(e) {
     S.yatirim = P.yatirim; S.maas = P.gelir;
     S.araclar = getDefaultAraclar(P.risk||'dengeli');
@@ -181,7 +188,9 @@ function saveState() {
       yatirim:S.yatirim, maas:S.maas, brut:S.brut, vergiBrut:S.vergiBrut,
       bordro:S.bordrolar, bakiye:S.bakiye, araclar:S.araclar,
       alarmlar:S.alarmlar, alarmGecmis:S.alarmGecmis, sigortaBaslangic:S.sigortaBaslangic,
-      giderler:S.giderler||[], tekrarlayan:S.tekrarlayan||[], butce:S.butce||{}
+      giderler:S.giderler||[], tekrarlayan:S.tekrarlayan||[], butce:S.butce||{},
+      dismissedInsights:S.dismissedInsights||[], achievements:S.achievements||{},
+      streaks:S.streaks||{}, lastInteraction:S.lastInteraction, goals:S.goals||[]
     }));
   } catch(e) {
     showToast('Veri kaydedilemedi — depolama alanı dolu olabilir','error',5000);
@@ -322,6 +331,7 @@ function finalizeOnboarding() {
   S.yatirim=P.yatirim; S.maas=P.gelir; S.araclar=getDefaultAraclar(P.risk);
   S.bordrolar=[]; S.bakiye=[]; S.alarmlar=[]; S.alarmGecmis=[];
   S.giderler=[]; S.tekrarlayan=[]; S.butce={};
+  S.dismissedInsights=[]; S.achievements={}; S.streaks={tasarruf:0,butce:0,giris:0}; S.goals=[];
   if(P.sigorta==='var')S.sigortaBaslangic=new Date().toISOString();
   saveState();
   GIZLI=false;
