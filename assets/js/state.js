@@ -41,10 +41,13 @@ function resetTabToPortfolio() {
   // Aktif tab'ı portföye döndür (profil değişiminde)
   document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
   document.querySelectorAll('.nb').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.bnav-item').forEach(function(b){ b.classList.remove('active'); });
   var pt = document.getElementById('tab-portfolio');
   if (pt) pt.classList.add('active');
   var nbs = document.querySelectorAll('.nb');
   if (nbs.length > 0) nbs[0].classList.add('active');
+  var bnavs = document.querySelectorAll('.bnav-item');
+  if (bnavs.length > 0) bnavs[0].classList.add('active');
 }
 
 function showProfileSelect() {

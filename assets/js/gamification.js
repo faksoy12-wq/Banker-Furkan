@@ -145,6 +145,9 @@ function renderAchievementGallery() {
 
 function updateStreaks() {
   if (!S.streaks) S.streaks = { tasarruf: 0, butce: 0, giris: 0 };
+  // Only update streaks once per calendar day
+  var today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  if (S.lastInteraction && S.lastInteraction.slice(0, 10) === today) return; // Already updated today
   var gel = P.gelir || 0;
   // Savings streak
   if (gel > 0 && (S.yatirim / gel) >= 0.20) {
