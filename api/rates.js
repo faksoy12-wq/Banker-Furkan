@@ -18,14 +18,14 @@ module.exports = async function handler(req, res) {
     const onsVal = parseFloat(((altinVal * 31.1035) / usdVal).toFixed(2));
 
     return res.status(200).json({
-      // Frontend'de hata almamak için her iki formatı da gönderiyoruz
-      usd: usdVal,
-      USD: usdVal, 
-      eur: eurVal,
-      EUR: eurVal,
-      altin: altinVal,
-      ons: onsVal,
-      kaynak: 'truncgil-v4',
+      usd: usd,
+      USD: usd,
+      eur: eur,
+      EUR: eur,
+      altin: gramAltin,
+      ALTIN: gramAltin,
+      ons: onsUSD,
+      kaynak: 'truncgil',
       zaman: new Date().toISOString(),
     });
 
